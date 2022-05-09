@@ -1,0 +1,1300 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Methods &#8212; The Machine Learning Simplified book</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Filter Methods" href="filter_methods.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/mls_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">The Machine Learning Simplified book</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   About
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 2 - Overview of Supervised Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter2/knn.html">
+   K-Nearest Neighbors (KNN) Classifier
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 3 - Model Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter3/linear_regression_and_gradient_descent.html">
+   Linear Regression and Gradient Descent
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 4 - Basis Expansion and Regularization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter4/basis_expansion.html">
+   Basis Expansion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter4/regularization.html">
+   Regularization
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 5 - Model Selection
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter5/bias_variance_decomposition.html">
+   Bias-variance Decomposition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter5/validation_methods.html">
+   Cross-validation Methods
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 6 - Feature Selection
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="filter_methods.html">
+   Filter Methods
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Search Methods
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../../_sources/book/chapter6/wrapper_methods.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/book/chapter6/wrapper_methods.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/5x12/themlsbook"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fbook/chapter6/wrapper_methods.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/book/chapter6/wrapper_methods.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/5x12/themlsbook/master?urlpath=tree/jupyter_book/book/chapter6/wrapper_methods.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-libraries-data-variables">
+   1. Required Libraries, Data &amp; Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wrapper-methods">
+   2. Wrapper methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-forward-feature-selection">
+     2.1. Step Forward Feature Selection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-backward-feature-selection">
+     2.2. Step Backward Feature Selection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recursive-feature-elimination-method">
+     2.3. Recursive Feature Elimination Method
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comparing-four-methods">
+   3. Comparing Four Methods
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Search Methods</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-libraries-data-variables">
+   1. Required Libraries, Data &amp; Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wrapper-methods">
+   2. Wrapper methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-forward-feature-selection">
+     2.1. Step Forward Feature Selection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-backward-feature-selection">
+     2.2. Step Backward Feature Selection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recursive-feature-elimination-method">
+     2.3. Recursive Feature Elimination Method
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comparing-four-methods">
+   3. Comparing Four Methods
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="search-methods">
+<span id="chapter6-part2"></span><h1>Search Methods<a class="headerlink" href="#search-methods" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>This Jupyter Notebook is a supplement for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> (MLS) book. Note that all detailed explanations are written in the book. This notebook just shed light on Python implementations of the topics discussed.</p></li>
+<li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my notebooks.</p></li>
+</ul>
+<div class="section" id="required-libraries-data-variables">
+<h2>1. Required Libraries, Data &amp; Variables<a class="headerlink" href="#required-libraries-data-variables" title="Permalink to this headline">¶</a></h2>
+<p>Let’s import the data and have a look at it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://github.com/5x12/themlsbook/raw/master/supplements/data/car_price.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>car_ID</th>
+      <th>symboling</th>
+      <th>CarName</th>
+      <th>fueltype</th>
+      <th>aspiration</th>
+      <th>doornumber</th>
+      <th>carbody</th>
+      <th>drivewheel</th>
+      <th>enginelocation</th>
+      <th>wheelbase</th>
+      <th>...</th>
+      <th>enginesize</th>
+      <th>fuelsystem</th>
+      <th>boreratio</th>
+      <th>stroke</th>
+      <th>compressionratio</th>
+      <th>horsepower</th>
+      <th>peakrpm</th>
+      <th>citympg</th>
+      <th>highwaympg</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>3</td>
+      <td>alfa-romero giulia</td>
+      <td>gas</td>
+      <td>std</td>
+      <td>two</td>
+      <td>convertible</td>
+      <td>rwd</td>
+      <td>front</td>
+      <td>88.6</td>
+      <td>...</td>
+      <td>130</td>
+      <td>mpfi</td>
+      <td>3.47</td>
+      <td>2.68</td>
+      <td>9.0</td>
+      <td>111</td>
+      <td>5000</td>
+      <td>21</td>
+      <td>27</td>
+      <td>13495.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>3</td>
+      <td>alfa-romero stelvio</td>
+      <td>gas</td>
+      <td>std</td>
+      <td>two</td>
+      <td>convertible</td>
+      <td>rwd</td>
+      <td>front</td>
+      <td>88.6</td>
+      <td>...</td>
+      <td>130</td>
+      <td>mpfi</td>
+      <td>3.47</td>
+      <td>2.68</td>
+      <td>9.0</td>
+      <td>111</td>
+      <td>5000</td>
+      <td>21</td>
+      <td>27</td>
+      <td>16500.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>alfa-romero Quadrifoglio</td>
+      <td>gas</td>
+      <td>std</td>
+      <td>two</td>
+      <td>hatchback</td>
+      <td>rwd</td>
+      <td>front</td>
+      <td>94.5</td>
+      <td>...</td>
+      <td>152</td>
+      <td>mpfi</td>
+      <td>2.68</td>
+      <td>3.47</td>
+      <td>9.0</td>
+      <td>154</td>
+      <td>5000</td>
+      <td>19</td>
+      <td>26</td>
+      <td>16500.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>2</td>
+      <td>audi 100 ls</td>
+      <td>gas</td>
+      <td>std</td>
+      <td>four</td>
+      <td>sedan</td>
+      <td>fwd</td>
+      <td>front</td>
+      <td>99.8</td>
+      <td>...</td>
+      <td>109</td>
+      <td>mpfi</td>
+      <td>3.19</td>
+      <td>3.40</td>
+      <td>10.0</td>
+      <td>102</td>
+      <td>5500</td>
+      <td>24</td>
+      <td>30</td>
+      <td>13950.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>2</td>
+      <td>audi 100ls</td>
+      <td>gas</td>
+      <td>std</td>
+      <td>four</td>
+      <td>sedan</td>
+      <td>4wd</td>
+      <td>front</td>
+      <td>99.4</td>
+      <td>...</td>
+      <td>136</td>
+      <td>mpfi</td>
+      <td>3.19</td>
+      <td>3.40</td>
+      <td>8.0</td>
+      <td>115</td>
+      <td>5500</td>
+      <td>18</td>
+      <td>22</td>
+      <td>17450.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 26 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;car_ID&#39;, &#39;symboling&#39;, &#39;CarName&#39;, &#39;fueltype&#39;, &#39;aspiration&#39;,
+       &#39;doornumber&#39;, &#39;carbody&#39;, &#39;drivewheel&#39;, &#39;enginelocation&#39;, &#39;wheelbase&#39;,
+       &#39;carlength&#39;, &#39;carwidth&#39;, &#39;carheight&#39;, &#39;curbweight&#39;, &#39;enginetype&#39;,
+       &#39;cylindernumber&#39;, &#39;enginesize&#39;, &#39;fuelsystem&#39;, &#39;boreratio&#39;, &#39;stroke&#39;,
+       &#39;compressionratio&#39;, &#39;horsepower&#39;, &#39;peakrpm&#39;, &#39;citympg&#39;, &#39;highwaympg&#39;,
+       &#39;price&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s define features <span class="math notranslate nohighlight">\(X\)</span> and a target variable <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;wheelbase&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;carlength&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;carwidth&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;carheight&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;curbweight&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;enginesize&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;boreratio&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;stroke&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;compressionratio&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;horsepower&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;peakrpm&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;citympg&#39;</span><span class="p">,</span> 
+          <span class="s1">&#39;highwaympg&#39;</span><span class="p">]]</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s split the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="wrapper-methods">
+<h2>2. Wrapper methods<a class="headerlink" href="#wrapper-methods" title="Permalink to this headline">¶</a></h2>
+<p>The following Search methods are examined:</p>
+<ol class="simple">
+<li><p><strong>Step Forward</strong> Feature Selection method</p></li>
+<li><p><strong>Step Backward</strong> Feature Selection method</p></li>
+<li><p><strong>Recursive Feature</strong> Elimination method</p></li>
+</ol>
+<div class="section" id="step-forward-feature-selection">
+<h3>2.1. Step Forward Feature Selection<a class="headerlink" href="#step-forward-feature-selection" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importing required libraries</span>
+<span class="kn">from</span> <span class="nn">mlxtend.feature_selection</span> <span class="kn">import</span> <span class="n">SequentialFeatureSelector</span> <span class="k">as</span> <span class="n">sfs</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set a model (Random Forest Classifier) to use in SFFS</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Set step forward feature selection</span>
+<span class="n">sfs</span> <span class="o">=</span> <span class="n">sfs</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="c1"># model (defined above) to use in SFFS</span>
+          <span class="n">k_features</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="c1"># return top 4 features from the feature set X</span>
+          <span class="n">forward</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="c1"># True for SFFS, False for SBFS (explained below)</span>
+          <span class="n">floating</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+          <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+          <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span> <span class="c1"># metrics to use to estimate model&#39;s performance</span>
+          <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#cross-validation=2</span>
+
+<span class="c1"># Perform Step Forward Feature Selection by fitting X and y</span>
+<span class="n">sfs</span> <span class="o">=</span> <span class="n">sfs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done  13 out of  13 | elapsed:    1.1s finished
+
+[2022-05-09 16:48:37] Features: 1/4 -- score: 0.03491784037558685[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done  12 out of  12 | elapsed:    1.1s finished
+
+[2022-05-09 16:48:38] Features: 2/4 -- score: 0.028071205007824725[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=1)]: Done  11 out of  11 | elapsed:    1.0s finished
+
+[2022-05-09 16:48:39] Features: 3/4 -- score: 0.02797339593114241[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done  10 out of  10 | elapsed:    1.0s finished
+
+[2022-05-09 16:48:40] Features: 4/4 -- score: 0.04196009389671361
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return indexes the top 4 selected features</span>
+<span class="n">sfs</span><span class="o">.</span><span class="n">k_feature_idx_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 3, 6, 11)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return the labels of the top 4 selected features</span>
+<span class="n">top_forward</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">sfs</span><span class="o">.</span><span class="n">k_feature_idx_</span><span class="p">)]</span>
+<span class="n">top_forward</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;wheelbase&#39;, &#39;carheight&#39;, &#39;boreratio&#39;, &#39;citympg&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-backward-feature-selection">
+<h3>2.2. Step Backward Feature Selection<a class="headerlink" href="#step-backward-feature-selection" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importing required libraries</span>
+<span class="kn">from</span> <span class="nn">mlxtend.feature_selection</span> <span class="kn">import</span> <span class="n">SequentialFeatureSelector</span> <span class="k">as</span> <span class="n">sfs</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set a model (Random Forest Classifier) to use in SBFS</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Set step backward feature selection</span>
+<span class="n">sfs</span> <span class="o">=</span> <span class="n">sfs</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="c1"># model (defined above) to use in SBFS</span>
+           <span class="n">k_features</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="c1"># return bottom 4 features from the feature set X</span>
+           <span class="n">forward</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># False for SBFS, True for SFFS (explained above)</span>
+           <span class="n">floating</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+           <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+           <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span> <span class="c1"># metrics to use to estimate model&#39;s performance (here: R-squared)</span>
+           <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#cross-validation=2</span>
+
+<span class="c1"># Perform Step Backward Feature Selection by fitting X and y</span>
+<span class="n">sfs1</span> <span class="o">=</span> <span class="n">sfs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done  13 out of  13 | elapsed:    1.4s finished
+
+[2022-05-09 16:48:41] Features: 12/4 -- score: 0.7998949273343461[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=1)]: Done  12 out of  12 | elapsed:    1.3s finished
+
+[2022-05-09 16:48:43] Features: 11/4 -- score: 0.7879774903916175[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done  11 out of  11 | elapsed:    1.2s finished
+
+[2022-05-09 16:48:44] Features: 10/4 -- score: 0.7890632260204529[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done  10 out of  10 | elapsed:    1.1s finished
+
+[2022-05-09 16:48:45] Features: 9/4 -- score: 0.7856174008652672[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   9 out of   9 | elapsed:    0.9s finished
+
+[2022-05-09 16:48:46] Features: 8/4 -- score: 0.8099030881362143[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=1)]: Done   8 out of   8 | elapsed:    0.8s finished
+
+[2022-05-09 16:48:47] Features: 7/4 -- score: 0.7747932558887013[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   7 out of   7 | elapsed:    0.7s finished
+
+[2022-05-09 16:48:47] Features: 6/4 -- score: 0.7713845300612011[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   6 out of   6 | elapsed:    0.6s finished
+
+[2022-05-09 16:48:48] Features: 5/4 -- score: 0.7883549464785123[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/model_selection/_split.py:676: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=2.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=1)]: Done   5 out of   5 | elapsed:    0.5s finished
+
+[2022-05-09 16:48:48] Features: 4/4 -- score: 0.7782724197947183
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return the labels of the bottom 4 selected features</span>
+<span class="n">top_backward</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">sfs</span><span class="o">.</span><span class="n">k_feature_idx_</span><span class="p">)]</span>
+<span class="n">top_backward</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;curbweight&#39;, &#39;enginesize&#39;, &#39;horsepower&#39;, &#39;peakrpm&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="recursive-feature-elimination-method">
+<h3>2.3. Recursive Feature Elimination Method<a class="headerlink" href="#recursive-feature-elimination-method" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importing required libraries</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">RFE</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set a model (Linear Regression) to use in RFEM</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+
+<span class="c1"># Set step backward feature selection</span>
+<span class="n">rfe</span> <span class="o">=</span> <span class="n">RFE</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> 
+          <span class="n">n_features_to_select</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
+          <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Perform Step Backward Feature Selection by fitting X and y</span>
+<span class="n">rfe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RFE(estimator=LinearRegression(), n_features_to_select=4)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return labels of the top 4 selected features</span>
+<span class="n">top_recursive</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">rfe</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">top_recursive</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;carwidth&#39;, &#39;boreratio&#39;, &#39;stroke&#39;, &#39;citympg&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return labels and their scores of all features</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">rfe</span><span class="o">.</span><span class="n">ranking_</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;wheelbase&#39;: 7, &#39;carlength&#39;: 6, &#39;carwidth&#39;: 1, &#39;carheight&#39;: 5, &#39;curbweight&#39;: 10, &#39;enginesize&#39;: 4, &#39;boreratio&#39;: 1, &#39;stroke&#39;: 1, &#39;compressionratio&#39;: 2, &#39;horsepower&#39;: 8, &#39;peakrpm&#39;: 9, &#39;citympg&#39;: 1, &#39;highwaympg&#39;: 3}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="comparing-four-methods">
+<h2>3. Comparing Four Methods<a class="headerlink" href="#comparing-four-methods" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The features selected by Step Forward Feature Selection are: </span><span class="se">\n</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> </span><span class="se">\t</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> The features selected by Step Backward Feature Selection are: </span><span class="se">\n</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> </span><span class="se">\t</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> The features selected by Recursive Feature Elimination are: </span><span class="se">\n</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> </span><span class="se">\t</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top_forward</span><span class="p">,</span> <span class="n">top_backward</span><span class="p">,</span> <span class="n">top_recursive</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The features selected by Step Forward Feature Selection are: 
+ 
+ 	 Index([&#39;wheelbase&#39;, &#39;carheight&#39;, &#39;boreratio&#39;, &#39;citympg&#39;], dtype=&#39;object&#39;) 
+ 
+ 
+ The features selected by Step Backward Feature Selection are: 
+ 
+ 	 Index([&#39;curbweight&#39;, &#39;enginesize&#39;, &#39;horsepower&#39;, &#39;peakrpm&#39;], dtype=&#39;object&#39;) 
+ 
+ 
+ The features selected by Recursive Feature Elimination are: 
+ 
+ 	 Index([&#39;carwidth&#39;, &#39;boreratio&#39;, &#39;stroke&#39;, &#39;citympg&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./book/chapter6"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="filter_methods.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Filter Methods</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Andrew Wolf<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
