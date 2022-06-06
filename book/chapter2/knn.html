@@ -58,7 +58,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Model Learning" href="../chapter3/linear_regression_and_gradient_descent.html" />
+    <link rel="next" title="Linear Regression" href="../chapter3/linear_regression.html" />
     <link rel="prev" title="About" href="../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -122,8 +122,18 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../chapter3/linear_regression_and_gradient_descent.html">
-   Linear Regression and Gradient Descent
+  <a class="reference internal" href="../chapter3/linear_regression.html">
+   Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter3/cost_function.html">
+   Cost Function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter3/gradient_descent.html">
+   Gradient Descent
   </a>
  </li>
 </ul>
@@ -528,8 +538,9 @@ const thebe_selector_output = ".output, .cell_output"
   <div class="tex2jax_ignore mathjax_ignore section" id="k-nearest-neighbors-classifier">
 <span id="chapter2-part1"></span><h1>K-Nearest Neighbors Classifier<a class="headerlink" href="#k-nearest-neighbors-classifier" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>This Jupyter Notebook is a supplement for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. Note that all detailed explanations are written in the book. This notebook just shed light on Python implementations of the topics discussed.</p></li>
-<li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my notebooks.</p></li>
+<li><p>This is a supplement material for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book.</p></li>
+<li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
+<li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
 </ul>
 <p>Let’s recall Chapter 2. We have a hypothetical dataset (Table 2.1) containing 20 fruits that are a mix of <code class="docutils literal notranslate"><span class="pre">apples</span></code>, <code class="docutils literal notranslate"><span class="pre">mandarins</span></code>, and <code class="docutils literal notranslate"><span class="pre">lemons</span></code> For each fruit, we have measured it’s <code class="docutils literal notranslate"><span class="pre">height</span></code> and <code class="docutils literal notranslate"><span class="pre">width</span></code> and recorded them as the first two columns of the table. For each fruit we know its <code class="docutils literal notranslate"><span class="pre">type</span></code>, or class label, and this is represented by the last column.</p>
 <table class="colwidths-auto table">
@@ -634,13 +645,16 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Libraries</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
 <span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39; # sharper plots
+
 
 <span class="c1"># Create a function to plot scatter graph</span>
 <span class="k">def</span> <span class="nf">plotFruitFigure</span><span class="p">():</span>
@@ -1507,10 +1521,10 @@ k=20 | train error: 0.6 | test error: 0.6 | train misclassifications: 12.0 | tes
             <p class="prev-next-title">About</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../chapter3/linear_regression_and_gradient_descent.html" title="next page">
+    <a class='right-next' id="next-link" href="../chapter3/linear_regression.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model Learning</p>
+        <p class="prev-next-title">Linear Regression</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
