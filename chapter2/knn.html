@@ -139,7 +139,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CHAPTER 4 - Basis Expansion and Regularization
+  CHAPTER 4 - Basis Expansion &amp; Regularization
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -183,7 +183,7 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../chapter6/wrapper_methods.html">
+  <a class="reference internal" href="../chapter6/search_methods.html">
    Search Methods
   </a>
  </li>
@@ -542,106 +542,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
 <li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
 </ul>
-<p>Let’s recall Chapter 2. We have a hypothetical dataset (Table 2.1) containing 20 fruits that are a mix of <code class="docutils literal notranslate"><span class="pre">apples</span></code>, <code class="docutils literal notranslate"><span class="pre">mandarins</span></code>, and <code class="docutils literal notranslate"><span class="pre">lemons</span></code> For each fruit, we have measured it’s <code class="docutils literal notranslate"><span class="pre">height</span></code> and <code class="docutils literal notranslate"><span class="pre">width</span></code> and recorded them as the first two columns of the table. For each fruit we know its <code class="docutils literal notranslate"><span class="pre">type</span></code>, or class label, and this is represented by the last column.</p>
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="head"><p>height</p></th>
-<th class="head"><p>width</p></th>
-<th class="head"><p>fruit</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>3.91</p></td>
-<td><p>5.76</p></td>
-<td><p>Mandarin</p></td>
-</tr>
-<tr class="row-odd"><td><p>7.09</p></td>
-<td><p>7.69</p></td>
-<td><p>Apple</p></td>
-</tr>
-<tr class="row-even"><td><p>10.48</p></td>
-<td><p>7.32</p></td>
-<td><p>Lemon</p></td>
-</tr>
-<tr class="row-odd"><td><p>9.21</p></td>
-<td><p>7.20</p></td>
-<td><p>Lemon</p></td>
-</tr>
-<tr class="row-even"><td><p>7.95</p></td>
-<td><p>5.90</p></td>
-<td><p>Lemon</p></td>
-</tr>
-<tr class="row-odd"><td><p>7.62</p></td>
-<td><p>7.51</p></td>
-<td><p>Apple</p></td>
-</tr>
-<tr class="row-even"><td><p>7.95</p></td>
-<td><p>7.51</p></td>
-<td><p>Apple</p></td>
-</tr>
-<tr class="row-odd"><td><p>8.42</p></td>
-<td><p>5.32</p></td>
-<td><p>Mandarin</p></td>
-</tr>
-<tr class="row-even"><td><p>4.69</p></td>
-<td><p>6.19</p></td>
-<td><p>Mandarin</p></td>
-</tr>
-<tr class="row-odd"><td><p>7.50</p></td>
-<td><p>5.99</p></td>
-<td><p>Lemon</p></td>
-</tr>
-<tr class="row-even"><td><p>7.11</p></td>
-<td><p>7.02</p></td>
-<td><p>Apple</p></td>
-</tr>
-<tr class="row-odd"><td><p>4.15</p></td>
-<td><p>5.60</p></td>
-<td><p>Mandarin</p></td>
-</tr>
-<tr class="row-even"><td><p>7.29</p></td>
-<td><p>8.38</p></td>
-<td><p>Apple</p></td>
-</tr>
-<tr class="row-odd"><td><p>8.49</p></td>
-<td><p>6.52</p></td>
-<td><p>Lemon</p></td>
-</tr>
-<tr class="row-even"><td><p>7.44</p></td>
-<td><p>7.89</p></td>
-<td><p>Apple</p></td>
-</tr>
-<tr class="row-odd"><td><p>7.86</p></td>
-<td><p>7.60</p></td>
-<td><p>Apple</p></td>
-</tr>
-<tr class="row-even"><td><p>3.93</p></td>
-<td><p>6.12</p></td>
-<td><p>Apple</p></td>
-</tr>
-<tr class="row-odd"><td><p>4.40</p></td>
-<td><p>5.90</p></td>
-<td><p>Mandarin</p></td>
-</tr>
-<tr class="row-even"><td><p>8.10</p></td>
-<td><p>6.15</p></td>
-<td><p>Lemon</p></td>
-</tr>
-<tr class="row-odd"><td><p>8.69</p></td>
-<td><p>5.82</p></td>
-<td><p>Lemon</p></td>
-</tr>
-</tbody>
-</table>
-<p>The structure of this notebook is identical to the structure of Chapter 2.1: ML Pipeline: Example.</p>
-<ol class="simple">
-<li><p>Problem Representation</p></li>
-<li><p>Learning a Prediction Function</p></li>
-<li><p>How Good is our Prediction Function?</p></li>
-<li><p>Model Complexity</p></li>
-</ol>
 <div class="section" id="required-libraries-functions">
 <h2>1. Required Libraries &amp; Functions<a class="headerlink" href="#required-libraries-functions" title="Permalink to this headline">¶</a></h2>
+<p>Before we start, we need to import few libraries and functions that we will use in this jupyterbook. You don’t need to understand what those functions do for now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Libraries</span>
@@ -739,21 +642,112 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="probelm-representation">
 <h2>2. Probelm Representation<a class="headerlink" href="#probelm-representation" title="Permalink to this headline">¶</a></h2>
+<p>Let’s recall Chapter 2 of <a class="reference external" href="https://themlsbook.com">the Machine Learning Simplified book</a>. We have a hypothetical dataset (Table 2.1 in the MLS book) containing 20 fruits that are a mix of <code class="docutils literal notranslate"><span class="pre">apples</span></code>, <code class="docutils literal notranslate"><span class="pre">mandarins</span></code>, and <code class="docutils literal notranslate"><span class="pre">lemons</span></code> For each fruit, we have measured it’s <code class="docutils literal notranslate"><span class="pre">height</span></code> and <code class="docutils literal notranslate"><span class="pre">width</span></code> and recorded them as the first two columns of the table. For each fruit we know its <code class="docutils literal notranslate"><span class="pre">type</span></code>, or class label, and this is represented by the last column.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>height</p></th>
+<th class="head"><p>width</p></th>
+<th class="head"><p>fruit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>3.91</p></td>
+<td><p>5.76</p></td>
+<td><p>Mandarin</p></td>
+</tr>
+<tr class="row-odd"><td><p>7.09</p></td>
+<td><p>7.69</p></td>
+<td><p>Apple</p></td>
+</tr>
+<tr class="row-even"><td><p>10.48</p></td>
+<td><p>7.32</p></td>
+<td><p>Lemon</p></td>
+</tr>
+<tr class="row-odd"><td><p>9.21</p></td>
+<td><p>7.20</p></td>
+<td><p>Lemon</p></td>
+</tr>
+<tr class="row-even"><td><p>7.95</p></td>
+<td><p>5.90</p></td>
+<td><p>Lemon</p></td>
+</tr>
+<tr class="row-odd"><td><p>7.62</p></td>
+<td><p>7.51</p></td>
+<td><p>Apple</p></td>
+</tr>
+<tr class="row-even"><td><p>7.95</p></td>
+<td><p>7.51</p></td>
+<td><p>Apple</p></td>
+</tr>
+<tr class="row-odd"><td><p>8.42</p></td>
+<td><p>5.32</p></td>
+<td><p>Mandarin</p></td>
+</tr>
+<tr class="row-even"><td><p>4.69</p></td>
+<td><p>6.19</p></td>
+<td><p>Mandarin</p></td>
+</tr>
+<tr class="row-odd"><td><p>7.50</p></td>
+<td><p>5.99</p></td>
+<td><p>Lemon</p></td>
+</tr>
+<tr class="row-even"><td><p>7.11</p></td>
+<td><p>7.02</p></td>
+<td><p>Apple</p></td>
+</tr>
+<tr class="row-odd"><td><p>4.15</p></td>
+<td><p>5.60</p></td>
+<td><p>Mandarin</p></td>
+</tr>
+<tr class="row-even"><td><p>7.29</p></td>
+<td><p>8.38</p></td>
+<td><p>Apple</p></td>
+</tr>
+<tr class="row-odd"><td><p>8.49</p></td>
+<td><p>6.52</p></td>
+<td><p>Lemon</p></td>
+</tr>
+<tr class="row-even"><td><p>7.44</p></td>
+<td><p>7.89</p></td>
+<td><p>Apple</p></td>
+</tr>
+<tr class="row-odd"><td><p>7.86</p></td>
+<td><p>7.60</p></td>
+<td><p>Apple</p></td>
+</tr>
+<tr class="row-even"><td><p>3.93</p></td>
+<td><p>6.12</p></td>
+<td><p>Apple</p></td>
+</tr>
+<tr class="row-odd"><td><p>4.40</p></td>
+<td><p>5.90</p></td>
+<td><p>Mandarin</p></td>
+</tr>
+<tr class="row-even"><td><p>8.10</p></td>
+<td><p>6.15</p></td>
+<td><p>Lemon</p></td>
+</tr>
+<tr class="row-odd"><td><p>8.69</p></td>
+<td><p>5.82</p></td>
+<td><p>Lemon</p></td>
+</tr>
+</tbody>
+</table>
 <div class="section" id="create-hypothetical-dataset">
 <h3>2.1. Create Hypothetical Dataset<a class="headerlink" href="#create-hypothetical-dataset" title="Permalink to this headline">¶</a></h3>
-<p>To create a table, we use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library - a library that manages <strong>PAN</strong>el <strong>DA</strong>ta <strong>S</strong>ets. We have already loaded it in the beginning of this notebook.</p>
+<p>Let’s re-create aforementioned table in python. We use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library - a library that manages <strong>PAN</strong>el <strong>DA</strong>ta <strong>S</strong>ets - to do so. Note that we have already imported it in the beginning of this notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a hypothetical dataset from the MLS book</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#re-create a hypothetical dataset</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.91</span><span class="p">,</span> <span class="mf">7.09</span><span class="p">,</span> <span class="mf">10.48</span><span class="p">,</span> <span class="mf">9.21</span><span class="p">,</span> <span class="mf">7.95</span><span class="p">,</span> <span class="mf">7.62</span><span class="p">,</span> <span class="mf">7.95</span><span class="p">,</span> <span class="mf">4.69</span><span class="p">,</span> <span class="mf">7.50</span><span class="p">,</span> <span class="mf">7.11</span><span class="p">,</span> <span class="mf">4.15</span><span class="p">,</span> <span class="mf">7.29</span><span class="p">,</span> <span class="mf">8.49</span><span class="p">,</span> <span class="mf">7.44</span><span class="p">,</span> <span class="mf">7.86</span><span class="p">,</span> <span class="mf">3.93</span><span class="p">,</span> <span class="mf">4.40</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">8.10</span><span class="p">,</span> <span class="mf">8.69</span><span class="p">],</span> 
         <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.76</span><span class="p">,</span> <span class="mf">7.69</span><span class="p">,</span> <span class="mf">7.32</span><span class="p">,</span> <span class="mf">7.20</span><span class="p">,</span> <span class="mf">5.90</span><span class="p">,</span> <span class="mf">7.51</span><span class="p">,</span> <span class="mf">5.32</span><span class="p">,</span> <span class="mf">6.19</span><span class="p">,</span> <span class="mf">5.99</span><span class="p">,</span> <span class="mf">7.02</span><span class="p">,</span> <span class="mf">5.60</span><span class="p">,</span> <span class="mf">8.38</span><span class="p">,</span> <span class="mf">6.52</span><span class="p">,</span> <span class="mf">7.89</span><span class="p">,</span> <span class="mf">7.60</span><span class="p">,</span> <span class="mf">6.12</span><span class="p">,</span> <span class="mf">5.90</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">6.15</span><span class="p">,</span> <span class="mf">5.82</span><span class="p">],</span>
         <span class="s1">&#39;fruit&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Mandarin&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Lemon&#39;</span><span class="p">,</span> <span class="s1">&#39;Lemon&#39;</span><span class="p">,</span> <span class="s1">&#39;Lemon&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Mandarin&#39;</span><span class="p">,</span> <span class="s1">&#39;Mandarin&#39;</span><span class="p">,</span> <span class="s1">&#39;Lemon&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Mandarin&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Lemon&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Mandarin&#39;</span><span class="p">,</span> <span class="s1">&#39;Lemon&#39;</span><span class="p">,</span> <span class="s1">&#39;Lemon&#39;</span><span class="p">,</span> <span class="s1">&#39;Lemon&#39;</span><span class="p">]</span>
        <span class="p">}</span>  
 
-<span class="c1"># Create DataFrame df using pandas library</span>
+<span class="c1">#transform dataset into a DataFrame df using pandas library</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  
   
-<span class="c1"># Print the output</span>
+<span class="c1">#print the output</span>
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -910,7 +904,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="visualize-the-dataset">
 <h3>2.2. Visualize the Dataset<a class="headerlink" href="#visualize-the-dataset" title="Permalink to this headline">¶</a></h3>
-<p>Let’s now make the same graph that we had in the book. We can do so by simply calling the funtion <code class="docutils literal notranslate"><span class="pre">plotFruitFigure()</span></code> that we defined in the beginning.</p>
+<p>Let’s now build a plot to visualize the dataset. We will plot the same graph that we had in the Machine Learning Simplified book. To make things easier, we can do so by simply calling the funtion <code class="docutils literal notranslate"><span class="pre">plotFruitFigure()</span></code> that we defined in the beginning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotFruitFigure</span><span class="p">()</span>
@@ -964,7 +958,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="vizualize-knn-decision-regions">
 <h3>3.2. Vizualize KNN Decision Regions<a class="headerlink" href="#vizualize-knn-decision-regions" title="Permalink to this headline">¶</a></h3>
-<p>Let’s visualize the decision boundaries of KNN in a graph, like we did in the book. For that, we will use <code class="docutils literal notranslate"><span class="pre">plotKNN</span></code> function that we defined in the beginning.</p>
+<p>Now that the model is ready, let’s visualize the decision boundaries of KNN on a graph, like we did in the MLS book. To simplify things, we will simply use <code class="docutils literal notranslate"><span class="pre">plotKNN</span></code> function that we defined in the beginning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotKNN</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
@@ -989,10 +983,11 @@ const thebe_selector_output = ".output, .cell_output"
 <img alt="../_images/knn_15_0.png" src="../_images/knn_15_0.png" />
 </div>
 </div>
+<p>Figure above shows the learned decision regions of a model, or specifically, it shows how this classifier predicts the (unknown) type of a new fruit with height and width measurements. For instance, if there is an unknown data point with measurements (4cm,5cm), it lands in the green region so the classifier predicts mandarin.</p>
 </div>
 <div class="section" id="predict-unknown-values">
 <h3>3.3. Predict unknown values<a class="headerlink" href="#predict-unknown-values" title="Permalink to this headline">¶</a></h3>
-<p>Let’s predict unknown fruits using our trained classifier. Let’s try to predict the label for an unknown fruit with width of 9cm and height of 3cm</p>
+<p>Let’s predict unknown fruits using our trained classifier. Let’s try to predict the label for an unknown fruit with width of 9cm and height of 3cm:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prediction for a single data point</span>
@@ -1028,8 +1023,8 @@ const thebe_selector_output = ".output, .cell_output"
 <p>The next step is to evaluate how good our model is.</p>
 <div class="section" id="evaluate-on-train-set">
 <h3>4.1. Evaluate on Train Set<a class="headerlink" href="#evaluate-on-train-set" title="Permalink to this headline">¶</a></h3>
-<p>Let’s first evaluate the score of the model on the training dataset. Remember, as we explained in the MLS book, this should be 0 in this example.
-The first step is to “predict” the training set, that is, we pretend that we don’t know its labels and see if the trained model manages to guess them correctly.</p>
+<p>Let’s first evaluate the score of the model on the training dataset. Remember, as we explained in the MLS book, this should be 0 in this example.</p>
+<p>The first step is to “predict” the training set, as if we pretend that we don’t know training set’s labels and see if the trained model manages to guess them correctly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict values for the training set</span>

@@ -36,6 +36,7 @@ Let's recall our hypothetical dataset of six apartments located in the center of
 
 ## 1. Required Libraries & Data
 
+Before we start, we need to import few libraries that we will use in this jupyterbook.
 
 ```{code-cell} ipython3
 import matplotlib.pyplot as plt #to build graphs

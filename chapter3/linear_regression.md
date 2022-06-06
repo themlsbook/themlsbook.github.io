@@ -19,15 +19,6 @@ kernelspec:
 - This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -> `.ipynb`) to reproduce the code and play around with it. 
 
 
-<!-- The structure of this notebook is similar to the structure of Chapter 3 of [MLS](https://themlsbook.com) book.
-
-1. Problem Representation
-2. Learning a Prediction Function
-3. How Good is our Prediction Function?
-4. Build Regressions with Wrong Parameters
-5. Cost Function
-6. Gradient Descent -->
-
 ## 1. Required Libraries & Functions
 
 Before we start, we need to import few libraries that we will use in this jupyterbook.
