@@ -1,0 +1,1966 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gradient Descent &#8212; The Machine Learning Simplified book</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Basis Expansion" href="../chapter4/basis_expansion.html" />
+    <link rel="prev" title="Cost Function" href="cost_function.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/mls_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">The Machine Learning Simplified book</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   About
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 2 - Overview of Supervised Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter2/knn.html">
+   K-Nearest Neighbors (KNN) Classifier
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 3 - Model Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression.html">
+   Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cost_function.html">
+   Cost Function
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Gradient Descent
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 4 - Basis Expansion and Regularization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter4/basis_expansion.html">
+   Basis Expansion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter4/regularization.html">
+   Regularization
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 5 - Model Selection
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter5/bias_variance_decomposition.html">
+   Bias-variance Decomposition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter5/validation_methods.html">
+   Cross-validation Methods
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CHAPTER 6 - Feature Selection
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter6/filter_methods.html">
+   Filter Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../chapter6/wrapper_methods.html">
+   Search Methods
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/chapter3/gradient_descent.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/chapter3/gradient_descent.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/5x12/themlsbook"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter3/gradient_descent.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter3/gradient_descent.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/5x12/themlsbook/master?urlpath=tree/jupyter_book/chapter3/gradient_descent.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-libraries-data">
+   1. Required Libraries &amp; Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-descent-in-action">
+   2. Gradient Descent in Action
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deriving-cost-function">
+     2.1. Deriving Cost Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-descent-steps">
+     2.2. Gradient Descent Steps
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-1">
+       2.2.1. Step 1
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-2">
+       2.2.2. Step 2
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-3">
+       2.2.3. Step 3
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-4">
+       2.2.4. Step 4
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-5">
+       2.2.5. Step 5
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-6">
+       2.2.6. Step 6
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-7">
+       2.2.7. Step 7
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-8">
+       2.2.8. Step 8
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-9">
+       2.2.9. Step 9
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-10">
+       2.2.10. Step 10
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-11">
+       2.2.11. Step 11
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-12">
+       2.2.12. Step 12
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-13">
+       2.2.13. Step 13
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-14">
+       2.2.14. Step 14
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-15">
+       2.2.15. Step 15
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#different-initialization">
+     2.3. Different Initialization
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       2.3.1. Step 1
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       2.3.2. Step 2
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       2.3.3. Step 3
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       2.3.4. Step 4
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       2.3.5. Step 5
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       2.3.6. Step 6
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       2.3.7. Step 7
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       2.3.8. Step 8
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id9">
+       2.3.9. Step 9
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-10-step-15">
+       2.3.10. Step 10 - Step 15
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Gradient Descent</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-libraries-data">
+   1. Required Libraries &amp; Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-descent-in-action">
+   2. Gradient Descent in Action
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deriving-cost-function">
+     2.1. Deriving Cost Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-descent-steps">
+     2.2. Gradient Descent Steps
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-1">
+       2.2.1. Step 1
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-2">
+       2.2.2. Step 2
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-3">
+       2.2.3. Step 3
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-4">
+       2.2.4. Step 4
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-5">
+       2.2.5. Step 5
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-6">
+       2.2.6. Step 6
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-7">
+       2.2.7. Step 7
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-8">
+       2.2.8. Step 8
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-9">
+       2.2.9. Step 9
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-10">
+       2.2.10. Step 10
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-11">
+       2.2.11. Step 11
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-12">
+       2.2.12. Step 12
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-13">
+       2.2.13. Step 13
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-14">
+       2.2.14. Step 14
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-15">
+       2.2.15. Step 15
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#different-initialization">
+     2.3. Different Initialization
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       2.3.1. Step 1
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       2.3.2. Step 2
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       2.3.3. Step 3
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       2.3.4. Step 4
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       2.3.5. Step 5
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       2.3.6. Step 6
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       2.3.7. Step 7
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       2.3.8. Step 8
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id9">
+       2.3.9. Step 9
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#step-10-step-15">
+       2.3.10. Step 10 - Step 15
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="gradient-descent">
+<span id="chapter3-part3"></span><h1>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>This is a supplement material for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book.</p></li>
+<li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
+<li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
+</ul>
+<p>In the <a class="reference external" href="https://code.themlsbook.com/book/chapter3/cost_function">previous section</a> we explored how to build a cost function in python. In this section, we will go further and explore each step of the gradient descent algorithm.</p>
+<p>As a reminer, I’m leaving here our hypothetical dataset (Table 3.1) of six apartments located in the center of Amsterdam along with their prices (in 10,000 EUR) and floor areas (in square meters).</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>area (<span class="math notranslate nohighlight">\(m^2\)</span>)</p></th>
+<th class="head"><p>price (in €10,000)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>31</p></td>
+</tr>
+<tr class="row-odd"><td><p>46</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-even"><td><p>60</p></td>
+<td><p>80</p></td>
+</tr>
+<tr class="row-odd"><td><p>65</p></td>
+<td><p>49</p></td>
+</tr>
+<tr class="row-even"><td><p>77</p></td>
+<td><p>70</p></td>
+</tr>
+<tr class="row-odd"><td><p>95</p></td>
+<td><p>118</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="required-libraries-data">
+<h2>1. Required Libraries &amp; Data<a class="headerlink" href="#required-libraries-data" title="Permalink to this headline">¶</a></h2>
+<p>Before we start, we need to import few libraries that we will use in this jupyterbook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sym</span> <span class="c1">#to take derivatives of functions</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> <span class="c1">#to build graphs</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1">#to work with numbers</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39; #to make sharper and prettier plots
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next step is to re-create our hypothetical dataset that we’ve been working with.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">30</span><span class="p">],</span> <span class="p">[</span><span class="mi">46</span><span class="p">],</span> <span class="p">[</span><span class="mi">60</span><span class="p">],</span> <span class="p">[</span><span class="mi">65</span><span class="p">],</span> <span class="p">[</span><span class="mi">77</span><span class="p">],</span> <span class="p">[</span><span class="mi">95</span><span class="p">]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">118</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="gradient-descent-in-action">
+<h2>2. Gradient Descent in Action<a class="headerlink" href="#gradient-descent-in-action" title="Permalink to this headline">¶</a></h2>
+<p>Let’s now see the gradient descent is action. But before we go into that, I’d like to recall how the fitted regression looks like - in other words, what regression the gradient needs to obtain in the end of its procedures.</p>
+<p>In previous sections we understood that the function of the fitted regression is <span class="math notranslate nohighlight">\(f(x) = -18 + 1.3*x\)</span>, let’s go ahead and plot this function using <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> library.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="c1">#plotting training dataset</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;training data&#39;</span><span class="p">)</span>
+
+<span class="c1">#plotting the fitted regression</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">18</span> <span class="o">+</span> <span class="mf">1.3</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;y = </span><span class="si">{}</span><span class="s1"> + </span><span class="si">{}</span><span class="s1"> x&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">-</span><span class="mi">18</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">))</span>
+
+<span class="c1">#showing legend and setting the size of the graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">110</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 110.0)
+</pre></div>
+</div>
+<img alt="../_images/gradient_descent_5_1.png" src="../_images/gradient_descent_5_1.png" />
+</div>
+</div>
+<p>Ok, so the gradient descent needs to obtain identical regression as the one shown above. Visual representation is a nice thing, but we can also quantify the goodness of fit of this regression. Let’s calculate its Sum of Squared Residuals, or SSR, once again.</p>
+<blockquote>
+<div><p>If you need a more detailed overview of how SSR is calculated, go to a <a class="reference external" href="https://code.themlsbook.com/book/chapter3/cost_function">previous section</a>.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#preparing empty list for predicted values</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1">#simple loop to calculate each value predicted by the function, y_pred</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+    <span class="n">y_pred</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="mi">18</span> <span class="o">+</span> <span class="mf">1.3</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[array([21.]), array([41.8]), array([60.]), array([66.5]), array([82.1]), array([105.5])]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#preparing empty list for residuals</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1">#simple loop to calculate each redisual, r</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[array([100.]), array([139.24]), array([400.]), array([306.25]), array([146.41]), array([156.25])]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#sum all the residuals </span>
+<span class="n">ssr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ssr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1248.1500000000003
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="deriving-cost-function">
+<h3>2.1. Deriving Cost Function<a class="headerlink" href="#deriving-cost-function" title="Permalink to this headline">¶</a></h3>
+<p>From previous sections we already know our cost function <span class="math notranslate nohighlight">\(J(a)\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(
+\begin{equation}
+\begin{split}
+    J(a) &amp;= \sum\Big(y_i - (ax_i-18)\Big)^2 \\
+    &amp;= \Big(31-(a*30-18)\Big)^2+\Big(30-(a*46-18)\Big)^2+\Big(80-(a*60-18)\Big)^2+\\
+    &amp;+\Big(49-(a*65-18)\Big)^2+\Big(70-(a*77-18)\Big)^2+\Big(118-(a*95-18)\Big)^2
+\end{split}
+\end{equation}
+\)</span></p>
+<p>Let’s now take the derivative of this function with the respect to parameter <span class="math notranslate nohighlight">\(a\)</span>. In python, you can simply derive any function using a special library <code class="docutils literal notranslate"><span class="pre">sympy</span></code> that we’ve already installed in the begining of this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculating a derivative</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">sym</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="mi">31</span><span class="o">-</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="mi">30</span><span class="o">-</span><span class="mi">18</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="mi">30</span><span class="o">-</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="mi">46</span><span class="o">-</span><span class="mi">18</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="mi">80</span><span class="o">-</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="mi">60</span><span class="o">-</span><span class="mi">18</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="mi">49</span><span class="o">-</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="mi">65</span><span class="o">-</span><span class="mi">18</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="mi">70</span><span class="o">-</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="mi">77</span><span class="o">-</span><span class="mi">18</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="mi">118</span><span class="o">-</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="mi">95</span><span class="o">-</span><span class="mi">18</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">sym</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle 51590 a - 67218\]</div>
+</div>
+</div>
+<!-- 
+
+
+$
+\begin{equation}
+\begin{split}
+    \underbrace{\frac{\partial}{\partial \ a} \ J(a)}_\text{slope} &=\underbrace{\frac{\partial}{\partial \ a}\Big(31-(a*30-18)\Big)^2}_\text{2*30*(31-(a*30-18))*(-1)}+\frac{\partial}{\partial \ a}\Big(30-(a*46-18)\Big)^2+\frac{\partial}{\partial \ a}\Big(80-(a*60-18)\Big)^2+\\
+    &+\frac{\partial}{\partial \ a}\Big(49-(a*65-18)\Big)^2+\frac{\partial}{\partial \ a}\Big(70-(a*77-18)\Big)^2+\frac{\partial}{\partial \ a}\Big(118-(a*95-18)\Big)^2
+\end{split}
+\end{equation}
+$
+
+Using a chain rule for each term, we will get this equation: 
+
+$
+\begin{equation}
+\begin{split}
+    \frac{\partial}{\partial \ a} \ J(a) &=(-2*30)\Big(31-(a*30-18)\Big)+(-2*46)\Big(30-(a*46-18)\Big)+(-2*60)\Big(80-(a*60-18)\Big)+\\
+    &+(-2*65)\Big(49-(a*65-18)\Big)+(-2*77)\Big(70-(a*77-18)\Big)+(-2*95)\Big(118-(a*95-18)\Big)
+\end{split}
+\end{equation}
+$
+ -->
+<p>Now that we have the derivative, gradient descent will use it to find where the Sum of Squared Residuals is the lowest.</p>
+</div>
+<div class="section" id="gradient-descent-steps">
+<h3>2.2. Gradient Descent Steps<a class="headerlink" href="#gradient-descent-steps" title="Permalink to this headline">¶</a></h3>
+<p>Because the gradient descent does not know the true value of <span class="math notranslate nohighlight">\(a\)</span> that would minimize <span class="math notranslate nohighlight">\(J(a)\)</span> (which is <span class="math notranslate nohighlight">\(a=1.3\)</span>), it will start by setting <span class="math notranslate nohighlight">\(a=0\)</span>.</p>
+<div class="section" id="step-1">
+<h4>2.2.1. Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline">¶</a></h4>
+<p>First step is to plug <span class="math notranslate nohighlight">\(a=0\)</span> into the derivative:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a</span><span class="o">-</span><span class="mi">67218</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -67218
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thus, when <span class="math notranslate nohighlight">\(a=0\)</span>, the slope of the curve = -67218 (which is identical to what we’ve received in the <span class="xref myst">Machine Learning Simplified</span> book).</p>
+<p>Gradient descent use step size to get to the minimum point. Gradient descent determines the <strong>Step Size</strong> by multiplying the slope <span class="math notranslate nohighlight">\(a\)</span> by a small number called the learning rate <span class="math notranslate nohighlight">\(l\)</span>.</p>
+<p>Just like in the Machine Learning Simplified book, let’s take <span class="math notranslate nohighlight">\(l=0.00001\)</span> and calculate the Step Size:</p>
+<p><span class="math notranslate nohighlight">\(
+\begin{equation}
+    \begin{split}
+        Step \ Size &amp;= J(a) * l \\
+        &amp;=(-67218)*0.00001
+    \end{split}
+\end{equation}
+\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#setting the learning rate</span>
+<span class="n">l</span> <span class="o">=</span> <span class="mf">0.00001</span>
+
+<span class="c1">#calculating step size</span>
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="n">step_size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.67218
+</pre></div>
+</div>
+</div>
+</div>
+<p>And then we update <span class="math notranslate nohighlight">\(a\)</span>:
+<span class="math notranslate nohighlight">\(
+\begin{equation}
+    \begin{split}
+        a_{new} &amp;= a - Step \ Size \\
+        &amp;=0-(-0.67218)=0.67218
+    \end{split}
+\end{equation}
+\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 1, a = &#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 1, a =  0
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first iteration is done. Let’s move forward.</p>
+</div>
+<div class="section" id="step-2">
+<h4>2.2.2. Step 2<a class="headerlink" href="#step-2" title="Permalink to this headline">¶</a></h4>
+<p>Following the same logic, we now use the new coefficient <span class="math notranslate nohighlight">\(a\)</span> to calculate new  derivative:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a1</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -32540.2338
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.3254
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a2</span> <span class="o">=</span> <span class="n">a1</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 2, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 2, a =  0.99758
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-3">
+<h4>2.2.3. Step 3<a class="headerlink" href="#step-3" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a2</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -15752.7272
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.15753
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a3</span> <span class="o">=</span> <span class="n">a2</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 3, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 3, a =  1.15511
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-4">
+<h4>2.2.4. Step 4<a class="headerlink" href="#step-4" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a3</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -7625.8952
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.07626
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a4</span> <span class="o">=</span> <span class="n">a3</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 4, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 4, a =  1.23137
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-5">
+<h4>2.2.5. Step 5<a class="headerlink" href="#step-5" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a4</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -3691.6959
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.03692
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a5</span> <span class="o">=</span> <span class="n">a4</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 5, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 5, a =  1.26829
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-6">
+<h4>2.2.6. Step 6<a class="headerlink" href="#step-6" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a5</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -1787.15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.01787
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a6</span> <span class="o">=</span> <span class="n">a5</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 6, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 6, a =  1.28616
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-7">
+<h4>2.2.7. Step 7<a class="headerlink" href="#step-7" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a6</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -865.1593
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.00865
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a7</span> <span class="o">=</span> <span class="n">a6</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 7, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 7, a =  1.29481
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-8">
+<h4>2.2.8. Step 8<a class="headerlink" href="#step-8" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a7</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -418.8236
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.00419
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a8</span> <span class="o">=</span> <span class="n">a7</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 8, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 8, a =  1.299
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-9">
+<h4>2.2.9. Step 9<a class="headerlink" href="#step-9" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a8</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -202.7525
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.00203
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a9</span> <span class="o">=</span> <span class="n">a8</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 9, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 9, a =  1.30102
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-10">
+<h4>2.2.10. Step 10<a class="headerlink" href="#step-10" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a9</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -98.1525
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.00098
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a10</span> <span class="o">=</span> <span class="n">a9</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 10, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 10, a =  1.30201
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-11">
+<h4>2.2.11. Step 11<a class="headerlink" href="#step-11" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a10</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -47.5156
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.00048
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a11</span> <span class="o">=</span> <span class="n">a10</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 11, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a11</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 11, a =  1.30248
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-12">
+<h4>2.2.12. Step 12<a class="headerlink" href="#step-12" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a11</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -23.0023
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.00023
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a12</span> <span class="o">=</span> <span class="n">a11</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 12, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 12, a =  1.30271
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-13">
+<h4>2.2.13. Step 13<a class="headerlink" href="#step-13" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a12</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -11.1354
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -0.00011
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a13</span> <span class="o">=</span> <span class="n">a12</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 13, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 13, a =  1.30282
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-14">
+<h4>2.2.14. Step 14<a class="headerlink" href="#step-14" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a13</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -5.3907
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -5e-05
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a14</span> <span class="o">=</span> <span class="n">a13</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 14, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 14, a =  1.30288
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-15">
+<h4>2.2.15. Step 15<a class="headerlink" href="#step-15" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a14</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  -2.6096
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  -3e-05
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a15</span> <span class="o">=</span> <span class="n">a14</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 15, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 15, a =  1.3029
+</pre></div>
+</div>
+</div>
+</div>
+<p>Eventually, the gradient descent obtained the proper value for the parameter <span class="math notranslate nohighlight">\(a =  1.3029\)</span>.</p>
+</div>
+</div>
+<div class="section" id="different-initialization">
+<h3>2.3. Different Initialization<a class="headerlink" href="#different-initialization" title="Permalink to this headline">¶</a></h3>
+<p>The gradient succeeded at finding the proper value for <span class="math notranslate nohighlight">\(a\)</span>. Let’s now see what will happen if the gradient starts at a different value for <span class="math notranslate nohighlight">\(a\)</span>, not <span class="math notranslate nohighlight">\(a=0\)</span>. For instance, let’s take a random value of <span class="math notranslate nohighlight">\(a=2.23\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="mf">0.00001</span> <span class="c1">#same learning rate</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">2.23</span> <span class="c1">#different value for a</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h4>2.3.1. Step 1<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  47827.7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="n">step_size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step Size =  0.478277
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 1, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>At Step 1, a =  1.75172
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h4>2.3.2. Step 2<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 2</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a1</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a2</span> <span class="o">=</span> <span class="n">a1</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 2, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  23153.3896
+Step Size =  0.23153
+At Step 2, a =  1.52019
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>2.3.3. Step 3<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 3</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a2</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a3</span> <span class="o">=</span> <span class="n">a2</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 3, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  11208.5559
+Step Size =  0.11209
+At Step 3, a =  1.4081
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4>2.3.4. Step 4<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 4</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a3</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a4</span> <span class="o">=</span> <span class="n">a3</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 4, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  5426.0619
+Step Size =  0.05426
+At Step 4, a =  1.35384
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4>2.3.5. Step 5<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 5</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a4</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a5</span> <span class="o">=</span> <span class="n">a4</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 5, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  2626.7566
+Step Size =  0.02627
+At Step 5, a =  1.32758
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h4>2.3.6. Step 6<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 6</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a5</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a6</span> <span class="o">=</span> <span class="n">a5</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 6, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  1271.6129
+Step Size =  0.01272
+At Step 6, a =  1.31486
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h4>2.3.7. Step 7<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 7</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a6</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a7</span> <span class="o">=</span> <span class="n">a6</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 7, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  615.5878
+Step Size =  0.00616
+At Step 7, a =  1.3087
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h4>2.3.8. Step 8<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 8</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a7</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a8</span> <span class="o">=</span> <span class="n">a7</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 8, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  298.006
+Step Size =  0.00298
+At Step 8, a =  1.30572
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h4>2.3.9. Step 9<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 9</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a8</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a9</span> <span class="o">=</span> <span class="n">a8</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 9, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  144.2647
+Step Size =  0.00144
+At Step 9, a =  1.30428
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-10-step-15">
+<h4>2.3.10. Step 10 - Step 15<a class="headerlink" href="#step-10-step-15" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 10</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a9</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a10</span> <span class="o">=</span> <span class="n">a9</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 10, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  69.8386
+Step Size =  0.0007
+At Step 10, a =  1.30358
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 11</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a10</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a11</span> <span class="o">=</span> <span class="n">a10</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 10, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a11</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  33.8088
+Step Size =  0.00034
+At Step 10, a =  1.30324
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 12</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a11</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a12</span> <span class="o">=</span> <span class="n">a11</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 10, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  16.3669
+Step Size =  0.00016
+At Step 10, a =  1.30308
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 13</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a12</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a13</span> <span class="o">=</span> <span class="n">a12</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 10, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  7.9232
+Step Size =  8e-05
+At Step 10, a =  1.303
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 14</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a13</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a14</span> <span class="o">=</span> <span class="n">a13</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 10, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  3.8356
+Step Size =  4e-05
+At Step 10, a =  1.30296
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step 15</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mi">51590</span><span class="o">*</span><span class="n">a14</span><span class="o">-</span><span class="mi">67218</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Derivative = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">l</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Step Size = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">a15</span> <span class="o">=</span> <span class="n">a14</span><span class="o">-</span><span class="n">step_size</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;At Step 10, a = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Derivative =  1.8568
+Step Size =  2e-05
+At Step 10, a =  1.30294
+</pre></div>
+</div>
+</div>
+</div>
+<p>The gradient descent successfully obtained the same proper value for the parameter <span class="math notranslate nohighlight">\(a\)</span>, even though it was initialized with the different value for <span class="math notranslate nohighlight">\(a\)</span> in the beginning.</p>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapter3"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="cost_function.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Cost Function</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../chapter4/basis_expansion.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Basis Expansion</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Andrew Wolf<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
