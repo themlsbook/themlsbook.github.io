@@ -11,7 +11,7 @@ repository:
   branch: master            # Which branch of the repository should be used when creating links (optional)
 
 execute:
-  execute_notebooks           : cache
+  execute_notebooks: force
   timeout: -1
 
 # exclude some content
@@ -23,6 +23,7 @@ html:
   home_page_in_navbar         : true  # Whether to include your home page in the left Navigation Bar
   use_edit_page_button        : true  # Whether to add an "edit this page" button to pages. If `true`, repository information in repository: must be filled in
   use_repository_button       : true  # Whether to add a link to your repository button
+  use_download_button         : true  # Enable the download button in the toolbar
   use_issues_button           : true  # Whether to add an "open an issue" button
 
 # Interact link settings
@@ -34,3 +35,7 @@ sphinx:
     html_js_files:
       - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
       - https://c6.patreon.com/becomePatronButton.bundle.js
+
+# Theme settings to enable light mode by default
+html_theme_options:
+  color_theme: "light"  # Ensure the default theme is light

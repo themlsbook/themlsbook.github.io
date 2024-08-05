@@ -26,7 +26,7 @@ This notebook is a supplement for *Chapter 7. Data Preparation* of **Machine Lea
 Let's import the data and have a look at it:
 
 
-```python
+```{code-cell} ipython3
 import pandas as pd
 
 # Define the data as a dictionary
@@ -48,103 +48,6 @@ df
 
 
 
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Customer ID</th>
-      <th>State</th>
-      <th>City</th>
-      <th>Postal Code</th>
-      <th>Ship Date</th>
-      <th>Purchase ($)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>383</td>
-      <td>Pennsylvania</td>
-      <td>Drexel Hill</td>
-      <td>19026</td>
-      <td>23/08/2020</td>
-      <td>190.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1997</td>
-      <td>Californai</td>
-      <td>Sacramento</td>
-      <td>94229</td>
-      <td>07/03/2020</td>
-      <td>243.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>698</td>
-      <td>California</td>
-      <td>Los Angeles</td>
-      <td>90058</td>
-      <td>14/09/2020</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>333</td>
-      <td>New York</td>
-      <td>Brooklyn</td>
-      <td>11249</td>
-      <td>14-09-2020</td>
-      <td>298.0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>1996</td>
-      <td>Washington</td>
-      <td>None</td>
-      <td>98101</td>
-      <td>19/05/2020</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
 Table above contains a hypothetical dirty dataset of online product orders. This dataset has a number of issues, such as incorrect data, missing data, duplicated data, irrelevant data, and improperly formatted data, that make it impossible to apply ML algorithms right away. This section discusses methods that can be used to clean this data set such that ML algorithms can be applied to it
 
 ## 2. Data Cleaning
@@ -156,128 +59,23 @@ Datasets may contain data that is clearly incorrect, such as spelling or syntax 
 How can we identify incorrect data? One way to check whether a particular column has misspelled values is to look at its set of unique values, which is often much smaller than the set of all values itself.
 
 
-```python
+```{code-cell} ipython3
 df.State.unique()
 ```
-
-
-
-
-    array(['Pennsylvania', 'Californai', 'California', 'Iowa', 'New York',
-           'Washington'], dtype=object)
-
-
 
 We can fix misspelled 'Californai' with the code:
 
 
-```python
+```{code-cell} ipython3
 df['State'] = df['State'].replace('Californai', 'California')
 ```
 
 Revisiting the dataframe, the problem has been fixed.
 
 
-```python
+```{code-cell} ipython3
 df
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Customer ID</th>
-      <th>State</th>
-      <th>City</th>
-      <th>Postal Code</th>
-      <th>Ship Date</th>
-      <th>Purchase ($)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>383</td>
-      <td>Pennsylvania</td>
-      <td>Drexel Hill</td>
-      <td>19026</td>
-      <td>23/08/2020</td>
-      <td>190.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1997</td>
-      <td>California</td>
-      <td>Sacramento</td>
-      <td>94229</td>
-      <td>07/03/2020</td>
-      <td>243.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>698</td>
-      <td>California</td>
-      <td>Los Angeles</td>
-      <td>90058</td>
-      <td>14/09/2020</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>333</td>
-      <td>New York</td>
-      <td>Brooklyn</td>
-      <td>11249</td>
-      <td>14-09-2020</td>
-      <td>298.0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>1996</td>
-      <td>Washington</td>
-      <td>None</td>
-      <td>98101</td>
-      <td>19/05/2020</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 
 
@@ -288,221 +86,24 @@ In some cases, we might have improperly formatted values. For instance, the Ship
 We can fix these inconsistences by using `pd.to_datetime` with `format='mixed'` argument to handle a mixture of date formats dynamically. This can be particularly useful if the dates are not consistently in one format.
 
 
-```python
+```{code-cell} ipython3
 # Convert 'Ship Date' to datetime format (ISO format by default)
 df['Ship Date'] = pd.to_datetime(df['Ship Date'], format='mixed')
 ```
 
 
-```python
+```{code-cell} ipython3
 df
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Customer ID</th>
-      <th>State</th>
-      <th>City</th>
-      <th>Postal Code</th>
-      <th>Ship Date</th>
-      <th>Purchase ($)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>383</td>
-      <td>Pennsylvania</td>
-      <td>Drexel Hill</td>
-      <td>19026</td>
-      <td>2020-08-23</td>
-      <td>190.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1997</td>
-      <td>California</td>
-      <td>Sacramento</td>
-      <td>94229</td>
-      <td>2020-07-03</td>
-      <td>243.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>698</td>
-      <td>California</td>
-      <td>Los Angeles</td>
-      <td>90058</td>
-      <td>2020-09-14</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>2020-02-29</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>2020-02-29</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>333</td>
-      <td>New York</td>
-      <td>Brooklyn</td>
-      <td>11249</td>
-      <td>2020-09-14</td>
-      <td>298.0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>1996</td>
-      <td>Washington</td>
-      <td>None</td>
-      <td>98101</td>
-      <td>2020-05-19</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 Let's format the 'Ship Date' to "dd/mm/yyyy" after conversion
 
 
-```python
+```{code-cell} ipython3
 df['Ship Date'] = df['Ship Date'].dt.strftime('%d/%m/%Y')
 
 df
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Customer ID</th>
-      <th>State</th>
-      <th>City</th>
-      <th>Postal Code</th>
-      <th>Ship Date</th>
-      <th>Purchase ($)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>383</td>
-      <td>Pennsylvania</td>
-      <td>Drexel Hill</td>
-      <td>19026</td>
-      <td>23/08/2020</td>
-      <td>190.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1997</td>
-      <td>California</td>
-      <td>Sacramento</td>
-      <td>94229</td>
-      <td>03/07/2020</td>
-      <td>243.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>698</td>
-      <td>California</td>
-      <td>Los Angeles</td>
-      <td>90058</td>
-      <td>14/09/2020</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>333</td>
-      <td>New York</td>
-      <td>Brooklyn</td>
-      <td>11249</td>
-      <td>14/09/2020</td>
-      <td>298.0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>1996</td>
-      <td>Washington</td>
-      <td>None</td>
-      <td>98101</td>
-      <td>19/05/2020</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
 
 
 ### 2.3. Duplicated Data
@@ -512,102 +113,14 @@ Duplicated data is another common problem that arises in practice. For example, 
 One of the ways to fix this is to use `drop_duplicates()` method in pandas:
 
 
-```python
+```{code-cell} ipython3
 df_cleaned = df.drop_duplicates()
 ```
 
 
-```python
+```{code-cell} ipython3
 df_cleaned
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Customer ID</th>
-      <th>State</th>
-      <th>City</th>
-      <th>Postal Code</th>
-      <th>Ship Date</th>
-      <th>Purchase ($)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>383</td>
-      <td>Pennsylvania</td>
-      <td>Drexel Hill</td>
-      <td>19026</td>
-      <td>23/08/2020</td>
-      <td>190.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1997</td>
-      <td>California</td>
-      <td>Sacramento</td>
-      <td>94229</td>
-      <td>03/07/2020</td>
-      <td>243.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>698</td>
-      <td>California</td>
-      <td>Los Angeles</td>
-      <td>90058</td>
-      <td>14/09/2020</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>333</td>
-      <td>New York</td>
-      <td>Brooklyn</td>
-      <td>11249</td>
-      <td>14/09/2020</td>
-      <td>298.0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>1996</td>
-      <td>Washington</td>
-      <td>None</td>
-      <td>98101</td>
-      <td>19/05/2020</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 
 
@@ -619,7 +132,7 @@ Missing data arises for a variety of reasons. For example, if the data is entere
 A missing value in Purchase column cannot be determined exactly and we need to make an educated guess at its value. For example, to impute a missing product order, we take the median order total.
 
 
-```python
+```{code-cell} ipython3
 # Calculate the median of the 'Purchase ($)' column, excluding NaN values
 median_purchase = df_cleaned['Purchase ($)'].median()
 
@@ -628,113 +141,9 @@ median_purchase = df_cleaned['Purchase ($)'].median()
 df_cleaned['Purchase ($)'].fillna(median_purchase, inplace=True)
 ```
 
-    /var/folders/5y/7zvhsc3x5nx162713kvx9c1m0000gn/T/ipykernel_95810/3282763330.py:6: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
-    The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
-    
-    For example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.
-    
-    
-      df_cleaned['Purchase ($)'].fillna(median_purchase, inplace=True)
-    /var/folders/5y/7zvhsc3x5nx162713kvx9c1m0000gn/T/ipykernel_95810/3282763330.py:6: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      df_cleaned['Purchase ($)'].fillna(median_purchase, inplace=True)
-
-
-
-```python
+```{code-cell} ipython3
 df_cleaned
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Customer ID</th>
-      <th>State</th>
-      <th>City</th>
-      <th>Postal Code</th>
-      <th>Ship Date</th>
-      <th>Purchase ($)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>383</td>
-      <td>Pennsylvania</td>
-      <td>Drexel Hill</td>
-      <td>19026</td>
-      <td>23/08/2020</td>
-      <td>190.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1997</td>
-      <td>California</td>
-      <td>Sacramento</td>
-      <td>94229</td>
-      <td>03/07/2020</td>
-      <td>243.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>698</td>
-      <td>California</td>
-      <td>Los Angeles</td>
-      <td>90058</td>
-      <td>14/09/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>333</td>
-      <td>New York</td>
-      <td>Brooklyn</td>
-      <td>11249</td>
-      <td>14/09/2020</td>
-      <td>298.0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>1996</td>
-      <td>Washington</td>
-      <td>None</td>
-      <td>98101</td>
-      <td>19/05/2020</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
 
 
 #### 2.4.2. Missing Value in City Column
@@ -748,7 +157,7 @@ To fill in missing values for the 'City' column using the zip code when you have
 
 
 
-```python
+```{code-cell} ipython3
 # Mapping table that relates Postal Codes to Cities
 zip_to_city = {
     "Postal Code": [94229, 50501, 98101, 11249, 90058, 19026],
@@ -759,178 +168,20 @@ df_mapping = pd.DataFrame(zip_to_city)
 ```
 
 
-```python
+```{code-cell} ipython3
 df_mapping
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Postal Code</th>
-      <th>City</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>94229</td>
-      <td>Sacramento</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>50501</td>
-      <td>Fort Dodge</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>98101</td>
-      <td>Seattle</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>11249</td>
-      <td>Brooklyn</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>90058</td>
-      <td>Los Angeles</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>19026</td>
-      <td>Drexel Hill</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
+```{code-cell} ipython3
 # Merge the main DataFrame with the mapping DataFrame on 'Postal Code'
 df_merged = df_cleaned.merge(df_mapping, on="Postal Code", how="left", suffixes=('', '_mapped'))
 ```
 
 
-```python
+```{code-cell} ipython3
 df_merged
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Customer ID</th>
-      <th>State</th>
-      <th>City</th>
-      <th>Postal Code</th>
-      <th>Ship Date</th>
-      <th>Purchase ($)</th>
-      <th>City_mapped</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>383</td>
-      <td>Pennsylvania</td>
-      <td>Drexel Hill</td>
-      <td>19026</td>
-      <td>23/08/2020</td>
-      <td>190.0</td>
-      <td>Drexel Hill</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1997</td>
-      <td>California</td>
-      <td>Sacramento</td>
-      <td>94229</td>
-      <td>03/07/2020</td>
-      <td>243.0</td>
-      <td>Sacramento</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>698</td>
-      <td>California</td>
-      <td>Los Angeles</td>
-      <td>90058</td>
-      <td>14/09/2020</td>
-      <td>193.0</td>
-      <td>Los Angeles</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1314</td>
-      <td>Iowa</td>
-      <td>Fort Dodge</td>
-      <td>50501</td>
-      <td>29/02/2020</td>
-      <td>193.0</td>
-      <td>Fort Dodge</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>333</td>
-      <td>New York</td>
-      <td>Brooklyn</td>
-      <td>11249</td>
-      <td>14/09/2020</td>
-      <td>298.0</td>
-      <td>Brooklyn</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1996</td>
-      <td>Washington</td>
-      <td>NaN</td>
-      <td>98101</td>
-      <td>19/05/2020</td>
-      <td>1.0</td>
-      <td>Seattle</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
 
 
 ### 2.5. Outliers
@@ -944,20 +195,17 @@ There are no hard and fast rules about how to classify a point as an outlier and
 How can we use statistical metrics to determine if a data point is an outlier? The simplest way is to identify if a datapoint is too far away from the average value.
 
 
-```python
+```{code-cell} ipython3
 mean_value = df_cleaned['Purchase ($)'].mean()
 std_dev = df_cleaned['Purchase ($)'].std()
 
 print(f"Mean = {mean_value}, Standard Deviation = {std_dev}")
 ```
 
-    Mean = 186.33333333333334, Standard Deviation = 100.13124720419029
-
-
 Suppose we set a range of acceptable values of k = 3 standard deviations. Then: 
 
 
-```python
+```{code-cell} ipython3
 # Find outliers based on the defined threshold
 k=3
 
@@ -966,8 +214,5 @@ upper_bound = mean_value + k * std_dev
 
 print(f"Anything below {lower_bound} and above {upper_bound} is considered as an outlier.")
 ```
-
-    Anything below -114.06040827923752 and above 486.7270749459042 is considered as an outlier.
-
 
 But since we cannot have a purchase with a negative sum, outlier would be above 486.72. In this data set, there are no outliers present.

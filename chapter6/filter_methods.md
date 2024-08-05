@@ -161,7 +161,7 @@ f_values
 
 ```{code-cell} ipython3
 # Importing required libraries
-! pip install ReliefF
+# ! pip install ReliefF
 from ReliefF import ReliefF
 ```
 
@@ -203,7 +203,20 @@ relief_features
 
 ```{code-cell} ipython3
 #Correlation with output variable
-cor = data.corr()
+cor = data[['wheelbase', 
+          'carlength', 
+          'carwidth', 
+          'carheight', 
+          'curbweight', 
+          'enginesize', 
+          'boreratio', 
+          'stroke',
+          'compressionratio', 
+          'horsepower', 
+          'peakrpm', 
+          'citympg', 
+          'highwaympg',
+          'price']].corr()
 cor_target = abs(cor['price'])
 
 #Selecting highly correlated features > 0.8
@@ -216,6 +229,4 @@ relevant_features
 
 ```{code-cell} ipython3
 print('The features selected by chi-square are: \n \n {} \n \n \n The features selected by f_values are: \n \n {} \n \n \n The features selected by ReliefF are: \n \n {} \n \n \n The features selected by Correlation-based feature selection method are: \n \n {}'.format(chi_features, f_values, relief_features, relevant_features))
-
-
 ```
