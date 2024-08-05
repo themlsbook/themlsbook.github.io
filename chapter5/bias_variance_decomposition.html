@@ -1,443 +1,457 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Bias-variance Decomposition &#8212; The Machine Learning Simplified book</title>
-    
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
-
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter5/bias_variance_decomposition';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Cross-validation Methods" href="validation_methods.html" />
     <link rel="prev" title="Regularization" href="../chapter4/regularization.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/mls_logo.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">The Machine Learning Simplified book</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../index.html">
-   About
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 2 - Overview of Supervised Learning
- </span>
-</p>
+    
+    
+    <img src="../_static/mls_logo.png" class="logo__image only-light" alt="The Machine Learning Simplified book - Home"/>
+    <script>document.write(`<img src="../_static/mls_logo.png" class="logo__image only-dark" alt="The Machine Learning Simplified book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    About
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 2 - Overview of Supervised Learning</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter2/knn.html">
-   K-Nearest Neighbors (KNN) Classifier
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/knn.html">K-Nearest Neighbors (KNN) Classifier</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 3 - Model Learning
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 3 - Model Learning</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter3/linear_regression.html">
-   Linear Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter3/cost_function.html">
-   Cost Function
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter3/gradient_descent.html">
-   Gradient Descent
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/linear_regression.html">Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/cost_function.html">Cost Function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/gradient_descent.html">Gradient Descent</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 4 - Basis Expansion &amp; Regularization
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 4 - Basis Expansion &amp; Regularization</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter4/basis_expansion.html">
-   Basis Expansion
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter4/regularization.html">
-   Regularization
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/basis_expansion.html">Basis Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/regularization.html">Regularization</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 5 - Model Selection
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 5 - Model Selection</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Bias-variance Decomposition
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="validation_methods.html">
-   Cross-validation Methods
-  </a>
- </li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Bias-variance Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation_methods.html">Cross-validation Methods</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 6 - Feature Selection
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 6 - Feature Selection</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter6/filter_methods.html">
-   Filter Methods
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter6/search_methods.html">
-   Search Methods
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/filter_methods.html">Filter Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/search_methods.html">Search Methods</a></li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        <a class="dropdown-buttons"
-            href="../_sources/chapter5/bias_variance_decomposition.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapter5/bias_variance_decomposition.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+</nav></div>
     </div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-            <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/5x12/themlsbook"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter5/bias_variance_decomposition.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter5/bias_variance_decomposition.md"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
     </div>
-</div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+<div class="article-header-buttons">
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
 
-            <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/5x12/themlsbook/master?urlpath=tree/jupyter_book/chapter5/bias_variance_decomposition.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
 
-        </div>
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#required-libraries-functions">
-   1. Required Libraries &amp; Functions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#synthetic-data">
-   2. Synthetic Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#define-synthetic-data-and-target">
-     2.1. Define Synthetic Data and Target
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#plot-two-datasets">
-     2.2. Plot two datasets
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fit-polynomials-of-different-degrees-to-two-datasets">
-     2.3. Fit polynomials of different degrees to two datasets
-    </a>
-   </li>
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter5/bias_variance_decomposition.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter5/bias_variance_decomposition.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#variance-computation">
-   3. Variance Computation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bias-comptuation">
-   4. Bias Comptuation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#total-epe">
-   5. Total EPE
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empirical-test-error">
-   6. Empirical Test Error
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#conclusion">
-   7. Conclusion
-  </a>
- </li>
-</ul>
+</div>
 
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter5/bias_variance_decomposition.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Bias-variance Decomposition</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-libraries-functions">1. Required Libraries &amp; Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#synthetic-data">2. Synthetic Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-synthetic-data-and-target">2.1. Define Synthetic Data and Target</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-two-datasets">2.2. Plot two datasets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-polynomials-of-different-degrees-to-two-datasets">2.3. Fit polynomials of different degrees to two datasets</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-computation">3. Variance Computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-comptuation">4. Bias Comptuation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#total-epe">5. Total EPE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empirical-test-error">6. Empirical Test Error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">7. Conclusion</a></li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Bias-variance Decomposition</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#required-libraries-functions">
-   1. Required Libraries &amp; Functions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#synthetic-data">
-   2. Synthetic Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#define-synthetic-data-and-target">
-     2.1. Define Synthetic Data and Target
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#plot-two-datasets">
-     2.2. Plot two datasets
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fit-polynomials-of-different-degrees-to-two-datasets">
-     2.3. Fit polynomials of different degrees to two datasets
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#variance-computation">
-   3. Variance Computation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bias-comptuation">
-   4. Bias Comptuation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#total-epe">
-   5. Total EPE
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empirical-test-error">
-   6. Empirical Test Error
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#conclusion">
-   7. Conclusion
-  </a>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
+              
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="bias-variance-decomposition">
-<span id="chapter5-part1"></span><h1>Bias-variance Decomposition<a class="headerlink" href="#bias-variance-decomposition" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="bias-variance-decomposition">
+<span id="chapter5-part1"></span><h1>Bias-variance Decomposition<a class="headerlink" href="#bias-variance-decomposition" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>This is a supplement material for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book.</p></li>
 <li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
 <li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
 </ul>
-<div class="section" id="required-libraries-functions">
-<h2>1. Required Libraries &amp; Functions<a class="headerlink" href="#required-libraries-functions" title="Permalink to this headline">¶</a></h2>
+<section id="required-libraries-functions">
+<h2>1. Required Libraries &amp; Functions<a class="headerlink" href="#required-libraries-functions" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -450,11 +464,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="synthetic-data">
-<h2>2. Synthetic Data<a class="headerlink" href="#synthetic-data" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="define-synthetic-data-and-target">
-<h3>2.1. Define Synthetic Data and Target<a class="headerlink" href="#define-synthetic-data-and-target" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="synthetic-data">
+<h2>2. Synthetic Data<a class="headerlink" href="#synthetic-data" title="Link to this heading">#</a></h2>
+<section id="define-synthetic-data-and-target">
+<h3>2.1. Define Synthetic Data and Target<a class="headerlink" href="#define-synthetic-data-and-target" title="Link to this heading">#</a></h3>
 <p>Our synthetic problem defines:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(f\)</span> is the true function.  <span class="math notranslate nohighlight">\(f\)</span> is usually not known, but for our synthetic example it is known and set to:
@@ -493,9 +507,9 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="plot-two-datasets">
-<h3>2.2. Plot two datasets<a class="headerlink" href="#plot-two-datasets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="plot-two-datasets">
+<h3>2.2. Plot two datasets<a class="headerlink" href="#plot-two-datasets" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>We draw a random sample of two datasets of size <span class="math notranslate nohighlight">\(N\)</span></p></li>
 <li><p>Plot them in different colors</p></li>
@@ -515,7 +529,7 @@ $<span class="math notranslate nohighlight">\(
         <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">plot_two_datasets</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span><span class="n">y2</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Plot two datasets on the same axes and set appropriate limits.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Plot two datasets on the same axes and set appropriate limits.&#39;&#39;&#39;</span>
     <span class="n">plt_new_fig</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s1">&#39;og&#39;</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s1">&#39;ok&#39;</span><span class="p">)</span>
 
@@ -527,12 +541,12 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bias_variance_decomposition_5_0.png" src="../_images/bias_variance_decomposition_5_0.png" />
+<a class="reference internal image-reference" href="../_images/6efbcac25b06c80cc19b026c65edffbf5fb1c77ec8dc5af1cbe700fb78911c3e.png"><img alt="../_images/6efbcac25b06c80cc19b026c65edffbf5fb1c77ec8dc5af1cbe700fb78911c3e.png" src="../_images/6efbcac25b06c80cc19b026c65edffbf5fb1c77ec8dc5af1cbe700fb78911c3e.png" style="width: 559px; height: 418px;" /></a>
 </div>
 </div>
-</div>
-<div class="section" id="fit-polynomials-of-different-degrees-to-two-datasets">
-<h3>2.3. Fit polynomials of different degrees to two datasets<a class="headerlink" href="#fit-polynomials-of-different-degrees-to-two-datasets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="fit-polynomials-of-different-degrees-to-two-datasets">
+<h3>2.3. Fit polynomials of different degrees to two datasets<a class="headerlink" href="#fit-polynomials-of-different-degrees-to-two-datasets" title="Link to this heading">#</a></h3>
 <p>Note how the fit of the higher-order polynomial differs more (visually) from each other than the lower-order polynomial does.</p>
 <p>This will visually help us understand the variance – how much the randomness in the dataset affects the learned function <span class="math notranslate nohighlight">\(\hat{f}\)</span>.  (More detailed calculation of variance to follow)</p>
 <div class="cell docutils container">
@@ -568,16 +582,16 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bias_variance_decomposition_8_0.png" src="../_images/bias_variance_decomposition_8_0.png" />
-<img alt="../_images/bias_variance_decomposition_8_1.png" src="../_images/bias_variance_decomposition_8_1.png" />
-<img alt="../_images/bias_variance_decomposition_8_2.png" src="../_images/bias_variance_decomposition_8_2.png" />
-<img alt="../_images/bias_variance_decomposition_8_3.png" src="../_images/bias_variance_decomposition_8_3.png" />
+<a class="reference internal image-reference" href="../_images/9bdee5498e57584f9f0d9298ec281198dea84ed92bc830fc38112e49bebc082e.png"><img alt="../_images/9bdee5498e57584f9f0d9298ec281198dea84ed92bc830fc38112e49bebc082e.png" src="../_images/9bdee5498e57584f9f0d9298ec281198dea84ed92bc830fc38112e49bebc082e.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/e86b013f419cf7371bb66162e3892f2d75dada70546dd3558af8bd1b79b72a11.png"><img alt="../_images/e86b013f419cf7371bb66162e3892f2d75dada70546dd3558af8bd1b79b72a11.png" src="../_images/e86b013f419cf7371bb66162e3892f2d75dada70546dd3558af8bd1b79b72a11.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/f6e9e33fd757045793e95c10d58e29a3a7564ce3a7fe65ed93477506c7d1429a.png"><img alt="../_images/f6e9e33fd757045793e95c10d58e29a3a7564ce3a7fe65ed93477506c7d1429a.png" src="../_images/f6e9e33fd757045793e95c10d58e29a3a7564ce3a7fe65ed93477506c7d1429a.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/03f1e620a964566cedd96ee52b056e4d3c02b74b0f653e979951a2aa1971acee.png"><img alt="../_images/03f1e620a964566cedd96ee52b056e4d3c02b74b0f653e979951a2aa1971acee.png" src="../_images/03f1e620a964566cedd96ee52b056e4d3c02b74b0f653e979951a2aa1971acee.png" style="width: 559px; height: 434px;" /></a>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="variance-computation">
-<h2>3. Variance Computation<a class="headerlink" href="#variance-computation" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="variance-computation">
+<h2>3. Variance Computation<a class="headerlink" href="#variance-computation" title="Link to this heading">#</a></h2>
 <!-- ### 3.1. $E[\hat{f}]$ computation
 
 We then approximate the expected value of the fit as the average of the fit over $M$ random dataset:
@@ -593,7 +607,7 @@ $E_{\mathcal{D}}[\hat{f}(x)]$, for polynomials of each degree. -->
 <!-- Note: the discrete averaging procedure is used as an approximation to the true expectation which is not easy to compute analytically. --><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">random_fits</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">num_fits</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Generate random datasets and fit polynomial functions to data.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Generate random datasets and fit polynomial functions to data.&#39;&#39;&#39;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">fits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_fits</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_fits</span><span class="p">):</span>
@@ -602,7 +616,7 @@ $E_{\mathcal{D}}[\hat{f}(x)]$, for polynomials of each degree. -->
     <span class="k">return</span> <span class="n">fits</span>
 
 <span class="k">def</span> <span class="nf">compute_E_fhat</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">num_fits</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Approximate the average fit E[\hat{f}] by averaging over num_fits fits to random datasets.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Approximate the average fit E[\hat{f}] by averaging over num_fits fits to random datasets.&#39;&#39;&#39;</span>
     <span class="n">fits</span> <span class="o">=</span> <span class="n">random_fits</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">num_fits</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 
@@ -635,15 +649,15 @@ $E_{\mathcal{D}}[\hat{f}(x)]$, for polynomials of each degree. -->
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bias_variance_decomposition_11_0.png" src="../_images/bias_variance_decomposition_11_0.png" />
-<img alt="../_images/bias_variance_decomposition_11_1.png" src="../_images/bias_variance_decomposition_11_1.png" />
-<img alt="../_images/bias_variance_decomposition_11_2.png" src="../_images/bias_variance_decomposition_11_2.png" />
-<img alt="../_images/bias_variance_decomposition_11_3.png" src="../_images/bias_variance_decomposition_11_3.png" />
+<a class="reference internal image-reference" href="../_images/184798b64a97ab56d6fd9480a7ed7c5e67743d950e8c16b3a12b760328bc3eb6.png"><img alt="../_images/184798b64a97ab56d6fd9480a7ed7c5e67743d950e8c16b3a12b760328bc3eb6.png" src="../_images/184798b64a97ab56d6fd9480a7ed7c5e67743d950e8c16b3a12b760328bc3eb6.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/df3a9310f3bf6fea5704441d758842eedbfb89f46bdab27c8190ccabdb350ac5.png"><img alt="../_images/df3a9310f3bf6fea5704441d758842eedbfb89f46bdab27c8190ccabdb350ac5.png" src="../_images/df3a9310f3bf6fea5704441d758842eedbfb89f46bdab27c8190ccabdb350ac5.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/05d27eefcbed2941fc5d7fcd5c01e7fb8a859157553f684a77b064b01c41e0f7.png"><img alt="../_images/05d27eefcbed2941fc5d7fcd5c01e7fb8a859157553f684a77b064b01c41e0f7.png" src="../_images/05d27eefcbed2941fc5d7fcd5c01e7fb8a859157553f684a77b064b01c41e0f7.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/5c1c24a7b111c7a34d046789c8c970dfb12e90afd10286d3357de88a0fbfa6d0.png"><img alt="../_images/5c1c24a7b111c7a34d046789c8c970dfb12e90afd10286d3357de88a0fbfa6d0.png" src="../_images/5c1c24a7b111c7a34d046789c8c970dfb12e90afd10286d3357de88a0fbfa6d0.png" style="width: 559px; height: 434px;" /></a>
 </div>
 </div>
-</div>
-<div class="section" id="bias-comptuation">
-<h2>4. Bias Comptuation<a class="headerlink" href="#bias-comptuation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="bias-comptuation">
+<h2>4. Bias Comptuation<a class="headerlink" href="#bias-comptuation" title="Link to this heading">#</a></h2>
 <p>The below plots show the expected fit <span class="math notranslate nohighlight">\(E_{\mathcal{D}}[\hat{f}]\)</span> against the true function <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <p>We also compute the squared bias
 $<span class="math notranslate nohighlight">\(
@@ -681,15 +695,15 @@ where we break up the line \)</span>[0, 2 \pi]<span class="math notranslate nohi
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bias_variance_decomposition_14_0.png" src="../_images/bias_variance_decomposition_14_0.png" />
-<img alt="../_images/bias_variance_decomposition_14_1.png" src="../_images/bias_variance_decomposition_14_1.png" />
-<img alt="../_images/bias_variance_decomposition_14_2.png" src="../_images/bias_variance_decomposition_14_2.png" />
-<img alt="../_images/bias_variance_decomposition_14_3.png" src="../_images/bias_variance_decomposition_14_3.png" />
+<a class="reference internal image-reference" href="../_images/82aca9c414b7a077019aaa9438251977bac1f8476bc1595fadb59e1767b8c34a.png"><img alt="../_images/82aca9c414b7a077019aaa9438251977bac1f8476bc1595fadb59e1767b8c34a.png" src="../_images/82aca9c414b7a077019aaa9438251977bac1f8476bc1595fadb59e1767b8c34a.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/6e7773e4671d3202177c2365972fe1e5c78d3d2cd53a9d3f8ca8f0fb1228213a.png"><img alt="../_images/6e7773e4671d3202177c2365972fe1e5c78d3d2cd53a9d3f8ca8f0fb1228213a.png" src="../_images/6e7773e4671d3202177c2365972fe1e5c78d3d2cd53a9d3f8ca8f0fb1228213a.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/a9eccb17076b033a823cbc7bdfd2432e648fd5bdd87244eb2b91b3f07167a5ec.png"><img alt="../_images/a9eccb17076b033a823cbc7bdfd2432e648fd5bdd87244eb2b91b3f07167a5ec.png" src="../_images/a9eccb17076b033a823cbc7bdfd2432e648fd5bdd87244eb2b91b3f07167a5ec.png" style="width: 559px; height: 434px;" /></a>
+<a class="reference internal image-reference" href="../_images/601fa783b780f7cf2846bb90ab0a2eed6e71a878d275c7032f6a676b78a16f81.png"><img alt="../_images/601fa783b780f7cf2846bb90ab0a2eed6e71a878d275c7032f6a676b78a16f81.png" src="../_images/601fa783b780f7cf2846bb90ab0a2eed6e71a878d275c7032f6a676b78a16f81.png" style="width: 559px; height: 434px;" /></a>
 </div>
 </div>
-</div>
-<div class="section" id="total-epe">
-<h2>5. Total EPE<a class="headerlink" href="#total-epe" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="total-epe">
+<h2>5. Total EPE<a class="headerlink" href="#total-epe" title="Link to this heading">#</a></h2>
 <p>We now compute the total expeected prediction error (EPE) for each degree polynomial.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -768,12 +782,12 @@ where we break up the line \)</span>[0, 2 \pi]<span class="math notranslate nohi
     </tr>
   </tbody>
 </table>
-</div></div><img alt="../_images/bias_variance_decomposition_16_1.png" src="../_images/bias_variance_decomposition_16_1.png" />
+</div></div><a class="reference internal image-reference" href="../_images/9ddd2d2f0d09d366673cc27bb56bd8629cc060eb7c8288b99a62b1a0f8cac858.png"><img alt="../_images/9ddd2d2f0d09d366673cc27bb56bd8629cc060eb7c8288b99a62b1a0f8cac858.png" src="../_images/9ddd2d2f0d09d366673cc27bb56bd8629cc060eb7c8288b99a62b1a0f8cac858.png" style="width: 826px; height: 525px;" /></a>
 </div>
 </div>
-</div>
-<div class="section" id="empirical-test-error">
-<h2>6. Empirical Test Error<a class="headerlink" href="#empirical-test-error" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="empirical-test-error">
+<h2>6. Empirical Test Error<a class="headerlink" href="#empirical-test-error" title="Link to this heading">#</a></h2>
 <p>Previously we computed the theoretical EPE.
 The key question is:</p>
 <ul class="simple">
@@ -781,14 +795,14 @@ The key question is:</p>
 </ul>
 <p>To compute the emperical test error, we draw a random train and test dataset,
 then perform the standard ML training and evaluation procedure:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Draw a training set of size N</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Fit polynomials of each degree to the training data.</p></li>
 </ol>
 </li>
 <li><p>Draw a test set of size N</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Evaluate the squared error of each fit on the test data.</p></li>
 </ol>
 </li>
@@ -806,7 +820,7 @@ then perform the standard ML training and evaluation procedure:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bias_variance_decomposition_18_0.png" src="../_images/bias_variance_decomposition_18_0.png" />
+<a class="reference internal image-reference" href="../_images/fee35f9e58e5f0f8a70e0521fc76609f11ebe17ee0e375206fd5e0499f7ad960.png"><img alt="../_images/fee35f9e58e5f0f8a70e0521fc76609f11ebe17ee0e375206fd5e0499f7ad960.png" src="../_images/fee35f9e58e5f0f8a70e0521fc76609f11ebe17ee0e375206fd5e0499f7ad960.png" style="width: 559px; height: 418px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -891,7 +905,7 @@ The emperirical error and theoretical EPE now agree <em>very</em> well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_sample_fit_and_eval_test_error_1</span><span class="p">(</span><span class="n">degree</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    1. Draw a random training and test set</span>
 <span class="sd">    2. Fit a polynomial of degree degree to the tranining data</span>
 <span class="sd">    3. Evaluate performance on test set</span>
@@ -967,9 +981,9 @@ The emperirical error and theoretical EPE now agree <em>very</em> well.</p>
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="conclusion">
-<h2>7. Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="conclusion">
+<h2>7. Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
 <p>In this notebook you learned how to:</p>
 <ul class="simple">
 <li><p>Comptue the theoretical expected prediction error (EPE) using the bias-variance decomposition:</p>
@@ -990,8 +1004,8 @@ The emperirical error and theoretical EPE now agree <em>very</em> well.</p>
 </ul>
 </li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1005,7 +1019,7 @@ The emperirical error and theoretical EPE now agree <em>very</em> well.</p>
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./chapter5"
         },
         predefinedOutput: true
@@ -1013,44 +1027,114 @@ The emperirical error and theoretical EPE now agree <em>very</em> well.</p>
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../chapter4/regularization.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Regularization</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../chapter4/regularization.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Regularization</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="validation_methods.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="validation_methods.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Cross-validation Methods</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
+                </footer>
+              
+            </div>
             
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By Andrew Wolf<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-      </div>
-    </div>
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-libraries-functions">1. Required Libraries &amp; Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#synthetic-data">2. Synthetic Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-synthetic-data-and-target">2.1. Define Synthetic Data and Target</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-two-datasets">2.2. Plot two datasets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-polynomials-of-different-degrees-to-two-datasets">2.3. Fit polynomials of different degrees to two datasets</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-computation">3. Variance Computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-comptuation">4. Bias Comptuation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#total-epe">5. Total EPE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empirical-test-error">6. Empirical Test Error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">7. Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andrew Wolf
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

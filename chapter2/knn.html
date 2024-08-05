@@ -1,549 +1,474 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>K-Nearest Neighbors Classifier &#8212; The Machine Learning Simplified book</title>
-    
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
-
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter2/knn';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Linear Regression" href="../chapter3/linear_regression.html" />
     <link rel="prev" title="About" href="../index.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/mls_logo.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">The Machine Learning Simplified book</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../index.html">
-   About
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 2 - Overview of Supervised Learning
- </span>
-</p>
+    
+    
+    <img src="../_static/mls_logo.png" class="logo__image only-light" alt="The Machine Learning Simplified book - Home"/>
+    <script>document.write(`<img src="../_static/mls_logo.png" class="logo__image only-dark" alt="The Machine Learning Simplified book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    About
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 2 - Overview of Supervised Learning</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   K-Nearest Neighbors (KNN) Classifier
-  </a>
- </li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">K-Nearest Neighbors (KNN) Classifier</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 3 - Model Learning
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 3 - Model Learning</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter3/linear_regression.html">
-   Linear Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter3/cost_function.html">
-   Cost Function
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter3/gradient_descent.html">
-   Gradient Descent
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/linear_regression.html">Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/cost_function.html">Cost Function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/gradient_descent.html">Gradient Descent</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 4 - Basis Expansion &amp; Regularization
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 4 - Basis Expansion &amp; Regularization</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter4/basis_expansion.html">
-   Basis Expansion
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter4/regularization.html">
-   Regularization
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/basis_expansion.html">Basis Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/regularization.html">Regularization</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 5 - Model Selection
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 5 - Model Selection</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter5/bias_variance_decomposition.html">
-   Bias-variance Decomposition
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter5/validation_methods.html">
-   Cross-validation Methods
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/bias_variance_decomposition.html">Bias-variance Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/validation_methods.html">Cross-validation Methods</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 6 - Feature Selection
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 6 - Feature Selection</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter6/filter_methods.html">
-   Filter Methods
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter6/search_methods.html">
-   Search Methods
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/filter_methods.html">Filter Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/search_methods.html">Search Methods</a></li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        <a class="dropdown-buttons"
-            href="../_sources/chapter2/knn.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapter2/knn.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+</nav></div>
     </div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-            <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/5x12/themlsbook"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter2/knn.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter2/knn.md"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
     </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter2/knn.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter2/knn.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
 
-            <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/5x12/themlsbook/master?urlpath=tree/jupyter_book/chapter2/knn.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter2/knn.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
     </div>
+  
 </div>
+</div>
+              
+              
 
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>K-Nearest Neighbors Classifier</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div>
+                <h2> Contents </h2>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#required-libraries-functions">
-   1. Required Libraries &amp; Functions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#probelm-representation">
-   2. Probelm Representation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-hypothetical-dataset">
-     2.1. Create Hypothetical Dataset
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#visualize-the-dataset">
-     2.2. Visualize the Dataset
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-a-prediction-function">
-   3. Learning a Prediction Function
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#build-a-knn-classifier">
-     3.1. Build a KNN Classifier
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#vizualize-knn-decision-regions">
-     3.2. Vizualize KNN Decision Regions
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#predict-unknown-values">
-     3.3. Predict unknown values
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-good-is-our-prediction-function">
-   4. How Good is our Prediction Function?
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#evaluate-on-train-set">
-     4.1. Evaluate on Train Set
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#evaluate-on-test-set">
-     4.2. Evaluate on Test Set
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model-complexity">
-   5. Model Complexity
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#view-different-scenarios">
-     5.1. View Different Scenarios
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#k-1">
-       5.1.1. K = 1
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#k-2">
-       5.1.2. K = 2
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#k-5">
-       5.1.3. K = 5
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#k-n">
-       5.1.4. K = N
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tune-hyperparameters">
-     5.2. Tune Hyperparameters
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#plot-misclassification-error-rates">
-     5.3. Plot Misclassification Error Rates
-    </a>
-   </li>
-  </ul>
- </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-libraries-functions">1. Required Libraries &amp; Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probelm-representation">2. Probelm Representation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-hypothetical-dataset">2.1. Create Hypothetical Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-the-dataset">2.2. Visualize the Dataset</a></li>
 </ul>
-
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-a-prediction-function">3. Learning a Prediction Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-knn-classifier">3.1. Build a KNN Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vizualize-knn-decision-regions">3.2. Vizualize KNN Decision Regions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predict-unknown-values">3.3. Predict unknown values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-good-is-our-prediction-function">4. How Good is our Prediction Function?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-on-train-set">4.1. Evaluate on Train Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-on-test-set">4.2. Evaluate on Test Set</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-complexity">5. Model Complexity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#view-different-scenarios">5.1. View Different Scenarios</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-1">5.1.1. K = 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-2">5.1.2. K = 2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-5">5.1.3. K = 5</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-n">5.1.4. K = N</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tune-hyperparameters">5.2. Tune Hyperparameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-misclassification-error-rates">5.3. Plot Misclassification Error Rates</a></li>
+</ul>
+</li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>K-Nearest Neighbors Classifier</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#required-libraries-functions">
-   1. Required Libraries &amp; Functions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#probelm-representation">
-   2. Probelm Representation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-hypothetical-dataset">
-     2.1. Create Hypothetical Dataset
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#visualize-the-dataset">
-     2.2. Visualize the Dataset
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-a-prediction-function">
-   3. Learning a Prediction Function
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#build-a-knn-classifier">
-     3.1. Build a KNN Classifier
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#vizualize-knn-decision-regions">
-     3.2. Vizualize KNN Decision Regions
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#predict-unknown-values">
-     3.3. Predict unknown values
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-good-is-our-prediction-function">
-   4. How Good is our Prediction Function?
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#evaluate-on-train-set">
-     4.1. Evaluate on Train Set
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#evaluate-on-test-set">
-     4.2. Evaluate on Test Set
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model-complexity">
-   5. Model Complexity
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#view-different-scenarios">
-     5.1. View Different Scenarios
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#k-1">
-       5.1.1. K = 1
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#k-2">
-       5.1.2. K = 2
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#k-5">
-       5.1.3. K = 5
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#k-n">
-       5.1.4. K = N
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tune-hyperparameters">
-     5.2. Tune Hyperparameters
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#plot-misclassification-error-rates">
-     5.3. Plot Misclassification Error Rates
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
+              
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="k-nearest-neighbors-classifier">
-<span id="chapter2-part1"></span><h1>K-Nearest Neighbors Classifier<a class="headerlink" href="#k-nearest-neighbors-classifier" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="k-nearest-neighbors-classifier">
+<span id="chapter2-part1"></span><h1>K-Nearest Neighbors Classifier<a class="headerlink" href="#k-nearest-neighbors-classifier" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>This is a supplement material for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book.</p></li>
 <li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
 <li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
 </ul>
-<div class="section" id="required-libraries-functions">
-<h2>1. Required Libraries &amp; Functions<a class="headerlink" href="#required-libraries-functions" title="Permalink to this headline">¶</a></h2>
+<section id="required-libraries-functions">
+<h2>1. Required Libraries &amp; Functions<a class="headerlink" href="#required-libraries-functions" title="Link to this heading">#</a></h2>
 <p>Before we start, we need to import few libraries and functions that we will use in this jupyterbook. You don’t need to understand what those functions do for now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -639,11 +564,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="probelm-representation">
-<h2>2. Probelm Representation<a class="headerlink" href="#probelm-representation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="probelm-representation">
+<h2>2. Probelm Representation<a class="headerlink" href="#probelm-representation" title="Link to this heading">#</a></h2>
 <p>Let’s recall Chapter 2 of <a class="reference external" href="https://themlsbook.com">the Machine Learning Simplified book</a>. We have a hypothetical dataset (Table 2.1 in the MLS book) containing 20 fruits that are a mix of <code class="docutils literal notranslate"><span class="pre">apples</span></code>, <code class="docutils literal notranslate"><span class="pre">mandarins</span></code>, and <code class="docutils literal notranslate"><span class="pre">lemons</span></code> For each fruit, we have measured it’s <code class="docutils literal notranslate"><span class="pre">height</span></code> and <code class="docutils literal notranslate"><span class="pre">width</span></code> and recorded them as the first two columns of the table. For each fruit we know its <code class="docutils literal notranslate"><span class="pre">type</span></code>, or class label, and this is represented by the last column.</p>
-<table class="colwidths-auto table">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>height</p></th>
 <th class="head"><p>width</p></th>
@@ -733,8 +658,9 @@ const thebe_selector_output = ".output, .cell_output"
 </tr>
 </tbody>
 </table>
-<div class="section" id="create-hypothetical-dataset">
-<h3>2.1. Create Hypothetical Dataset<a class="headerlink" href="#create-hypothetical-dataset" title="Permalink to this headline">¶</a></h3>
+</div>
+<section id="create-hypothetical-dataset">
+<h3>2.1. Create Hypothetical Dataset<a class="headerlink" href="#create-hypothetical-dataset" title="Link to this heading">#</a></h3>
 <p>Let’s re-create aforementioned table in python. We use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library - a library that manages <strong>PAN</strong>el <strong>DA</strong>ta <strong>S</strong>ets - to do so. Note that we have already imported it in the beginning of this notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -901,9 +827,9 @@ const thebe_selector_output = ".output, .cell_output"
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="visualize-the-dataset">
-<h3>2.2. Visualize the Dataset<a class="headerlink" href="#visualize-the-dataset" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="visualize-the-dataset">
+<h3>2.2. Visualize the Dataset<a class="headerlink" href="#visualize-the-dataset" title="Link to this heading">#</a></h3>
 <p>Let’s now build a plot to visualize the dataset. We will plot the same graph that we had in the Machine Learning Simplified book. To make things easier, we can do so by simply calling the funtion <code class="docutils literal notranslate"><span class="pre">plotFruitFigure()</span></code> that we defined in the beginning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -912,15 +838,15 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_5_0.png" src="../_images/knn_5_0.png" />
+<a class="reference internal image-reference" href="../_images/bf8e1c708f97c952d00ebf34c705f3e4f54a384ff5e9415bfb696abbec409189.png"><img alt="../_images/bf8e1c708f97c952d00ebf34c705f3e4f54a384ff5e9415bfb696abbec409189.png" src="../_images/bf8e1c708f97c952d00ebf34c705f3e4f54a384ff5e9415bfb696abbec409189.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="learning-a-prediction-function">
-<h2>3. Learning a Prediction Function<a class="headerlink" href="#learning-a-prediction-function" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="build-a-knn-classifier">
-<h3>3.1. Build a KNN Classifier<a class="headerlink" href="#build-a-knn-classifier" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="learning-a-prediction-function">
+<h2>3. Learning a Prediction Function<a class="headerlink" href="#learning-a-prediction-function" title="Link to this heading">#</a></h2>
+<section id="build-a-knn-classifier">
+<h3>3.1. Build a KNN Classifier<a class="headerlink" href="#build-a-knn-classifier" title="Link to this heading">#</a></h3>
 <p>Let’s build a classifier and use it to predict some values. Firstly, we define <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -950,14 +876,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNeighborsClassifier(n_neighbors=1)
-</pre></div>
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KNeighborsClassifier(n_neighbors=1)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">KNeighborsClassifier</label><div class="sk-toggleable__content"><pre>KNeighborsClassifier(n_neighbors=1)</pre></div></div></div></div></div></div></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="vizualize-knn-decision-regions">
-<h3>3.2. Vizualize KNN Decision Regions<a class="headerlink" href="#vizualize-knn-decision-regions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="vizualize-knn-decision-regions">
+<h3>3.2. Vizualize KNN Decision Regions<a class="headerlink" href="#vizualize-knn-decision-regions" title="Link to this heading">#</a></h3>
 <p>Now that the model is ready, let’s visualize the decision boundaries of KNN on a graph, like we did in the MLS book. To simplify things, we will simply use <code class="docutils literal notranslate"><span class="pre">plotKNN</span></code> function that we defined in the beginning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -969,7 +892,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_13_0.png" src="../_images/knn_13_0.png" />
+<a class="reference internal image-reference" href="../_images/e8621c8a8b564bb735ddbc1749162b496eab732e5a6e68df33e28ed661b794e1.png"><img alt="../_images/e8621c8a8b564bb735ddbc1749162b496eab732e5a6e68df33e28ed661b794e1.png" src="../_images/e8621c8a8b564bb735ddbc1749162b496eab732e5a6e68df33e28ed661b794e1.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>We can remove the datapoints - after the learning is done, we don’t need them anymore. Hence, we can set a parameter <code class="docutils literal notranslate"><span class="pre">plot_data=False</span></code> to see our trained model.</p>
@@ -980,13 +903,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_15_0.png" src="../_images/knn_15_0.png" />
+<a class="reference internal image-reference" href="../_images/146bacb5ead5b2b020840bf90fa50c8a1fc4eaa5ae4c6bfd42b03be0cb49bd81.png"><img alt="../_images/146bacb5ead5b2b020840bf90fa50c8a1fc4eaa5ae4c6bfd42b03be0cb49bd81.png" src="../_images/146bacb5ead5b2b020840bf90fa50c8a1fc4eaa5ae4c6bfd42b03be0cb49bd81.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Figure above shows the learned decision regions of a model, or specifically, it shows how this classifier predicts the (unknown) type of a new fruit with height and width measurements. For instance, if there is an unknown data point with measurements (4cm,5cm), it lands in the green region so the classifier predicts mandarin.</p>
-</div>
-<div class="section" id="predict-unknown-values">
-<h3>3.3. Predict unknown values<a class="headerlink" href="#predict-unknown-values" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="predict-unknown-values">
+<h3>3.3. Predict unknown values<a class="headerlink" href="#predict-unknown-values" title="Link to this heading">#</a></h3>
 <p>Let’s predict unknown fruits using our trained classifier. Let’s try to predict the label for an unknown fruit with width of 9cm and height of 3cm:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1016,13 +939,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="how-good-is-our-prediction-function">
-<h2>4. How Good is our Prediction Function?<a class="headerlink" href="#how-good-is-our-prediction-function" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="how-good-is-our-prediction-function">
+<h2>4. How Good is our Prediction Function?<a class="headerlink" href="#how-good-is-our-prediction-function" title="Link to this heading">#</a></h2>
 <p>The next step is to evaluate how good our model is.</p>
-<div class="section" id="evaluate-on-train-set">
-<h3>4.1. Evaluate on Train Set<a class="headerlink" href="#evaluate-on-train-set" title="Permalink to this headline">¶</a></h3>
+<section id="evaluate-on-train-set">
+<h3>4.1. Evaluate on Train Set<a class="headerlink" href="#evaluate-on-train-set" title="Link to this heading">#</a></h3>
 <p>Let’s first evaluate the score of the model on the training dataset. Remember, as we explained in the MLS book, this should be 0 in this example.</p>
 <p>The first step is to “predict” the training set, as if we pretend that we don’t know training set’s labels and see if the trained model manages to guess them correctly.</p>
 <div class="cell docutils container">
@@ -1094,11 +1017,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="evaluate-on-test-set">
-<h3>4.2. Evaluate on Test Set<a class="headerlink" href="#evaluate-on-test-set" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="evaluate-on-test-set">
+<h3>4.2. Evaluate on Test Set<a class="headerlink" href="#evaluate-on-test-set" title="Link to this heading">#</a></h3>
 <p>Imagine we have new fuits with the following properties:</p>
-<table class="colwidths-auto table">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>height</p></th>
 <th class="head"><p>width</p></th>
@@ -1128,6 +1051,7 @@ const thebe_selector_output = ".output, .cell_output"
 </tr>
 </tbody>
 </table>
+</div>
 <p>Let’s see if our model would correctly predict the fruit label from this dataset (test set). Again, we do so by showing fruits’ measurements and not revealing their labels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1151,7 +1075,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_30_0.png" src="../_images/knn_30_0.png" />
+<a class="reference internal image-reference" href="../_images/45464c8a45fb0bd2272686d1331307159ad2cb772f2b487192eb10a0be2495b8.png"><img alt="../_images/45464c8a45fb0bd2272686d1331307159ad2cb772f2b487192eb10a0be2495b8.png" src="../_images/45464c8a45fb0bd2272686d1331307159ad2cb772f2b487192eb10a0be2495b8.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Just by eyeballing this graph, we can already see that the model made few prediction errors - some data points do not land at decision regions of the same color (this was explained in the book). Let’s verify it:</p>
@@ -1187,30 +1111,18 @@ const thebe_selector_output = ".output, .cell_output"
 [WRONG!] - actual observation is Lemon, but the model predicted [&#39;Mandarin&#39;]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:566: FutureWarning: Arrays of bytes/strings is being converted to decimal numbers if dtype=&#39;numeric&#39;. This behavior is deprecated in 0.24 and will be removed in 1.1 (renaming of 0.26). Please convert your data to numeric values explicitly instead.
-  X = check_array(X, **check_params)
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:566: FutureWarning: Arrays of bytes/strings is being converted to decimal numbers if dtype=&#39;numeric&#39;. This behavior is deprecated in 0.24 and will be removed in 1.1 (renaming of 0.26). Please convert your data to numeric values explicitly instead.
-  X = check_array(X, **check_params)
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:566: FutureWarning: Arrays of bytes/strings is being converted to decimal numbers if dtype=&#39;numeric&#39;. This behavior is deprecated in 0.24 and will be removed in 1.1 (renaming of 0.26). Please convert your data to numeric values explicitly instead.
-  X = check_array(X, **check_params)
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:566: FutureWarning: Arrays of bytes/strings is being converted to decimal numbers if dtype=&#39;numeric&#39;. This behavior is deprecated in 0.24 and will be removed in 1.1 (renaming of 0.26). Please convert your data to numeric values explicitly instead.
-  X = check_array(X, **check_params)
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:566: FutureWarning: Arrays of bytes/strings is being converted to decimal numbers if dtype=&#39;numeric&#39;. This behavior is deprecated in 0.24 and will be removed in 1.1 (renaming of 0.26). Please convert your data to numeric values explicitly instead.
-  X = check_array(X, **check_params)
-</pre></div>
-</div>
 </div>
 </div>
 <p>The model incorrectly predicted 3 observations out of 5. As we discussed in the MLS book, when the error is low on the training set (0%), but much higher on an unseen test set (3/5=60%), the model is overfitted. Another problem is underfitting - when test and train errors are equally high. To get a balance between these two, we tune hyperparameters of the model to pick the right model complexity (not too simple, not too complicated).</p>
-</div>
-</div>
-<div class="section" id="model-complexity">
-<h2>5. Model Complexity<a class="headerlink" href="#model-complexity" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="view-different-scenarios">
-<h3>5.1. View Different Scenarios<a class="headerlink" href="#view-different-scenarios" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="model-complexity">
+<h2>5. Model Complexity<a class="headerlink" href="#model-complexity" title="Link to this heading">#</a></h2>
+<section id="view-different-scenarios">
+<h3>5.1. View Different Scenarios<a class="headerlink" href="#view-different-scenarios" title="Link to this heading">#</a></h3>
 <p>Let’s try different values of k (k=1, k=2, k-5, k=20) and visually see what happens.</p>
-<div class="section" id="k-1">
-<h4>5.1.1. K = 1<a class="headerlink" href="#k-1" title="Permalink to this headline">¶</a></h4>
+<section id="k-1">
+<h4>5.1.1. K = 1<a class="headerlink" href="#k-1" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotKNN</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="c1">#selecting k=1</span>
@@ -1221,7 +1133,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_34_0.png" src="../_images/knn_34_0.png" />
+<a class="reference internal image-reference" href="../_images/e8621c8a8b564bb735ddbc1749162b496eab732e5a6e68df33e28ed661b794e1.png"><img alt="../_images/e8621c8a8b564bb735ddbc1749162b496eab732e5a6e68df33e28ed661b794e1.png" src="../_images/e8621c8a8b564bb735ddbc1749162b496eab732e5a6e68df33e28ed661b794e1.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Let’s check predictions of test data once again:</p>
@@ -1235,13 +1147,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_36_0.png" src="../_images/knn_36_0.png" />
+<a class="reference internal image-reference" href="../_images/45464c8a45fb0bd2272686d1331307159ad2cb772f2b487192eb10a0be2495b8.png"><img alt="../_images/45464c8a45fb0bd2272686d1331307159ad2cb772f2b487192eb10a0be2495b8.png" src="../_images/45464c8a45fb0bd2272686d1331307159ad2cb772f2b487192eb10a0be2495b8.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Misclassifications on test set: 3 (3 data points do not have the same color as their decision region)</p>
-</div>
-<div class="section" id="k-2">
-<h4>5.1.2. K = 2<a class="headerlink" href="#k-2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="k-2">
+<h4>5.1.2. K = 2<a class="headerlink" href="#k-2" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotKNN</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="c1">#selecting k=2</span>
@@ -1252,7 +1164,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_38_0.png" src="../_images/knn_38_0.png" />
+<a class="reference internal image-reference" href="../_images/906ce1138eba80474c9d86f366e38cf822d0610666447d91101782f24c5019e8.png"><img alt="../_images/906ce1138eba80474c9d86f366e38cf822d0610666447d91101782f24c5019e8.png" src="../_images/906ce1138eba80474c9d86f366e38cf822d0610666447d91101782f24c5019e8.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Let’s check predictions of test data when <span class="math notranslate nohighlight">\(k=2\)</span>:</p>
@@ -1266,13 +1178,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_40_0.png" src="../_images/knn_40_0.png" />
+<a class="reference internal image-reference" href="../_images/26aed91e693b0160d93b72e4189b2e484db03c7612bfa1d29dd0d226146c5491.png"><img alt="../_images/26aed91e693b0160d93b72e4189b2e484db03c7612bfa1d29dd0d226146c5491.png" src="../_images/26aed91e693b0160d93b72e4189b2e484db03c7612bfa1d29dd0d226146c5491.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Misclassifications on test set: 2 (2 data points (both mandarins) do not have the same color as their decision region)</p>
-</div>
-<div class="section" id="k-5">
-<h4>5.1.3. K = 5<a class="headerlink" href="#k-5" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="k-5">
+<h4>5.1.3. K = 5<a class="headerlink" href="#k-5" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotKNN</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="c1">#selecting k=5</span>
@@ -1283,7 +1195,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_42_0.png" src="../_images/knn_42_0.png" />
+<a class="reference internal image-reference" href="../_images/4fc2feb061f3299c5f9aa5afdd834fd88937223d3f7033463bbcf3f111726c9e.png"><img alt="../_images/4fc2feb061f3299c5f9aa5afdd834fd88937223d3f7033463bbcf3f111726c9e.png" src="../_images/4fc2feb061f3299c5f9aa5afdd834fd88937223d3f7033463bbcf3f111726c9e.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Let’s check predictions of test data when <span class="math notranslate nohighlight">\(k=5\)</span>:</p>
@@ -1297,13 +1209,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_44_0.png" src="../_images/knn_44_0.png" />
+<a class="reference internal image-reference" href="../_images/0c1ce538213796f93da23641a58d07c0e6c3ab5f2fd03119ec7e5f561bbb1738.png"><img alt="../_images/0c1ce538213796f93da23641a58d07c0e6c3ab5f2fd03119ec7e5f561bbb1738.png" src="../_images/0c1ce538213796f93da23641a58d07c0e6c3ab5f2fd03119ec7e5f561bbb1738.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Misclassifications on test set: 0 (all data points have the same color as their decision region)</p>
-</div>
-<div class="section" id="k-n">
-<h4>5.1.4. K = N<a class="headerlink" href="#k-n" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="k-n">
+<h4>5.1.4. K = N<a class="headerlink" href="#k-n" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
@@ -1316,7 +1228,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_46_0.png" src="../_images/knn_46_0.png" />
+<a class="reference internal image-reference" href="../_images/c2026f9703080d1e295861c4d89ccadf2c31a54c81d4e6a42c6476b4a7b24fc0.png"><img alt="../_images/c2026f9703080d1e295861c4d89ccadf2c31a54c81d4e6a42c6476b4a7b24fc0.png" src="../_images/c2026f9703080d1e295861c4d89ccadf2c31a54c81d4e6a42c6476b4a7b24fc0.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Let’s check predictions of test data when <span class="math notranslate nohighlight">\(k=n=20\)</span>:</p>
@@ -1330,14 +1242,14 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_48_0.png" src="../_images/knn_48_0.png" />
+<a class="reference internal image-reference" href="../_images/7d0910d3388d8b5c9ff7d818f0f461061a42d0a1b8e6261c5fce2bdec5f2e76b.png"><img alt="../_images/7d0910d3388d8b5c9ff7d818f0f461061a42d0a1b8e6261c5fce2bdec5f2e76b.png" src="../_images/7d0910d3388d8b5c9ff7d818f0f461061a42d0a1b8e6261c5fce2bdec5f2e76b.png" style="width: 498px; height: 454px;" /></a>
 </div>
 </div>
 <p>Misclassifications on test set: 4 (only one dataapoint (apple) has the same color as its decision region)</p>
-</div>
-</div>
-<div class="section" id="tune-hyperparameters">
-<h3>5.2. Tune Hyperparameters<a class="headerlink" href="#tune-hyperparameters" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="tune-hyperparameters">
+<h3>5.2. Tune Hyperparameters<a class="headerlink" href="#tune-hyperparameters" title="Link to this heading">#</a></h3>
 <p>Now, for each <code class="docutils literal notranslate"><span class="pre">k</span></code> let’s calculate train_error and test_error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1405,53 +1317,53 @@ k=19 | train error: 0.6 | test error: 0.6 | train misclassifications: 12.0 | tes
 k=20 | train error: 0.6 | test error: 0.6 | train misclassifications: 12.0 | test misclassifications: 3.0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
-/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/sklearn/base.py:443: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
+/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/base.py:402: UserWarning: X has feature names, but KNeighborsClassifier was fitted without feature names
   warnings.warn(
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="plot-misclassification-error-rates">
-<h3>5.3. Plot Misclassification Error Rates<a class="headerlink" href="#plot-misclassification-error-rates" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="plot-misclassification-error-rates">
+<h3>5.3. Plot Misclassification Error Rates<a class="headerlink" href="#plot-misclassification-error-rates" title="Link to this heading">#</a></h3>
 <p>Now, let’s plot a graph that shows misclassification error rate for training and test sets as we vary <span class="math notranslate nohighlight">\(k\)</span>, the number of neighbors in our KNN model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1476,13 +1388,13 @@ k=20 | train error: 0.6 | test error: 0.6 | train misclassifications: 12.0 | tes
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/knn_52_0.png" src="../_images/knn_52_0.png" />
+<a class="reference internal image-reference" href="../_images/cca4ac9c7fe6f7f801fa81ef33623626f330e085981a9c5a43a567d9f0aec2f7.png"><img alt="../_images/cca4ac9c7fe6f7f801fa81ef33623626f330e085981a9c5a43a567d9f0aec2f7.png" src="../_images/cca4ac9c7fe6f7f801fa81ef33623626f330e085981a9c5a43a567d9f0aec2f7.png" style="width: 574px; height: 465px;" /></a>
 </div>
 </div>
 <p>Models on the left side of the plot (near <span class="math notranslate nohighlight">\(k=n=20\)</span>) use too large a neighborhood and produce an underfit model. Models on the right side of the plot (near <span class="math notranslate nohighlight">\(k=1\)</span>) use too small a neighborhood and produce an overfit model. Models between <span class="math notranslate nohighlight">\(k=3\)</span> and <span class="math notranslate nohighlight">\(k=7\)</span> perform optimally on the test set – in other words, they optimally balance overfitting and underfitting.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1496,7 +1408,7 @@ k=20 | train error: 0.6 | test error: 0.6 | train misclassifications: 12.0 | tes
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./chapter2"
         },
         predefinedOutput: true
@@ -1504,44 +1416,131 @@ k=20 | train error: 0.6 | test error: 0.6 | train misclassifications: 12.0 | tes
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">About</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">About</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="../chapter3/linear_regression.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="../chapter3/linear_regression.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Linear Regression</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
+                </footer>
+              
+            </div>
             
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By Andrew Wolf<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-      </div>
-    </div>
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-libraries-functions">1. Required Libraries &amp; Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probelm-representation">2. Probelm Representation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-hypothetical-dataset">2.1. Create Hypothetical Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-the-dataset">2.2. Visualize the Dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-a-prediction-function">3. Learning a Prediction Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-knn-classifier">3.1. Build a KNN Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vizualize-knn-decision-regions">3.2. Vizualize KNN Decision Regions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predict-unknown-values">3.3. Predict unknown values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-good-is-our-prediction-function">4. How Good is our Prediction Function?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-on-train-set">4.1. Evaluate on Train Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-on-test-set">4.2. Evaluate on Test Set</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-complexity">5. Model Complexity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#view-different-scenarios">5.1. View Different Scenarios</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-1">5.1.1. K = 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-2">5.1.2. K = 2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-5">5.1.3. K = 5</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-n">5.1.4. K = N</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tune-hyperparameters">5.2. Tune Hyperparameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-misclassification-error-rates">5.3. Plot Misclassification Error Rates</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andrew Wolf
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

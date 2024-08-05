@@ -1,0 +1,1489 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Feature Transformation &amp; Binning &#8212; The Machine Learning Simplified book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter7/feature_transformation';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Data Augmentation" href="data_augmentation.html" />
+    <link rel="prev" title="Data Cleaning" href="data_cleaning.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mls_logo.png" class="logo__image only-light" alt="The Machine Learning Simplified book - Home"/>
+    <script>document.write(`<img src="../_static/mls_logo.png" class="logo__image only-dark" alt="The Machine Learning Simplified book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    About
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 2 - Overview of Supervised Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/knn.html">K-Nearest Neighbors (KNN) Classifier</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 3 - Model Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/linear_regression.html">Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/cost_function.html">Cost Function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/gradient_descent.html">Gradient Descent</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 4 - Basis Expansion &amp; Regularization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/basis_expansion.html">Basis Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/regularization.html">Regularization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 5 - Model Selection</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/bias_variance_decomposition.html">Bias-variance Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/validation_methods.html">Cross-validation Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 6 - Feature Selection</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/filter_methods.html">Filter Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/search_methods.html">Search Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 7 - Data Preparation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Feature Transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_augmentation.html">Data Augmentation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter7/feature_transformation.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter7/feature_transformation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter7/feature_transformation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Feature Transformation & Binning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-libraries-data-variables">1. Required Libraries, Data &amp; Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-encoding">2. Feature Encoding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-one-hot-encoding-to-vehicle-and-kids">2.1. Apply One-Hot Encoding to “Vehicle” and “Kids”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-label-encoding-to-residence">2.2. Apply Label Encoding to “Residence”</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling">3. Feature Scaling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-binning">4. Feature Binning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-approach">4.1. General Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equal-width-binning">4.2. Equal Width Binning</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="feature-transformation-binning">
+<h1>Feature Transformation &amp; Binning<a class="headerlink" href="#feature-transformation-binning" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>This is a supplement material for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book.</p></li>
+<li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
+<li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
+</ul>
+<p>This notebook is a supplement for <em>Chapter 7. Data Preparation</em> of <strong>Machine Learning For Everyone</strong> book.</p>
+<section id="required-libraries-data-variables">
+<h2>1. Required Libraries, Data &amp; Variables<a class="headerlink" href="#required-libraries-data-variables" title="Link to this heading">#</a></h2>
+<p>Let’s import the data and have a look at it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">LabelEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+
+
+<span class="c1"># Define the data as a dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">54</span><span class="p">],</span>
+    <span class="s2">&quot;Income (€)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">95000</span><span class="p">,</span> <span class="mi">210000</span><span class="p">,</span> <span class="mi">75000</span><span class="p">,</span> <span class="mi">30000</span><span class="p">,</span> <span class="mi">55000</span><span class="p">,</span> <span class="mi">430000</span><span class="p">],</span>
+    <span class="s2">&quot;Vehicle&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;car&quot;</span><span class="p">,</span> <span class="s2">&quot;truck&quot;</span><span class="p">,</span> <span class="s2">&quot;car&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;car&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Kids&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Residence&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;downtown&quot;</span><span class="p">,</span> <span class="s2">&quot;downtown&quot;</span><span class="p">,</span> <span class="s2">&quot;suburbs&quot;</span><span class="p">,</span> <span class="s2">&quot;suburbs&quot;</span><span class="p">,</span> <span class="s2">&quot;suburbs&quot;</span><span class="p">,</span> <span class="s2">&quot;downtown&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Create DataFrame from the dictionary</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Print the DataFrame</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Income (€)</th>
+      <th>Vehicle</th>
+      <th>Kids</th>
+      <th>Residence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32</td>
+      <td>95000</td>
+      <td>none</td>
+      <td>no</td>
+      <td>downtown</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>46</td>
+      <td>210000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>downtown</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25</td>
+      <td>75000</td>
+      <td>truck</td>
+      <td>yes</td>
+      <td>suburbs</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>36</td>
+      <td>30000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>suburbs</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>29</td>
+      <td>55000</td>
+      <td>none</td>
+      <td>no</td>
+      <td>suburbs</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>54</td>
+      <td>430000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>downtown</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="feature-encoding">
+<h2>2. Feature Encoding<a class="headerlink" href="#feature-encoding" title="Link to this heading">#</a></h2>
+<p>After having cleaned your data, you must encode it in a way such that the ML algorithm can consume it.One important thing you must do is encode complex data types, like strings or categorical variables, in a numeric format.</p>
+<p>We will illustrate feature encoding on the dataset above, where the  three independent variables are Income, Vehicle, and Kids, each of which are categorical variables, and the target variable is a person’s Residence (whether a person lives in downtown or in suburbs).</p>
+<section id="apply-one-hot-encoding-to-vehicle-and-kids">
+<h3>2.1. Apply One-Hot Encoding to “Vehicle” and “Kids”<a class="headerlink" href="#apply-one-hot-encoding-to-vehicle-and-kids" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># One-hot encode the &#39;Vehicle&#39; and &#39;Kids&#39; columns</span>
+<span class="n">ohe</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">encoded_features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ohe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Vehicle&#39;</span><span class="p">,</span> <span class="s1">&#39;Kids&#39;</span><span class="p">]]))</span>
+
+<span class="c1"># Get new column names from OneHotEncoder</span>
+<span class="n">encoded_features</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">ohe</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">([</span><span class="s1">&#39;Vehicle&#39;</span><span class="p">,</span> <span class="s1">&#39;Kids&#39;</span><span class="p">])</span>
+
+<span class="c1"># Concatenate the encoded features back to the original DataFrame</span>
+<span class="n">df_encoded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">encoded_features</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Vehicle&#39;</span><span class="p">,</span> <span class="s1">&#39;Kids&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_encoded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/preprocessing/_encoders.py:808: FutureWarning: `sparse` was renamed to `sparse_output` in version 1.2 and will be removed in 1.4. `sparse_output` is ignored unless you leave `sparse` to its default value.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Income (€)</th>
+      <th>Residence</th>
+      <th>Vehicle_car</th>
+      <th>Vehicle_none</th>
+      <th>Vehicle_truck</th>
+      <th>Kids_no</th>
+      <th>Kids_yes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32</td>
+      <td>95000</td>
+      <td>downtown</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>46</td>
+      <td>210000</td>
+      <td>downtown</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25</td>
+      <td>75000</td>
+      <td>suburbs</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>36</td>
+      <td>30000</td>
+      <td>suburbs</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>29</td>
+      <td>55000</td>
+      <td>suburbs</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>54</td>
+      <td>430000</td>
+      <td>downtown</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="apply-label-encoding-to-residence">
+<h3>2.2. Apply Label Encoding to “Residence”<a class="headerlink" href="#apply-label-encoding-to-residence" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Label encode the &#39;Residence&#39; column</span>
+<span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">df_encoded</span><span class="p">[</span><span class="s1">&#39;Residence&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_encoded</span><span class="p">[</span><span class="s1">&#39;Residence&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_encoded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Income (€)</th>
+      <th>Residence</th>
+      <th>Vehicle_car</th>
+      <th>Vehicle_none</th>
+      <th>Vehicle_truck</th>
+      <th>Kids_no</th>
+      <th>Kids_yes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32</td>
+      <td>95000</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>46</td>
+      <td>210000</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25</td>
+      <td>75000</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>36</td>
+      <td>30000</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>29</td>
+      <td>55000</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>54</td>
+      <td>430000</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="feature-scaling">
+<h2>3. Feature Scaling<a class="headerlink" href="#feature-scaling" title="Link to this heading">#</a></h2>
+<p>Many datasets contain numeric features with significantly different numeric scales.</p>
+<p>For example, the Age feature ranges from 27 to 54 (years), while the Income feature ranges from <span class="math notranslate nohighlight">\(30,000\)</span> EUR to <span class="math notranslate nohighlight">\(430,000\)</span> EUR, while the features Vehicle_none, Vehicle_car, Vehicle_truck, Kids_yes and Kids_no all have the range from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<p>Unscaled data will, technically, not prohibit the ML algorithm from running, but can often lead to problems in the learning algorithm.</p>
+<p>For example, since the Income feature has much larger value than the other features, it will influence the target variable much more.\footnote{This is the case for many ML models, such as linear models we discussed in the last section.  However, some ML models like decision trees are invariant to feature scaling.</p>
+<p>But we don’t necessarily want this to be the case.</p>
+<p>To ensure that the measurement scale doesn’t adversely affect our learning algorithm, we scale, or normalize, each feature to a common range of values. Here is an example Python code that demonstrates how to scale your features using <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the StandardScaler</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List of all the columns</span>
+<span class="n">df_encoded</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Age&#39;, &#39;Income (€)&#39;, &#39;Residence&#39;, &#39;Vehicle_car&#39;, &#39;Vehicle_none&#39;,
+       &#39;Vehicle_truck&#39;, &#39;Kids_no&#39;, &#39;Kids_yes&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List of columns to scale (we take all but| target variable)</span>
+<span class="n">columns_to_scale</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Income (€)&#39;</span><span class="p">,</span> <span class="s1">&#39;Vehicle_car&#39;</span><span class="p">,</span> <span class="s1">&#39;Vehicle_none&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Vehicle_truck&#39;</span><span class="p">,</span> <span class="s1">&#39;Kids_no&#39;</span><span class="p">,</span> <span class="s1">&#39;Kids_yes&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit the scaler to the data and transform it</span>
+<span class="n">df_encoded</span><span class="p">[</span><span class="n">columns_to_scale</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_encoded</span><span class="p">[</span><span class="n">columns_to_scale</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_encoded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Income (€)</th>
+      <th>Residence</th>
+      <th>Vehicle_car</th>
+      <th>Vehicle_none</th>
+      <th>Vehicle_truck</th>
+      <th>Kids_no</th>
+      <th>Kids_yes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.498342</td>
+      <td>-0.392844</td>
+      <td>0</td>
+      <td>-1.0</td>
+      <td>1.414214</td>
+      <td>-0.447214</td>
+      <td>1.414214</td>
+      <td>-1.414214</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.897015</td>
+      <td>0.441194</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>-0.707107</td>
+      <td>-0.447214</td>
+      <td>-0.707107</td>
+      <td>0.707107</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.196020</td>
+      <td>-0.537894</td>
+      <td>1</td>
+      <td>-1.0</td>
+      <td>-0.707107</td>
+      <td>2.236068</td>
+      <td>-0.707107</td>
+      <td>0.707107</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.099668</td>
+      <td>-0.864257</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>-0.707107</td>
+      <td>-0.447214</td>
+      <td>-0.707107</td>
+      <td>0.707107</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.797347</td>
+      <td>-0.682945</td>
+      <td>1</td>
+      <td>-1.0</td>
+      <td>1.414214</td>
+      <td>-0.447214</td>
+      <td>1.414214</td>
+      <td>-1.414214</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.694362</td>
+      <td>2.036746</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>-0.707107</td>
+      <td>-0.447214</td>
+      <td>-0.707107</td>
+      <td>0.707107</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="feature-binning">
+<h2>4. Feature Binning<a class="headerlink" href="#feature-binning" title="Link to this heading">#</a></h2>
+<p>Feature binning is the process that converts a numerical (either continuous and discrete) feature into a categorical feature represented by a set of ranges, or bins.</p>
+<p>For example, instead of representing age as a single real-valued feature, we chop ranges of age into 3 discrete bins:
+$<span class="math notranslate nohighlight">\(
+\begin{equation*}
+    young \in [ages \ 25  - 34],  \qquad
+    middle \in [ages \ 35  - 44], \qquad
+    old \in [ages \ 45  - 54]
+\end{equation*}
+\)</span>$</p>
+<section id="general-approach">
+<h3>4.1. General Approach<a class="headerlink" href="#general-approach" title="Link to this heading">#</a></h3>
+<p>To implement feature binning or discretization of the “Age” variable into categorical bins using Python, you can use the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library which provides a straightforward method called cut for binning continuous variables. Here’s how you can convert the age into three categories based on the provided ranges:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Income (€)</th>
+      <th>Vehicle</th>
+      <th>Kids</th>
+      <th>Residence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32</td>
+      <td>95000</td>
+      <td>none</td>
+      <td>no</td>
+      <td>downtown</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>46</td>
+      <td>210000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>downtown</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25</td>
+      <td>75000</td>
+      <td>truck</td>
+      <td>yes</td>
+      <td>suburbs</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>36</td>
+      <td>30000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>suburbs</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>29</td>
+      <td>55000</td>
+      <td>none</td>
+      <td>no</td>
+      <td>suburbs</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>54</td>
+      <td>430000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>downtown</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define bins and their labels</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">54</span><span class="p">]</span>  <span class="c1"># Extend ranges to include all possible ages in each group</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Young&#39;</span><span class="p">,</span> <span class="s1">&#39;Middle&#39;</span><span class="p">,</span> <span class="s1">&#39;Old&#39;</span><span class="p">]</span>
+
+<span class="c1"># Perform binning</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age Group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># right=True means inclusive on the right</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Income (€)</th>
+      <th>Vehicle</th>
+      <th>Kids</th>
+      <th>Residence</th>
+      <th>Age Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32</td>
+      <td>95000</td>
+      <td>none</td>
+      <td>no</td>
+      <td>downtown</td>
+      <td>Young</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>46</td>
+      <td>210000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>downtown</td>
+      <td>Old</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25</td>
+      <td>75000</td>
+      <td>truck</td>
+      <td>yes</td>
+      <td>suburbs</td>
+      <td>Young</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>36</td>
+      <td>30000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>suburbs</td>
+      <td>Middle</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>29</td>
+      <td>55000</td>
+      <td>none</td>
+      <td>no</td>
+      <td>suburbs</td>
+      <td>Young</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>54</td>
+      <td>430000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>downtown</td>
+      <td>Old</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This approach allows for clear and meaningful categorization of ages, which can be very useful for analysis or as a feature in machine learning models where age is an important factor.</p>
+</section>
+<section id="equal-width-binning">
+<h3>4.2. Equal Width Binning<a class="headerlink" href="#equal-width-binning" title="Link to this heading">#</a></h3>
+<p>Equal width binning divides the range of values of a feature into bins with equal width.</p>
+<p>Usually, we specify the number of bins as a hyper-parameter <span class="math notranslate nohighlight">\(K\)</span>, and then compute the width of each bin as</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation}
+    w = \Big[\frac{max^{(j)} - min^{(j)}}{K}\Big]
+\end{equation}
+\]</div>
+<p>where
+<span class="math notranslate nohighlight">\(max^{(j)}\)</span> and <span class="math notranslate nohighlight">\(min^{(j)}\)</span> are the <span class="math notranslate nohighlight">\(j^{th}\)</span> feature’s maximum and minimum values, respectively.</p>
+<p>The ranges of the <span class="math notranslate nohighlight">\(K\)</span> bins are then
+$<span class="math notranslate nohighlight">\(
+\begin{equation}
+\begin{split}
+    Bin \ 1&amp;: [min, \ min + w - 1] \\
+    Bin \ 2&amp;: [min+w, \ min + 2\cdot w - 1] \\
+    ... \\
+    Bin \ K&amp;: [min + (K-1)\cdot w, \ max]
+    \label{eq:equal_width_binning}
+\end{split}
+\end{equation}
+\)</span>$</p>
+<p>As an example of equal width binning, consider splitting the Age feature in the Amsterdam demographics dataset into <span class="math notranslate nohighlight">\(K=3\)</span> bins.</p>
+<p>The bin’s width is:
+$<span class="math notranslate nohighlight">\(
+\begin{equation*}
+    w = \Big[\frac{max-min}{x}\Big] = \Big[\frac{54-25}{3}\Big] = 9.7 \approx 10
+\end{equation*}
+\)</span>$</p>
+<p>which we rounded to the nearest integer because Age values are always integers (in this dataset).</p>
+<p>To implement equal width binning in Python and calculate each bin’s range for the “Age” feature of the Amsterdam demographics dataset using <span class="math notranslate nohighlight">\(K=3\)</span> bins, we can use the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> library to help with calculations and then use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> for binning. Here’s how you can perform this task:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of bins</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># Calculate the width of each bin</span>
+<span class="n">min_age</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">max_age</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">width</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_age</span> <span class="o">-</span> <span class="n">min_age</span><span class="p">)</span> <span class="o">//</span> <span class="n">K</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define bins using calculated width</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_age</span><span class="p">,</span> <span class="n">max_age</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[25.         34.66666667 44.33333333 54.        ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create bin labels</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Bin </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Bin 1&#39;, &#39;Bin 2&#39;, &#39;Bin 3&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform binning</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age Bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">include_lowest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Income (€)</th>
+      <th>Vehicle</th>
+      <th>Kids</th>
+      <th>Residence</th>
+      <th>Age Group</th>
+      <th>Age Bin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32</td>
+      <td>95000</td>
+      <td>none</td>
+      <td>no</td>
+      <td>downtown</td>
+      <td>Young</td>
+      <td>Bin 1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>46</td>
+      <td>210000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>downtown</td>
+      <td>Old</td>
+      <td>Bin 3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25</td>
+      <td>75000</td>
+      <td>truck</td>
+      <td>yes</td>
+      <td>suburbs</td>
+      <td>Young</td>
+      <td>Bin 1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>36</td>
+      <td>30000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>suburbs</td>
+      <td>Middle</td>
+      <td>Bin 2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>29</td>
+      <td>55000</td>
+      <td>none</td>
+      <td>no</td>
+      <td>suburbs</td>
+      <td>Young</td>
+      <td>Bin 1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>54</td>
+      <td>430000</td>
+      <td>car</td>
+      <td>yes</td>
+      <td>downtown</td>
+      <td>Old</td>
+      <td>Bin 3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter7"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="data_cleaning.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Cleaning</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="data_augmentation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data Augmentation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-libraries-data-variables">1. Required Libraries, Data &amp; Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-encoding">2. Feature Encoding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-one-hot-encoding-to-vehicle-and-kids">2.1. Apply One-Hot Encoding to “Vehicle” and “Kids”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-label-encoding-to-residence">2.2. Apply Label Encoding to “Residence”</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling">3. Feature Scaling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-binning">4. Feature Binning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-approach">4.1. General Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equal-width-binning">4.2. Equal Width Binning</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andrew Wolf
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

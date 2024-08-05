@@ -1,485 +1,466 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Linear Regression &#8212; The Machine Learning Simplified book</title>
-    
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
-
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter3/linear_regression';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Cost Function" href="cost_function.html" />
     <link rel="prev" title="K-Nearest Neighbors Classifier" href="../chapter2/knn.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/mls_logo.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">The Machine Learning Simplified book</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../index.html">
-   About
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 2 - Overview of Supervised Learning
- </span>
-</p>
+    
+    
+    <img src="../_static/mls_logo.png" class="logo__image only-light" alt="The Machine Learning Simplified book - Home"/>
+    <script>document.write(`<img src="../_static/mls_logo.png" class="logo__image only-dark" alt="The Machine Learning Simplified book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    About
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 2 - Overview of Supervised Learning</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter2/knn.html">
-   K-Nearest Neighbors (KNN) Classifier
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/knn.html">K-Nearest Neighbors (KNN) Classifier</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 3 - Model Learning
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 3 - Model Learning</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Linear Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="cost_function.html">
-   Cost Function
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gradient_descent.html">
-   Gradient Descent
-  </a>
- </li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cost_function.html">Cost Function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gradient_descent.html">Gradient Descent</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 4 - Basis Expansion &amp; Regularization
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 4 - Basis Expansion &amp; Regularization</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter4/basis_expansion.html">
-   Basis Expansion
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter4/regularization.html">
-   Regularization
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/basis_expansion.html">Basis Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/regularization.html">Regularization</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 5 - Model Selection
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 5 - Model Selection</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter5/bias_variance_decomposition.html">
-   Bias-variance Decomposition
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter5/validation_methods.html">
-   Cross-validation Methods
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/bias_variance_decomposition.html">Bias-variance Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/validation_methods.html">Cross-validation Methods</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  CHAPTER 6 - Feature Selection
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 6 - Feature Selection</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter6/filter_methods.html">
-   Filter Methods
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../chapter6/search_methods.html">
-   Search Methods
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/filter_methods.html">Filter Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/search_methods.html">Search Methods</a></li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        <a class="dropdown-buttons"
-            href="../_sources/chapter3/linear_regression.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapter3/linear_regression.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+</nav></div>
     </div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-            <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/5x12/themlsbook"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter3/linear_regression.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter3/linear_regression.md"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
     </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter3/linear_regression.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter3/linear_regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
 
-            <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/5x12/themlsbook/master?urlpath=tree/jupyter_book/chapter3/linear_regression.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter3/linear_regression.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
     </div>
+  
 </div>
+</div>
+              
+              
 
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Linear Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div>
+                <h2> Contents </h2>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#required-libraries-functions">
-   1. Required Libraries &amp; Functions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#problem-representation">
-   2. Problem Representation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-hypothetical-dataset">
-     2.1. Create Hypothetical Dataset
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#visualize-the-dataset">
-     2.2. Visualize the Dataset
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-a-prediction-function">
-   3. Learning a Prediction Function
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#build-a-linear-regression">
-     3.1. Build a Linear Regression
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#vizualize-linear-regression">
-     3.2. Vizualize Linear Regression
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-good-is-our-prediction-function">
-   4. How Good is our Prediction Function?
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#draw-residuals">
-     4.1. Draw Residuals
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#calculating-sum-of-squared-residuals-ssr">
-     4.2. Calculating Sum of Squared Residuals (SSR)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#build-regressions-with-wrong-parameters">
-   5. Build Regressions with Wrong Parameters
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#regression-i">
-     5.1. Regression I
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#regression-ii">
-     5.2. Regression II
-    </a>
-   </li>
-  </ul>
- </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-libraries-functions">1. Required Libraries &amp; Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-representation">2. Problem Representation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-hypothetical-dataset">2.1. Create Hypothetical Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-the-dataset">2.2. Visualize the Dataset</a></li>
 </ul>
-
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-a-prediction-function">3. Learning a Prediction Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-linear-regression">3.1. Build a Linear Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vizualize-linear-regression">3.2. Vizualize Linear Regression</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-good-is-our-prediction-function">4. How Good is our Prediction Function?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#draw-residuals">4.1. Draw Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-sum-of-squared-residuals-ssr">4.2. Calculating Sum of Squared Residuals (SSR)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-regressions-with-wrong-parameters">5. Build Regressions with Wrong Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-i">5.1. Regression I</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-ii">5.2. Regression II</a></li>
+</ul>
+</li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Linear Regression</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#required-libraries-functions">
-   1. Required Libraries &amp; Functions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#problem-representation">
-   2. Problem Representation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-hypothetical-dataset">
-     2.1. Create Hypothetical Dataset
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#visualize-the-dataset">
-     2.2. Visualize the Dataset
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-a-prediction-function">
-   3. Learning a Prediction Function
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#build-a-linear-regression">
-     3.1. Build a Linear Regression
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#vizualize-linear-regression">
-     3.2. Vizualize Linear Regression
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-good-is-our-prediction-function">
-   4. How Good is our Prediction Function?
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#draw-residuals">
-     4.1. Draw Residuals
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#calculating-sum-of-squared-residuals-ssr">
-     4.2. Calculating Sum of Squared Residuals (SSR)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#build-regressions-with-wrong-parameters">
-   5. Build Regressions with Wrong Parameters
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#regression-i">
-     5.1. Regression I
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#regression-ii">
-     5.2. Regression II
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
+              
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="linear-regression">
-<span id="chapter3-part1"></span><h1>Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="linear-regression">
+<span id="chapter3-part1"></span><h1>Linear Regression<a class="headerlink" href="#linear-regression" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>This is a supplement material for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book.</p></li>
 <li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
 <li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
 </ul>
-<div class="section" id="required-libraries-functions">
-<h2>1. Required Libraries &amp; Functions<a class="headerlink" href="#required-libraries-functions" title="Permalink to this headline">¶</a></h2>
+<section id="required-libraries-functions">
+<h2>1. Required Libraries &amp; Functions<a class="headerlink" href="#required-libraries-functions" title="Link to this heading">#</a></h2>
 <p>Before we start, we need to import few libraries that we will use in this jupyterbook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -491,11 +472,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="problem-representation">
-<h2>2. Problem Representation<a class="headerlink" href="#problem-representation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="problem-representation">
+<h2>2. Problem Representation<a class="headerlink" href="#problem-representation" title="Link to this heading">#</a></h2>
 <p>Let’s recall Chapter 3 of <a class="reference external" href="https://themlsbook.com">the Machine Learning Simplified book</a>. We have a hypothetical dataset of six apartments located in the center of Amsterdam along with their prices (in 10,000 EUR) and floor areas (in square meters).</p>
-<table class="colwidths-auto table">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>area (<span class="math notranslate nohighlight">\(m^2\)</span>)</p></th>
 <th class="head"><p>price (in €10,000)</p></th>
@@ -522,8 +503,9 @@ const thebe_selector_output = ".output, .cell_output"
 </tr>
 </tbody>
 </table>
-<div class="section" id="create-hypothetical-dataset">
-<h3>2.1. Create Hypothetical Dataset<a class="headerlink" href="#create-hypothetical-dataset" title="Permalink to this headline">¶</a></h3>
+</div>
+<section id="create-hypothetical-dataset">
+<h3>2.1. Create Hypothetical Dataset<a class="headerlink" href="#create-hypothetical-dataset" title="Link to this heading">#</a></h3>
 <p>To create two arrays, X and Y, we use <code class="docutils literal notranslate"><span class="pre">numpy</span></code> (<code class="docutils literal notranslate"><span class="pre">np</span></code>) library that we have already loaded it in the beginning of this notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -533,9 +515,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="visualize-the-dataset">
-<h3>2.2. Visualize the Dataset<a class="headerlink" href="#visualize-the-dataset" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="visualize-the-dataset">
+<h3>2.2. Visualize the Dataset<a class="headerlink" href="#visualize-the-dataset" title="Link to this heading">#</a></h3>
 <p>Let’s now make the same graph that we had in the book (Figure 3.1). We can do so by using <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> library that we loaded in the beginning of this notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -556,16 +538,16 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 110.0)
 </pre></div>
 </div>
-<img alt="../_images/linear_regression_5_1.png" src="../_images/linear_regression_5_1.png" />
+<a class="reference internal image-reference" href="../_images/d6c81c7fc7fe8b27fa48c5be0245538bf3d1ce1721e371318b119109d6472809.png"><img alt="../_images/d6c81c7fc7fe8b27fa48c5be0245538bf3d1ce1721e371318b119109d6472809.png" src="../_images/d6c81c7fc7fe8b27fa48c5be0245538bf3d1ce1721e371318b119109d6472809.png" style="width: 552px; height: 418px;" /></a>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="learning-a-prediction-function">
-<h2>3. Learning a Prediction Function<a class="headerlink" href="#learning-a-prediction-function" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="learning-a-prediction-function">
+<h2>3. Learning a Prediction Function<a class="headerlink" href="#learning-a-prediction-function" title="Link to this heading">#</a></h2>
 <p>Let’s now build a simple regression with our data and then visualize it with the graph.</p>
-<div class="section" id="build-a-linear-regression">
-<h3>3.1. Build a Linear Regression<a class="headerlink" href="#build-a-linear-regression" title="Permalink to this headline">¶</a></h3>
+<section id="build-a-linear-regression">
+<h3>3.1. Build a Linear Regression<a class="headerlink" href="#build-a-linear-regression" title="Link to this heading">#</a></h3>
 <p>First, we <strong>initialize</strong> our <code class="docutils literal notranslate"><span class="pre">Linear</span> <span class="pre">Regression</span></code> algorithm. We use <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> from <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> library that we loaded in the beginning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -599,9 +581,9 @@ intercept (parameter b) = -18.0
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="vizualize-linear-regression">
-<h3>3.2. Vizualize Linear Regression<a class="headerlink" href="#vizualize-linear-regression" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="vizualize-linear-regression">
+<h3>3.2. Vizualize Linear Regression<a class="headerlink" href="#vizualize-linear-regression" title="Link to this heading">#</a></h3>
 <p>Now we know the fitted function - <span class="math notranslate nohighlight">\(f(x) = -18.0  + 1.3*x\)</span>, we can plot it. For that, we can use <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> library.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -625,16 +607,16 @@ intercept (parameter b) = -18.0
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 110.0)
 </pre></div>
 </div>
-<img alt="../_images/linear_regression_13_1.png" src="../_images/linear_regression_13_1.png" />
+<a class="reference internal image-reference" href="../_images/303ca9ca07ceeeba6cd88f588117a72de3b6357a68475b0e425b7a300bb01c99.png"><img alt="../_images/303ca9ca07ceeeba6cd88f588117a72de3b6357a68475b0e425b7a300bb01c99.png" src="../_images/303ca9ca07ceeeba6cd88f588117a72de3b6357a68475b0e425b7a300bb01c99.png" style="width: 552px; height: 418px;" /></a>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="how-good-is-our-prediction-function">
-<h2>4. How Good is our Prediction Function?<a class="headerlink" href="#how-good-is-our-prediction-function" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="how-good-is-our-prediction-function">
+<h2>4. How Good is our Prediction Function?<a class="headerlink" href="#how-good-is-our-prediction-function" title="Link to this heading">#</a></h2>
 <p>The next step is to evaluate how good our model is. The “goodness of fit” can be represented by the Sum of Squared Residuals (SSR). Let’s first calculate residuals!</p>
-<div class="section" id="draw-residuals">
-<h3>4.1. Draw Residuals<a class="headerlink" href="#draw-residuals" title="Permalink to this headline">¶</a></h3>
+<section id="draw-residuals">
+<h3>4.1. Draw Residuals<a class="headerlink" href="#draw-residuals" title="Link to this heading">#</a></h3>
 <p>Before we go into actual math, I’d like to briefly remind you what a residual is. And there is no better way as to simply plot a nice plot!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -649,11 +631,11 @@ intercept (parameter b) = -18.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/Library/Caches/pypoetry/virtualenvs/themlsbook-8peXrHpY-py3.9/lib/python3.9/site-packages/numpy/core/shape_base.py:65: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify &#39;dtype=object&#39; when creating the ndarray.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/numpy/core/shape_base.py:65: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify &#39;dtype=object&#39; when creating the ndarray.
   ary = asanyarray(ary)
 </pre></div>
 </div>
-<img alt="../_images/linear_regression_15_1.png" src="../_images/linear_regression_15_1.png" />
+<a class="reference internal image-reference" href="../_images/026e36080b43ff365a76c325dbab4e3d06e8b66e1ea59a71d27808378dcfdc85.png"><img alt="../_images/026e36080b43ff365a76c325dbab4e3d06e8b66e1ea59a71d27808378dcfdc85.png" src="../_images/026e36080b43ff365a76c325dbab4e3d06e8b66e1ea59a71d27808378dcfdc85.png" style="width: 552px; height: 413px;" /></a>
 </div>
 </div>
 <p>The blue vertical lines represent the residuals - the difference between the actual data points and the predicted (by our model) values. So, in order to find the SSR, we need to find residuals first.</p>
@@ -694,9 +676,9 @@ intercept (parameter b) = -18.0
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="calculating-sum-of-squared-residuals-ssr">
-<h3>4.2. Calculating Sum of Squared Residuals (SSR)<a class="headerlink" href="#calculating-sum-of-squared-residuals-ssr" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="calculating-sum-of-squared-residuals-ssr">
+<h3>4.2. Calculating Sum of Squared Residuals (SSR)<a class="headerlink" href="#calculating-sum-of-squared-residuals-ssr" title="Link to this heading">#</a></h3>
 <p>Let’s calculate SSR. The formula for calculating SSR is:
 $<span class="math notranslate nohighlight">\(SSR = \sum (y_i-\hat{y}_i)^2=\sum(r_i)^2\)</span>$
 where</p>
@@ -736,13 +718,13 @@ where</p>
 </div>
 </div>
 <p>Hence, the SSR for the function <span class="math notranslate nohighlight">\(f(x) = -18.0  + 1.3*x\)</span> is <span class="math notranslate nohighlight">\(1248.15\)</span>.</p>
-</div>
-</div>
-<div class="section" id="build-regressions-with-wrong-parameters">
-<h2>5. Build Regressions with Wrong Parameters<a class="headerlink" href="#build-regressions-with-wrong-parameters" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="build-regressions-with-wrong-parameters">
+<h2>5. Build Regressions with Wrong Parameters<a class="headerlink" href="#build-regressions-with-wrong-parameters" title="Link to this heading">#</a></h2>
 <p>Just like we did in the <a class="reference external" href="https://themlsbook.com">MLS</a> book, let’s now build two regressions with random values for coefficient (<span class="math notranslate nohighlight">\(a\)</span>) and intercept (<span class="math notranslate nohighlight">\(b\)</span>), and see how their SSR would differ from the “true” regression <span class="math notranslate nohighlight">\(y=1.3x -18\)</span> (estimated in Section 2.1.)</p>
-<div class="section" id="regression-i">
-<h3>5.1. Regression I<a class="headerlink" href="#regression-i" title="Permalink to this headline">¶</a></h3>
+<section id="regression-i">
+<h3>5.1. Regression I<a class="headerlink" href="#regression-i" title="Link to this heading">#</a></h3>
 <p>Let’s plot regression <span class="math notranslate nohighlight">\(y=-10x+780\)</span> and calculate its SSR.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -762,7 +744,7 @@ where</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 110.0)
 </pre></div>
 </div>
-<img alt="../_images/linear_regression_23_1.png" src="../_images/linear_regression_23_1.png" />
+<a class="reference internal image-reference" href="../_images/4db02b10a29c1233d2039c4d0dfa42fb964278c3b5b7ba77b100bdfb66d6ee82.png"><img alt="../_images/4db02b10a29c1233d2039c4d0dfa42fb964278c3b5b7ba77b100bdfb66d6ee82.png" src="../_images/4db02b10a29c1233d2039c4d0dfa42fb964278c3b5b7ba77b100bdfb66d6ee82.png" style="width: 552px; height: 418px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -793,9 +775,9 @@ where</p>
 <div><p>For the Regression 1, <span class="math notranslate nohighlight">\(SSR=388,806\)</span>.</p>
 </div></blockquote>
 <p>Let’s proceed with another regression, Regression 2, and execute the same tasks!</p>
-</div>
-<div class="section" id="regression-ii">
-<h3>5.2. Regression II<a class="headerlink" href="#regression-ii" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="regression-ii">
+<h3>5.2. Regression II<a class="headerlink" href="#regression-ii" title="Link to this heading">#</a></h3>
 <p>Let’s plot regression <span class="math notranslate nohighlight">\(y=4*x-190\)</span> and calculate its SSR.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -816,7 +798,7 @@ where</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 110.0)
 </pre></div>
 </div>
-<img alt="../_images/linear_regression_26_1.png" src="../_images/linear_regression_26_1.png" />
+<a class="reference internal image-reference" href="../_images/574dc58a2bb2308efb46a2625891de962fc560e3aebf8d6e806cbb4cf5230dde.png"><img alt="../_images/574dc58a2bb2308efb46a2625891de962fc560e3aebf8d6e806cbb4cf5230dde.png" src="../_images/574dc58a2bb2308efb46a2625891de962fc560e3aebf8d6e806cbb4cf5230dde.png" style="width: 552px; height: 418px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -845,9 +827,9 @@ where</p>
 <div><p>For the Regression 2, <span class="math notranslate nohighlight">\(SSR=20,326\)</span>.</p>
 </div></blockquote>
 <p>If you compare Regression 1 and Regression 2, you might notice that, as the line follows the data points, it shrinks the residuals, and lowers the Sum of Squared Residuals.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -861,7 +843,7 @@ where</p>
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./chapter3"
         },
         predefinedOutput: true
@@ -869,44 +851,123 @@ where</p>
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../chapter2/knn.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">K-Nearest Neighbors Classifier</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../chapter2/knn.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">K-Nearest Neighbors Classifier</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="cost_function.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="cost_function.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Cost Function</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
+                </footer>
+              
+            </div>
             
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By Andrew Wolf<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-      </div>
-    </div>
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-libraries-functions">1. Required Libraries &amp; Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-representation">2. Problem Representation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-hypothetical-dataset">2.1. Create Hypothetical Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-the-dataset">2.2. Visualize the Dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-a-prediction-function">3. Learning a Prediction Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-linear-regression">3.1. Build a Linear Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vizualize-linear-regression">3.2. Vizualize Linear Regression</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-good-is-our-prediction-function">4. How Good is our Prediction Function?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#draw-residuals">4.1. Draw Residuals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-sum-of-squared-residuals-ssr">4.2. Calculating Sum of Squared Residuals (SSR)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-regressions-with-wrong-parameters">5. Build Regressions with Wrong Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-i">5.1. Regression I</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-ii">5.2. Regression II</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andrew Wolf
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

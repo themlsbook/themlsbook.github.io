@@ -34,3 +34,11 @@ parts:
     title: Filter Methods
   - file: chapter6/search_methods
     title: Search Methods
+- caption: CHAPTER 7 - Data Preparation
+  chapters:
+  - file: chapter7/data_cleaning
+    title: Data Cleaning
+  - file: chapter7/feature_transformation
+    title: Feature Transformation
+  - file: chapter7/data_augmentation
+    title: Data Augmentation
