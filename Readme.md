@@ -14,7 +14,9 @@ This will create the `jupyter_book/_build/index.html` file (at the end of `jupyt
 
 ![](_static/img/jup_book_screenshot.png)
 
-Running the build multiple times will efficiently reuse the cache. To make sure that all the code is up-to-date and working, you can manually remove the whole `jupyter_book/_build/` folder and execute `poetry run jupyter-book build jupyter_book` again. Depending on the amount of code this can take a while. Don't perform too heavy computation (e.g. hyperparam tuning) in a Jupyter book.
+Running the build multiple times will efficiently reuse the cache. To make sure that all the code is up-to-date and working, you can manually remove the whole `jupyter_book/_build/` folder and execute `poetry run jupyter-book build .` again. Depending on the amount of code this can take a while. Don't perform too heavy computation (e.g. hyperparam tuning) in a Jupyter book.
+
+If you need to test jupyter-book locally in your browser, navigate to the `_build/html directory` and Start the HTTP server `python -m http.server`
 
 ## How to add content to the book
 
