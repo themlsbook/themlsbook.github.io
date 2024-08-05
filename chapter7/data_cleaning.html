@@ -1,0 +1,1874 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Data Cleaning &#8212; The Machine Learning Simplified book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter7/data_cleaning';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Feature Transformation &amp; Binning" href="feature_transformation.html" />
+    <link rel="prev" title="Search Methods" href="../chapter6/search_methods.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/mls_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/mls_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter2/knn.html">
+                        K-Nearest Neighbors (KNN) Classifier
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/linear_regression.html">
+                        Linear Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/cost_function.html">
+                        Cost Function
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/gradient_descent.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter4/basis_expansion.html">
+                        Basis Expansion
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter4/regularization.html">
+                        Regularization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter5/bias_variance_decomposition.html">
+                        Bias-variance Decomposition
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter5/validation_methods.html">
+                        Cross-validation Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter6/filter_methods.html">
+                        Filter Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter6/search_methods.html">
+                        Search Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Data Cleaning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="feature_transformation.html">
+                        Feature Transformation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="data_augmentation.html">
+                        Data Augmentation
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter2/knn.html">
+                        K-Nearest Neighbors (KNN) Classifier
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/linear_regression.html">
+                        Linear Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/cost_function.html">
+                        Cost Function
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/gradient_descent.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter4/basis_expansion.html">
+                        Basis Expansion
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter4/regularization.html">
+                        Regularization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter5/bias_variance_decomposition.html">
+                        Bias-variance Decomposition
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter5/validation_methods.html">
+                        Cross-validation Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter6/filter_methods.html">
+                        Filter Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter6/search_methods.html">
+                        Search Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Data Cleaning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="feature_transformation.html">
+                        Feature Transformation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="data_augmentation.html">
+                        Data Augmentation
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/mls_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/mls_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    About
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 2 - Overview of Supervised Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/knn.html">K-Nearest Neighbors (KNN) Classifier</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 3 - Model Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/linear_regression.html">Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/cost_function.html">Cost Function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/gradient_descent.html">Gradient Descent</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 4 - Basis Expansion &amp; Regularization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/basis_expansion.html">Basis Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/regularization.html">Regularization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 5 - Model Selection</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/bias_variance_decomposition.html">Bias-variance Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/validation_methods.html">Cross-validation Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 6 - Feature Selection</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/filter_methods.html">Filter Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/search_methods.html">Search Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 7 - Data Preparation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Cleaning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_transformation.html">Feature Transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_augmentation.html">Data Augmentation</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/5x12/themlsbook" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter7/data_cleaning.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter7/data_cleaning.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">suggest edit</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../_sources/chapter7/data_cleaning.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li><a href="../_sources/chapter7/data_cleaning.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Cleaning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-libraries-data-variables">
+   1. Required Libraries, Data &amp; Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   2. Data Cleaning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#incorrect-data">
+     2.1. Incorrect Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#improperly-formatted-data">
+     2.2. Improperly Formatted Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#duplicated-data">
+     2.3. Duplicated Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#missing-data">
+     2.4. Missing Data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#missing-value-in-purchase-column">
+       2.4.1. Missing Value in Purchase Column
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#missing-value-in-city-column">
+       2.4.2. Missing Value in City Column
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outliers">
+     2.5. Outliers
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="data-cleaning">
+<span id="chapter7-part1"></span><h1>Data Cleaning<a class="headerlink" href="#data-cleaning" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>This is a supplement material for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book.</p></li>
+<li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
+<li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
+</ul>
+<p>This notebook is a supplement for <em>Chapter 7. Data Preparation</em> of <strong>Machine Learning For Everyone</strong> book.</p>
+<section id="required-libraries-data-variables">
+<h2>1. Required Libraries, Data &amp; Variables<a class="headerlink" href="#required-libraries-data-variables" title="Permalink to this heading">#</a></h2>
+<p>Let’s import the data and have a look at it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Define the data as a dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Customer ID&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">383</span><span class="p">,</span> <span class="mi">1997</span><span class="p">,</span> <span class="mi">698</span><span class="p">,</span> <span class="mi">1314</span><span class="p">,</span> <span class="mi">1314</span><span class="p">,</span> <span class="mi">333</span><span class="p">,</span> <span class="mi">1996</span><span class="p">],</span>
+    <span class="s2">&quot;State&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Pennsylvania&quot;</span><span class="p">,</span> <span class="s2">&quot;Californai&quot;</span><span class="p">,</span> <span class="s2">&quot;California&quot;</span><span class="p">,</span> <span class="s2">&quot;Iowa&quot;</span><span class="p">,</span> <span class="s2">&quot;Iowa&quot;</span><span class="p">,</span> <span class="s2">&quot;New York&quot;</span><span class="p">,</span> <span class="s2">&quot;Washington&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;City&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Drexel Hill&quot;</span><span class="p">,</span> <span class="s2">&quot;Sacramento&quot;</span><span class="p">,</span> <span class="s2">&quot;Los Angeles&quot;</span><span class="p">,</span> <span class="s2">&quot;Fort Dodge&quot;</span><span class="p">,</span> <span class="s2">&quot;Fort Dodge&quot;</span><span class="p">,</span> <span class="s2">&quot;Brooklyn&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s2">&quot;Postal Code&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">19026</span><span class="p">,</span> <span class="mi">94229</span><span class="p">,</span> <span class="mi">90058</span><span class="p">,</span> <span class="mi">50501</span><span class="p">,</span> <span class="mi">50501</span><span class="p">,</span> <span class="mi">11249</span><span class="p">,</span> <span class="mi">98101</span><span class="p">],</span>
+    <span class="s2">&quot;Ship Date&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;23/08/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;07/03/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;14/09/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;29/02/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;29/02/2020&quot;</span><span class="p">,</span> <span class="s2">&quot;14-09-2020&quot;</span><span class="p">,</span> <span class="s2">&quot;19/05/2020&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Purchase ($)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">190</span><span class="p">,</span> <span class="mi">243</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">193</span><span class="p">,</span> <span class="mi">193</span><span class="p">,</span> <span class="mi">298</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Convert the dictionary to a DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Print the DataFrame to the console</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Customer ID</th>
+      <th>State</th>
+      <th>City</th>
+      <th>Postal Code</th>
+      <th>Ship Date</th>
+      <th>Purchase ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>383</td>
+      <td>Pennsylvania</td>
+      <td>Drexel Hill</td>
+      <td>19026</td>
+      <td>23/08/2020</td>
+      <td>190.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1997</td>
+      <td>Californai</td>
+      <td>Sacramento</td>
+      <td>94229</td>
+      <td>07/03/2020</td>
+      <td>243.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>698</td>
+      <td>California</td>
+      <td>Los Angeles</td>
+      <td>90058</td>
+      <td>14/09/2020</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>New York</td>
+      <td>Brooklyn</td>
+      <td>11249</td>
+      <td>14-09-2020</td>
+      <td>298.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1996</td>
+      <td>Washington</td>
+      <td>None</td>
+      <td>98101</td>
+      <td>19/05/2020</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Table above contains a hypothetical dirty dataset of online product orders. This dataset has a number of issues, such as incorrect data, missing data, duplicated data, irrelevant data, and improperly formatted data, that make it impossible to apply ML algorithms right away. This section discusses methods that can be used to clean this data set such that ML algorithms can be applied to it</p>
+</section>
+<section id="id1">
+<h2>2. Data Cleaning<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<section id="incorrect-data">
+<h3>2.1. Incorrect Data<a class="headerlink" href="#incorrect-data" title="Permalink to this heading">#</a></h3>
+<p>Datasets may contain data that is clearly incorrect, such as spelling or syntax errors. The data point in the second row of Table has value “Californai” for its state feature, which is clearly a misspelling of the state “California”. If this mistake were left uncorrected, any ML algorithm built on this dataset would treat the two strings “Californai” and “California” differently.</p>
+<p>How can we identify incorrect data? One way to check whether a particular column has misspelled values is to look at its set of unique values, which is often much smaller than the set of all values itself.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Pennsylvania&#39;, &#39;Californai&#39;, &#39;California&#39;, &#39;Iowa&#39;, &#39;New York&#39;,
+       &#39;Washington&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can fix misspelled ‘Californai’ with the code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;State&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;State&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Californai&#39;</span><span class="p">,</span> <span class="s1">&#39;California&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Revisiting the dataframe, the problem has been fixed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Customer ID</th>
+      <th>State</th>
+      <th>City</th>
+      <th>Postal Code</th>
+      <th>Ship Date</th>
+      <th>Purchase ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>383</td>
+      <td>Pennsylvania</td>
+      <td>Drexel Hill</td>
+      <td>19026</td>
+      <td>23/08/2020</td>
+      <td>190.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1997</td>
+      <td>California</td>
+      <td>Sacramento</td>
+      <td>94229</td>
+      <td>07/03/2020</td>
+      <td>243.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>698</td>
+      <td>California</td>
+      <td>Los Angeles</td>
+      <td>90058</td>
+      <td>14/09/2020</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>New York</td>
+      <td>Brooklyn</td>
+      <td>11249</td>
+      <td>14-09-2020</td>
+      <td>298.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1996</td>
+      <td>Washington</td>
+      <td>None</td>
+      <td>98101</td>
+      <td>19/05/2020</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="improperly-formatted-data">
+<h3>2.2. Improperly Formatted Data<a class="headerlink" href="#improperly-formatted-data" title="Permalink to this heading">#</a></h3>
+<p>In some cases, we might have improperly formatted values. For instance, the Ship Date column in Table includes dates are improperly formatted, leading to misaligned date format. We need to standardize the format for all the dates, since an algorithm would treat the date 19-05-2020 and the date 19/05/2020 as two different dates, even though they are the same date in different formats.</p>
+<p>We can fix these inconsistences by using <code class="docutils literal notranslate"><span class="pre">pd.to_datetime</span></code> with <code class="docutils literal notranslate"><span class="pre">format='mixed'</span></code> argument to handle a mixture of date formats dynamically. This can be particularly useful if the dates are not consistently in one format.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert &#39;Ship Date&#39; to datetime format (ISO format by default)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Ship Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Ship Date&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;mixed&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Customer ID</th>
+      <th>State</th>
+      <th>City</th>
+      <th>Postal Code</th>
+      <th>Ship Date</th>
+      <th>Purchase ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>383</td>
+      <td>Pennsylvania</td>
+      <td>Drexel Hill</td>
+      <td>19026</td>
+      <td>2020-08-23</td>
+      <td>190.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1997</td>
+      <td>California</td>
+      <td>Sacramento</td>
+      <td>94229</td>
+      <td>2020-07-03</td>
+      <td>243.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>698</td>
+      <td>California</td>
+      <td>Los Angeles</td>
+      <td>90058</td>
+      <td>2020-09-14</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>2020-02-29</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>2020-02-29</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>New York</td>
+      <td>Brooklyn</td>
+      <td>11249</td>
+      <td>2020-09-14</td>
+      <td>298.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1996</td>
+      <td>Washington</td>
+      <td>None</td>
+      <td>98101</td>
+      <td>2020-05-19</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s format the ‘Ship Date’ to “dd/mm/yyyy” after conversion</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Ship Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Ship Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y&#39;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Customer ID</th>
+      <th>State</th>
+      <th>City</th>
+      <th>Postal Code</th>
+      <th>Ship Date</th>
+      <th>Purchase ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>383</td>
+      <td>Pennsylvania</td>
+      <td>Drexel Hill</td>
+      <td>19026</td>
+      <td>23/08/2020</td>
+      <td>190.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1997</td>
+      <td>California</td>
+      <td>Sacramento</td>
+      <td>94229</td>
+      <td>03/07/2020</td>
+      <td>243.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>698</td>
+      <td>California</td>
+      <td>Los Angeles</td>
+      <td>90058</td>
+      <td>14/09/2020</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>New York</td>
+      <td>Brooklyn</td>
+      <td>11249</td>
+      <td>14/09/2020</td>
+      <td>298.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1996</td>
+      <td>Washington</td>
+      <td>None</td>
+      <td>98101</td>
+      <td>19/05/2020</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="duplicated-data">
+<h3>2.3. Duplicated Data<a class="headerlink" href="#duplicated-data" title="Permalink to this heading">#</a></h3>
+<p>Duplicated data is another common problem that arises in practice. For example, provided dataset has duplicate observations in rows three and four, and in rows four and five. Duplicate data effectively doubles the weight that an ML algorithm gives to the data point and has the effect of incorrectly prioritizing some data points over others which can lead to a poor model.</p>
+<p>One of the ways to fix this is to use <code class="docutils literal notranslate"><span class="pre">drop_duplicates()</span></code> method in pandas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cleaned</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cleaned</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Customer ID</th>
+      <th>State</th>
+      <th>City</th>
+      <th>Postal Code</th>
+      <th>Ship Date</th>
+      <th>Purchase ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>383</td>
+      <td>Pennsylvania</td>
+      <td>Drexel Hill</td>
+      <td>19026</td>
+      <td>23/08/2020</td>
+      <td>190.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1997</td>
+      <td>California</td>
+      <td>Sacramento</td>
+      <td>94229</td>
+      <td>03/07/2020</td>
+      <td>243.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>698</td>
+      <td>California</td>
+      <td>Los Angeles</td>
+      <td>90058</td>
+      <td>14/09/2020</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>New York</td>
+      <td>Brooklyn</td>
+      <td>11249</td>
+      <td>14/09/2020</td>
+      <td>298.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1996</td>
+      <td>Washington</td>
+      <td>None</td>
+      <td>98101</td>
+      <td>19/05/2020</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="missing-data">
+<h3>2.4. Missing Data<a class="headerlink" href="#missing-data" title="Permalink to this heading">#</a></h3>
+<p>Missing data arises for a variety of reasons. For example, if the data is entered by a human being, he may have forgotten to input one or more values. Alternatively, data may be missing because it is genuinely unknown or unmeasured, such as, for example, a set of survey questions that were answered by some, but not all, customers. A missing value occurs in our running example for the purchase column in row three (Purchase column) and six (City column).</p>
+<section id="missing-value-in-purchase-column">
+<h4>2.4.1. Missing Value in Purchase Column<a class="headerlink" href="#missing-value-in-purchase-column" title="Permalink to this heading">#</a></h4>
+<p>A missing value in Purchase column cannot be determined exactly and we need to make an educated guess at its value. For example, to impute a missing product order, we take the median order total.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the median of the &#39;Purchase ($)&#39; column, excluding NaN values</span>
+<span class="n">median_purchase</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;Purchase ($)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+
+
+<span class="c1"># Impute missing values in the &#39;Purchase ($)&#39; column with the median</span>
+<span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;Purchase ($)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">median_purchase</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5y/7zvhsc3x5nx162713kvx9c1m0000gn/T/ipykernel_9649/3282763330.py:6: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
+The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
+
+For example, when doing &#39;df[col].method(value, inplace=True)&#39;, try using &#39;df.method({col: value}, inplace=True)&#39; or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.
+
+
+  df_cleaned[&#39;Purchase ($)&#39;].fillna(median_purchase, inplace=True)
+/var/folders/5y/7zvhsc3x5nx162713kvx9c1m0000gn/T/ipykernel_9649/3282763330.py:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df_cleaned[&#39;Purchase ($)&#39;].fillna(median_purchase, inplace=True)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cleaned</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Customer ID</th>
+      <th>State</th>
+      <th>City</th>
+      <th>Postal Code</th>
+      <th>Ship Date</th>
+      <th>Purchase ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>383</td>
+      <td>Pennsylvania</td>
+      <td>Drexel Hill</td>
+      <td>19026</td>
+      <td>23/08/2020</td>
+      <td>190.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1997</td>
+      <td>California</td>
+      <td>Sacramento</td>
+      <td>94229</td>
+      <td>03/07/2020</td>
+      <td>243.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>698</td>
+      <td>California</td>
+      <td>Los Angeles</td>
+      <td>90058</td>
+      <td>14/09/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>New York</td>
+      <td>Brooklyn</td>
+      <td>11249</td>
+      <td>14/09/2020</td>
+      <td>298.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1996</td>
+      <td>Washington</td>
+      <td>None</td>
+      <td>98101</td>
+      <td>19/05/2020</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="missing-value-in-city-column">
+<h4>2.4.2. Missing Value in City Column<a class="headerlink" href="#missing-value-in-city-column" title="Permalink to this heading">#</a></h4>
+<p>Sometimes the missing value can be determined exactly. For example, if the US State of an order is missing, but we have its zip code, we can determine its state exactly (assuming we have another table which maps zip codes to states) and fill it into the table.</p>
+<p>To fill in missing values for the ‘City’ column using the zip code when you have another table that maps zip codes to cities, you can use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library to merge these dataframes effectively. Here’s how you can perform this operation:</p>
+<ul class="simple">
+<li><p>Create a mapping table: This table will map zip codes to their corresponding cities.</p></li>
+<li><p>Merge this mapping table with your main data table: This merge operation will use the zip code as a key.</p></li>
+<li><p>Update the ‘City’ column in the main table: If the ‘City’ is missing but can be found through the mapping table, update it accordingly.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mapping table that relates Postal Codes to Cities</span>
+<span class="n">zip_to_city</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Postal Code&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">94229</span><span class="p">,</span> <span class="mi">50501</span><span class="p">,</span> <span class="mi">98101</span><span class="p">,</span> <span class="mi">11249</span><span class="p">,</span> <span class="mi">90058</span><span class="p">,</span> <span class="mi">19026</span><span class="p">],</span>
+    <span class="s2">&quot;City&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Sacramento&quot;</span><span class="p">,</span> <span class="s2">&quot;Fort Dodge&quot;</span><span class="p">,</span> <span class="s2">&quot;Seattle&quot;</span><span class="p">,</span> <span class="s2">&quot;Brooklyn&quot;</span><span class="p">,</span> <span class="s2">&quot;Los Angeles&quot;</span><span class="p">,</span> <span class="s2">&quot;Drexel Hill&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df_mapping</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">zip_to_city</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_mapping</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Postal Code</th>
+      <th>City</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>94229</td>
+      <td>Sacramento</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>50501</td>
+      <td>Fort Dodge</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>98101</td>
+      <td>Seattle</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11249</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>90058</td>
+      <td>Los Angeles</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>19026</td>
+      <td>Drexel Hill</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Merge the main DataFrame with the mapping DataFrame on &#39;Postal Code&#39;</span>
+<span class="n">df_merged</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_mapping</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;Postal Code&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;_mapped&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_merged</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Customer ID</th>
+      <th>State</th>
+      <th>City</th>
+      <th>Postal Code</th>
+      <th>Ship Date</th>
+      <th>Purchase ($)</th>
+      <th>City_mapped</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>383</td>
+      <td>Pennsylvania</td>
+      <td>Drexel Hill</td>
+      <td>19026</td>
+      <td>23/08/2020</td>
+      <td>190.0</td>
+      <td>Drexel Hill</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1997</td>
+      <td>California</td>
+      <td>Sacramento</td>
+      <td>94229</td>
+      <td>03/07/2020</td>
+      <td>243.0</td>
+      <td>Sacramento</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>698</td>
+      <td>California</td>
+      <td>Los Angeles</td>
+      <td>90058</td>
+      <td>14/09/2020</td>
+      <td>193.0</td>
+      <td>Los Angeles</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1314</td>
+      <td>Iowa</td>
+      <td>Fort Dodge</td>
+      <td>50501</td>
+      <td>29/02/2020</td>
+      <td>193.0</td>
+      <td>Fort Dodge</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>333</td>
+      <td>New York</td>
+      <td>Brooklyn</td>
+      <td>11249</td>
+      <td>14/09/2020</td>
+      <td>298.0</td>
+      <td>Brooklyn</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1996</td>
+      <td>Washington</td>
+      <td>None</td>
+      <td>98101</td>
+      <td>19/05/2020</td>
+      <td>1.0</td>
+      <td>Seattle</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="outliers">
+<h3>2.5. Outliers<a class="headerlink" href="#outliers" title="Permalink to this heading">#</a></h3>
+<p>An outlier is an observation that differs significantly from other observations. Outliers may be problematic for one of two reasons:</p>
+<ul class="simple">
+<li><p>first, an outlier may simply not be representative of data that we will see at test time (in a new dataset);</p></li>
+<li><p>second, many ML algorithms are sensitive to severe outliers and often learn models which focuses too heavily on outliers and consequently make poor predictions on the rest of the data points.</p></li>
+</ul>
+<p>There are no hard and fast rules about how to classify a point as an outlier and whether or not to remove it from the dataset. Usually, you will build ML models several times, both with and without outliers, and with different methods of outlier categorization. This subsection shows a statistical test that is commonly performed in practice to determine an outlier.</p>
+<p>How can we use statistical metrics to determine if a data point is an outlier? The simplest way is to identify if a datapoint is too far away from the average value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_value</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;Purchase ($)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">std_dev</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;Purchase ($)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean = </span><span class="si">{</span><span class="n">mean_value</span><span class="si">}</span><span class="s2">, Standard Deviation = </span><span class="si">{</span><span class="n">std_dev</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean = 186.33333333333334, Standard Deviation = 100.13124720419029
+</pre></div>
+</div>
+</div>
+</div>
+<p>Suppose we set a range of acceptable values of k = 3 standard deviations. Then:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find outliers based on the defined threshold</span>
+<span class="n">k</span><span class="o">=</span><span class="mi">3</span>
+
+<span class="n">lower_bound</span> <span class="o">=</span> <span class="n">mean_value</span> <span class="o">-</span> <span class="n">k</span> <span class="o">*</span> <span class="n">std_dev</span>
+<span class="n">upper_bound</span> <span class="o">=</span> <span class="n">mean_value</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="n">std_dev</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Anything below </span><span class="si">{</span><span class="n">lower_bound</span><span class="si">}</span><span class="s2"> and above </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">}</span><span class="s2"> is considered as an outlier.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Anything below -114.06040827923752 and above 486.7270749459042 is considered as an outlier.
+</pre></div>
+</div>
+</div>
+</div>
+<p>But since we cannot have a purchase with a negative sum, outlier would be above 486.72. In this data set, there are no outliers present.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter7"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="../chapter6/search_methods.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Search Methods</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="feature_transformation.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Feature Transformation &amp; Binning</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-libraries-data-variables">
+   1. Required Libraries, Data &amp; Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   2. Data Cleaning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#incorrect-data">
+     2.1. Incorrect Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#improperly-formatted-data">
+     2.2. Improperly Formatted Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#duplicated-data">
+     2.3. Duplicated Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#missing-data">
+     2.4. Missing Data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#missing-value-in-purchase-column">
+       2.4.1. Missing Value in Purchase Column
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#missing-value-in-city-column">
+       2.4.2. Missing Value in City Column
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outliers">
+     2.5. Outliers
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andrew Wolf
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>
