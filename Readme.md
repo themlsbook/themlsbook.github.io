@@ -27,7 +27,7 @@ Take a look at Markdown examples. You can generate this from a jupyter-notebook 
  - add a header that will say that the code in this markdown is executable, you can copy these 10 lines of code from any existing file, say from [jupyter\_book/book/chapter2/knn.md](book/chapter2/knn.md);
  - replace all "```python" with "```{code-cell} ipython3" – this will assure that code blocks are executable.
 
-Then, place the markdown in the `book` folder and put a corresponding record into the table of contents – `_toc.yml` file. 
+Then, place the markdown in the `book` folder and put a corresponding record into the table of contents – `_toc.yml` file.
 
 
 # Re-deploy
@@ -35,5 +35,6 @@ Then, place the markdown in the `book` folder and put a corresponding record int
 - After checking that everyting is ok (check locally ```cd mlsbook/_build/html; python -m http.server```)
 - Remove ```_build``` folder completely
 - Trigger ```jupyter-book build mlsbook```
-- Now you need to copy files located in ```mlsbook/_build/html``` to github branch ```gh-pages```
+- Now you need to copy folders and updated config located in ```mlsbook/_build/html``` to github branch ```gh-pages```
+Note: you can remove all files from gh-pages and copy the content of _build/html, but you need two files to add .buildinfo and .nojekyll.
 - Do not forget to add CNAME file as well, with code.themlsbook.com
