@@ -42,3 +42,9 @@ parts:
     title: Feature Transformation
   - file: chapter7/data_augmentation
     title: Data Augmentation
+- caption: CHAPTER 8 - Decision Trees
+  chapters:
+  - file: chapter8/decision_tree_regressor
+    title: Decision Tree in Regression
+  - file: chapter8/decision_tree_classifier
+    title: Decision Tree in Classification
