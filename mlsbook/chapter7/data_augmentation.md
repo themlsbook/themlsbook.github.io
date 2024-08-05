@@ -26,7 +26,7 @@ This notebook is a supplement for *Chapter 7. Data Preparation* of **Machine Lea
 Let's import needed libraries:
 
 
-```python
+```{code-cell} ipython3
 import pandas as pd
 from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import LabelEncoder
@@ -35,7 +35,7 @@ from sklearn.preprocessing import LabelEncoder
 Imagine you obtained the following dataset from  Silver Suchs Bank. This dataset contains 55 observations of bank transaction over a certain period of time. The target column $Status$ has two classes: $Fraud$ for fraudulent transactions and $Legit$ for legal transactions. Imagine that out of 55 observations in the dataset, there are 50 legal transactions (class $Legit$) and only 5 fraudulent transactions (class $Fraud$). These two classes are imbalanced.
 
 
-```python
+```{code-cell} ipython3
 # Data for 55 transactions, out of which 5 are Fraud class
 data = {
     "#": range(1, 56),
@@ -94,146 +94,25 @@ df_bank_transactions = pd.DataFrame(data)
 ```
 
 
-```python
+```{code-cell} ipython3
 # Display the DataFrame
 df_bank_transactions.head(10)
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>#</th>
-      <th>date</th>
-      <th>time</th>
-      <th>location</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>21/08/2020</td>
-      <td>02:00</td>
-      <td>Amsterdam</td>
-      <td>Legit</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>24/12/2020</td>
-      <td>05:19</td>
-      <td>Dusseldorf</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>10/04/2020</td>
-      <td>18:06</td>
-      <td>Berlin</td>
-      <td>Legit</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>13/03/2020</td>
-      <td>19:01</td>
-      <td>Belgium</td>
-      <td>Legit</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5</td>
-      <td>08/10/2020</td>
-      <td>15:34</td>
-      <td>Paris</td>
-      <td>Legit</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>6</td>
-      <td>02/04/2020</td>
-      <td>23:58</td>
-      <td>Amsterdam</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>7</td>
-      <td>15/05/2020</td>
-      <td>00:45</td>
-      <td>Dusseldorf</td>
-      <td>Legit</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>8</td>
-      <td>18/07/2020</td>
-      <td>01:15</td>
-      <td>Berlin</td>
-      <td>Legit</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>9</td>
-      <td>20/06/2020</td>
-      <td>02:30</td>
-      <td>Belgium</td>
-      <td>Legit</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>10</td>
-      <td>22/08/2020</td>
-      <td>03:50</td>
-      <td>Paris</td>
-      <td>Legit</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
+```{code-cell} ipython3
 # Calculate the number of 'Fraud' and 'Legit' observations
 status_counts = df_bank_transactions['Status'].value_counts()
 
 print(status_counts)
 ```
 
-    Status
-    Legit    50
-    Fraud     5
-    Name: count, dtype: int64
-
-
 Fraud class is imbalanced as it contains only 5 observations. Imbalanced classes can create problems in ML classification if the difference between the minority and majority classes are significant. When we have a very few observations in one class and a lot of observations in another, we try to minimize the gap. 
 
 One of the ways to do so is by using oversampling technique SMOTE.
 
 
-```python
+```{code-cell} ipython3
 # Preprocess the data: Convert categorical variables to numeric
 # Encoding 'location' and 'Status' for demonstration
 
@@ -245,213 +124,38 @@ df_bank_transactions['Status_encoded'] = le_status.fit_transform(df_bank_transac
 ```
 
 
-```python
+```{code-cell} ipython3
 df_bank_transactions.head()
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>#</th>
-      <th>date</th>
-      <th>time</th>
-      <th>location</th>
-      <th>Status</th>
-      <th>location_encoded</th>
-      <th>Status_encoded</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>21/08/2020</td>
-      <td>02:00</td>
-      <td>Amsterdam</td>
-      <td>Legit</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>24/12/2020</td>
-      <td>05:19</td>
-      <td>Dusseldorf</td>
-      <td>Fraud</td>
-      <td>3</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>10/04/2020</td>
-      <td>18:06</td>
-      <td>Berlin</td>
-      <td>Legit</td>
-      <td>2</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>13/03/2020</td>
-      <td>19:01</td>
-      <td>Belgium</td>
-      <td>Legit</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5</td>
-      <td>08/10/2020</td>
-      <td>15:34</td>
-      <td>Paris</td>
-      <td>Legit</td>
-      <td>4</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
+```{code-cell} ipython3
 # Define features and target variable
 X = df_bank_transactions[['location_encoded']]  # Simplified feature set for demonstration
 y = df_bank_transactions['Status_encoded']
 ```
 
 
-```python
+```{code-cell} ipython3
 # Apply SMOTE to balance the dataset
 smote = SMOTE(sampling_strategy={0: 50}, k_neighbors=4)  # Class label '0' corresponds to 'Fraud'
 X_res, y_res = smote.fit_resample(X, y)
 ```
 
 
-```python
+```{code-cell} ipython3
 # Check the new class distribution
 print("New class distribution:", pd.Series(y_res).value_counts())
 ```
 
-    New class distribution: Status_encoded
-    1    50
-    0    50
-    Name: count, dtype: int64
 
-
-
-```python
+```{code-cell} ipython3
 # Optionally, convert results back to a DataFrame and map encoded values back to original
 resampled_data = pd.DataFrame(X_res, columns=['location_encoded'])
 resampled_data['Status'] = le_status.inverse_transform(y_res)
 ```
 
 
-```python
+```{code-cell} ipython3
 resampled_data.tail(10)
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>location_encoded</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>90</th>
-      <td>0</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>91</th>
-      <td>3</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>92</th>
-      <td>0</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>93</th>
-      <td>3</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>94</th>
-      <td>0</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>95</th>
-      <td>3</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>96</th>
-      <td>2</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>2</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>0</td>
-      <td>Fraud</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>1</td>
-      <td>Fraud</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-

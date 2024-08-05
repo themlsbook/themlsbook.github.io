@@ -8,13 +8,13 @@ To build the book:
 
 - navigate to the project root folder `themlsbook`;
 - install all dependencies managed by [Poetry](https://python-poetry.org/docs/basic-usage/): `poetry install`;
-- execute `poetry run jupyter-book build jupyter_book`.
+- execute `poetry run jupyter-book build .`.
 
 This will create the `jupyter_book/_build/index.html` file (at the end of `jupyter-book` log you'll see a link to this file as well). Opening this in a browser shows smth like this:
 
 ![](_static/img/jup_book_screenshot.png)
 
-Running the build multiple times will efficiently reuse the cache. To make sure that all the code is up-to-date and working, you can manually remove the whole `jupyter_book/_build/` folder and execute `poetry run jupyter-book build .` again. Depending on the amount of code this can take a while. Don't perform too heavy computation (e.g. hyperparam tuning) in a Jupyter book.
+Running the build multiple times will efficiently reuse the cache. To make sure that all the code is up-to-date and working, you can manually remove the whole `mlsbook/_build/` folder and execute `poetry run jupyter-book build mlsbook` again. Depending on the amount of code this can take a while. Don't perform too heavy computation (e.g. hyperparam tuning) in a Jupyter book.
 
 If you need to test jupyter-book locally in your browser, navigate to the `_build/html directory` and Start the HTTP server `python -m http.server`
 
@@ -28,3 +28,12 @@ Take a look at Markdown examples. You can generate this from a jupyter-notebook 
  - replace all "```python" with "```{code-cell} ipython3" – this will assure that code blocks are executable.
 
 Then, place the markdown in the `book` folder and put a corresponding record into the table of contents – `_toc.yml` file. 
+
+
+# Re-deploy
+
+- After checking that everyting is ok (check locally ```cd mlsbook/_build/html; python -m http.server```)
+- Remove ```_build``` folder completely
+- Trigger ```jupyter-book build mlsbook```
+- Now you need to copy files located in ```mlsbook/_build/html``` to github branch ```gh-pages```
+- Do not forget to add CNAME file as well, with code.themlsbook.com

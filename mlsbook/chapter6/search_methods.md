@@ -196,11 +196,4 @@ print(dict(zip(X.columns, rfe.ranking_)))
 
 ```{code-cell} ipython3
 print('The features selected by Step Forward Feature Selection are: \n \n \t {} \n \n \n The features selected by Step Backward Feature Selection are: \n \n \t {} \n \n \n The features selected by Recursive Feature Elimination are: \n \n \t {}'.format(top_forward, top_backward, top_recursive))
-
-
-```
-
-
-```{code-cell} ipython3
-
 ```
