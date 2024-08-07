@@ -20,7 +20,7 @@ kernelspec:
 - This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -> `.ipynb`) to reproduce the code and play around with it. 
 
 
-This notebook is a supplement for *Chapter 7. Data Preparation* of **Machine Learning For Everyone** book.
+This notebook is a supplement for *Chapter 8. Decision Trees* of **Machine Learning For Everyone** book.
 
 ## 1. Required Libraries, Data & Variables
 

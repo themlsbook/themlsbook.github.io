@@ -1,0 +1,1945 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Bagging Models &#8212; The Machine Learning Simplified book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter9/bagging';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Boosting Models" href="boosting.html" />
+    <link rel="prev" title="Decision Trees in Classification" href="../chapter8/decision_tree_classifier.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/mls_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/mls_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter2/knn.html">
+                        K-Nearest Neighbors (KNN) Classifier
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/linear_regression.html">
+                        Linear Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/cost_function.html">
+                        Cost Function
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/gradient_descent.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter4/basis_expansion.html">
+                        Basis Expansion
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter4/regularization.html">
+                        Regularization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter5/bias_variance_decomposition.html">
+                        Bias-variance Decomposition
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter5/validation_methods.html">
+                        Cross-validation Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter6/filter_methods.html">
+                        Filter Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter6/search_methods.html">
+                        Search Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter7/data_cleaning.html">
+                        Data Cleaning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter7/feature_transformation.html">
+                        Feature Transformation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter7/data_augmentation.html">
+                        Data Augmentation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter8/decision_tree_regressor.html">
+                        Decision Tree in Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter8/decision_tree_classifier.html">
+                        Decision Tree in Classification
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Bagging Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="boosting.html">
+                        Boosting Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter10/logistic_regression.html">
+                        Logistic Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter11/svm.html">
+                        Support Vector Machines
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter12/tuning.html">
+                        Hyper-parameters Tuning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter13/evaluation_reg.html">
+                        Model Evaluation for Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter13/evaluation_class.html">
+                        Model Evaluation for Classification
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter2/knn.html">
+                        K-Nearest Neighbors (KNN) Classifier
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/linear_regression.html">
+                        Linear Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/cost_function.html">
+                        Cost Function
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter3/gradient_descent.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter4/basis_expansion.html">
+                        Basis Expansion
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter4/regularization.html">
+                        Regularization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter5/bias_variance_decomposition.html">
+                        Bias-variance Decomposition
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter5/validation_methods.html">
+                        Cross-validation Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter6/filter_methods.html">
+                        Filter Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter6/search_methods.html">
+                        Search Methods
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter7/data_cleaning.html">
+                        Data Cleaning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter7/feature_transformation.html">
+                        Feature Transformation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter7/data_augmentation.html">
+                        Data Augmentation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter8/decision_tree_regressor.html">
+                        Decision Tree in Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter8/decision_tree_classifier.html">
+                        Decision Tree in Classification
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Bagging Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="boosting.html">
+                        Boosting Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter10/logistic_regression.html">
+                        Logistic Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter11/svm.html">
+                        Support Vector Machines
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter12/tuning.html">
+                        Hyper-parameters Tuning
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter13/evaluation_reg.html">
+                        Model Evaluation for Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../chapter13/evaluation_class.html">
+                        Model Evaluation for Classification
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/mls_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/mls_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    About
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 2 - Overview of Supervised Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/knn.html">K-Nearest Neighbors (KNN) Classifier</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 3 - Model Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/linear_regression.html">Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/cost_function.html">Cost Function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/gradient_descent.html">Gradient Descent</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 4 - Basis Expansion &amp; Regularization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/basis_expansion.html">Basis Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/regularization.html">Regularization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 5 - Model Selection</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/bias_variance_decomposition.html">Bias-variance Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter5/validation_methods.html">Cross-validation Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 6 - Feature Selection</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/filter_methods.html">Filter Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter6/search_methods.html">Search Methods</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 7 - Data Preparation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter7/data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter7/feature_transformation.html">Feature Transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter7/data_augmentation.html">Data Augmentation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 8 - Decision Trees</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter8/decision_tree_regressor.html">Decision Trees in Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../chapter8/decision_tree_classifier.html">Decision Trees in Classification</a></li>
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 9 - Ensemble Models</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Bagging Models</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="boosting.html">Boosting Models</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 10 - Logit Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter10/logistic_regression.html">Logistic Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 11 - Maximum Margin Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter11/svm.html">Support Vector Machines</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 12 - Model Tuning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter12/tuning.html">Hyper-parameters Tuning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CHAPTER 13 - Model Evaluation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter13/evaluation_reg.html">Model Evaluation for Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter13/evaluation_class.html">Model Evaluation for Classification</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/5x12/themlsbook" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/5x12/themlsbook/issues/new?title=Issue%20on%20page%20%2Fchapter9/bagging.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/5x12/themlsbook/edit/master/jupyter_book/chapter9/bagging.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">suggest edit</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../_sources/chapter9/bagging.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li><a href="../_sources/chapter9/bagging.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Bagging Models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Bagging Models
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-libraries-data-variables">
+   1. Required Libraries, Data &amp; Variables
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparation-of-the-dataset">
+   2. Preparation of the Dataset
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bagging-ensemble">
+   3. Bagging Ensemble
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#building-a-boosting-ensemble">
+     3.1. Building a Boosting Ensemble
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualizing-boosted-ensemble">
+     3.2. Visualizing boosted ensemble
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#predicting-the-results">
+     3.3. Predicting the Results
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluating-the-model">
+     3.4. Evaluating the model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#random-forest-classifier">
+   4. Random Forest Classifier
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     4.1. Building a Boosting Ensemble
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     4.2. Predicting the Results
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4.3. Evaluating the model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section id="bagging-models">
+<span id="chapter9-part1"></span><h1>Bagging Models<a class="headerlink" href="#bagging-models" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>This is a supplement material for the <a class="reference external" href="https://themlsbook.com">Machine Learning Simplified</a> book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book.</p></li>
+<li><p>I also assume you know Python syntax and how it works. If you don’t, I highly recommend you to take a break and get introduced to the language before going forward with my code.</p></li>
+<li><p>This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -&gt; <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) to reproduce the code and play around with it.</p></li>
+</ul>
+<p>This notebook is a supplement for <em>Chapter 9. Ensemble Models</em> of <strong>Machine Learning For Everyone</strong> book.</p>
+</section>
+<section id="required-libraries-data-variables">
+<h1>1. Required Libraries, Data &amp; Variables<a class="headerlink" href="#required-libraries-data-variables" title="Permalink to this heading">#</a></h1>
+<p>Let’s import the data and have a look at it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Day&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">)),</span>
+    <span class="s1">&#39;Temperature&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span><span class="p">,</span> <span class="s1">&#39;Hot&#39;</span><span class="p">,</span> <span class="s1">&#39;Cold&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Humidity&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Outlook&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunny&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Wind&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Strong&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Strong&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Strong&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Strong&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Strong&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Strong&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Strong&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Weak&#39;</span><span class="p">,</span> <span class="s1">&#39;Strong&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Golf Played&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Converting the dictionary into a DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Displaying the DataFrame</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Day</th>
+      <th>Temperature</th>
+      <th>Humidity</th>
+      <th>Outlook</th>
+      <th>Wind</th>
+      <th>Golf Played</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Cold</td>
+      <td>Normal</td>
+      <td>Rain</td>
+      <td>Strong</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Hot</td>
+      <td>Normal</td>
+      <td>Rain</td>
+      <td>Weak</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Cold</td>
+      <td>Normal</td>
+      <td>Sunny</td>
+      <td>Weak</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Hot</td>
+      <td>High</td>
+      <td>Sunny</td>
+      <td>Weak</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Hot</td>
+      <td>High</td>
+      <td>Rain</td>
+      <td>Weak</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>Cold</td>
+      <td>Normal</td>
+      <td>Sunny</td>
+      <td>Strong</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>Hot</td>
+      <td>High</td>
+      <td>Rain</td>
+      <td>Weak</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>Cold</td>
+      <td>Normal</td>
+      <td>Sunny</td>
+      <td>Weak</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>Hot</td>
+      <td>High</td>
+      <td>Rain</td>
+      <td>Weak</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>Cold</td>
+      <td>Normal</td>
+      <td>Sunny</td>
+      <td>Strong</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="preparation-of-the-dataset">
+<h1>2. Preparation of the Dataset<a class="headerlink" href="#preparation-of-the-dataset" title="Permalink to this heading">#</a></h1>
+<p>One-hot encoding the categorical variables</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">encoded_features</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;Humidity&#39;</span><span class="p">,</span> <span class="s1">&#39;Outlook&#39;</span><span class="p">,</span> <span class="s1">&#39;Wind&#39;</span><span class="p">]])</span>
+<span class="n">encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">encoded_features</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">([</span><span class="s1">&#39;Temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;Humidity&#39;</span><span class="p">,</span> <span class="s1">&#39;Outlook&#39;</span><span class="p">,</span> <span class="s1">&#39;Wind&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/andrewwolf/.pyenv/versions/3.10.7/lib/python3.10/site-packages/sklearn/preprocessing/_encoders.py:808: FutureWarning: `sparse` was renamed to `sparse_output` in version 1.2 and will be removed in 1.4. `sparse_output` is ignored unless you leave `sparse` to its default value.
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<p>Visualizing the first 10 records of the encoded dataframe:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoded_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Temperature_Cold</th>
+      <th>Temperature_Hot</th>
+      <th>Humidity_High</th>
+      <th>Humidity_Normal</th>
+      <th>Outlook_Rain</th>
+      <th>Outlook_Sunny</th>
+      <th>Wind_Strong</th>
+      <th>Wind_Weak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Adding the encoded features back to the dataframe</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">encoded_df</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Day</th>
+      <th>Temperature</th>
+      <th>Humidity</th>
+      <th>Outlook</th>
+      <th>Wind</th>
+      <th>Golf Played</th>
+      <th>Temperature_Cold</th>
+      <th>Temperature_Hot</th>
+      <th>Humidity_High</th>
+      <th>Humidity_Normal</th>
+      <th>Outlook_Rain</th>
+      <th>Outlook_Sunny</th>
+      <th>Wind_Strong</th>
+      <th>Wind_Weak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Cold</td>
+      <td>Normal</td>
+      <td>Rain</td>
+      <td>Strong</td>
+      <td>No</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Hot</td>
+      <td>Normal</td>
+      <td>Rain</td>
+      <td>Weak</td>
+      <td>No</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Cold</td>
+      <td>Normal</td>
+      <td>Sunny</td>
+      <td>Weak</td>
+      <td>Yes</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Hot</td>
+      <td>High</td>
+      <td>Sunny</td>
+      <td>Weak</td>
+      <td>Yes</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Hot</td>
+      <td>High</td>
+      <td>Rain</td>
+      <td>Weak</td>
+      <td>Yes</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Preparing the features by removing categorical variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Day&#39;</span><span class="p">,</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;Humidity&#39;</span><span class="p">,</span> <span class="s1">&#39;Outlook&#39;</span><span class="p">,</span> <span class="s1">&#39;Wind&#39;</span><span class="p">,</span> <span class="s1">&#39;Golf Played&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Temperature_Cold</th>
+      <th>Temperature_Hot</th>
+      <th>Humidity_High</th>
+      <th>Humidity_Normal</th>
+      <th>Outlook_Rain</th>
+      <th>Outlook_Sunny</th>
+      <th>Wind_Strong</th>
+      <th>Wind_Weak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Defining y:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Golf Played&#39;</span><span class="p">]</span>
+
+<span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      No
+1      No
+2     Yes
+3     Yes
+4     Yes
+5      No
+6     Yes
+7      No
+8     Yes
+9     Yes
+10     No
+11    Yes
+12     No
+13    Yes
+14    Yes
+15     No
+16    Yes
+17     No
+18    Yes
+19    Yes
+20     No
+21    Yes
+22     No
+23    Yes
+24    Yes
+25     No
+26    Yes
+27     No
+28    Yes
+29    Yes
+Name: Golf Played, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Splitting the dataset into training and testing sets</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bagging-ensemble">
+<h1>3. Bagging Ensemble<a class="headerlink" href="#bagging-ensemble" title="Permalink to this heading">#</a></h1>
+<section id="building-a-boosting-ensemble">
+<h2>3.1. Building a Boosting Ensemble<a class="headerlink" href="#building-a-boosting-ensemble" title="Permalink to this heading">#</a></h2>
+<p>Creating the Gradient Boosting classifier</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingClassifier</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating the Bagging classifier</span>
+<span class="c1"># Using a DecisionTreeClassifier as the base classifier</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span>
+                            <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">(),</span> 
+                            <span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># Number of trees</span>
+                            <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>  <span class="c1"># Fraction of samples to draw from X to train each base estimator</span>
+                            <span class="n">max_features</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>  <span class="c1"># Fraction of features to draw from X to train each base estimator</span>
+                            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+                         <span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Creating the Bagging classifier</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># Using a DecisionTreeClassifier as the base classifier</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">model</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>                             <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">(),</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span>                             <span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># Number of trees</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>                             <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>  <span class="c1"># Fraction of samples to draw from X to train each base estimator</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>                             <span class="n">max_features</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>  <span class="c1"># Fraction of features to draw from X to train each base estimator</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>                             <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>                          <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;DecisionTreeClassifier&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizing-boosted-ensemble">
+<h2>3.2. Visualizing boosted ensemble<a class="headerlink" href="#visualizing-boosted-ensemble" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Building 5 decision trees</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">([</span><span class="s1">&#39;Temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;Humidity&#39;</span><span class="p">,</span> <span class="s1">&#39;Outlook&#39;</span><span class="p">,</span> <span class="s1">&#39;Wind&#39;</span><span class="p">])</span>
+<span class="n">trees</span> <span class="o">=</span> <span class="p">[</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">trees</span><span class="p">:</span>
+    <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Plotting all 5 trees</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">trees</span><span class="p">):</span>
+    <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">],</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Tree </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="predicting-the-results">
+<h2>3.3. Predicting the Results<a class="headerlink" href="#predicting-the-results" title="Permalink to this heading">#</a></h2>
+<p>Predicting the test set results</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluating-the-model">
+<h2>3.4. Evaluating the model<a class="headerlink" href="#evaluating-the-model" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">report</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="random-forest-classifier">
+<h1>4. Random Forest Classifier<a class="headerlink" href="#random-forest-classifier" title="Permalink to this heading">#</a></h1>
+<section id="id1">
+<h2>4.1. Building a Boosting Ensemble<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Creating the Random Forest Classifier</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_forest</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">random_forest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>4.2. Predicting the Results<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Making predictions on the test set</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">random_forest</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">y_pred</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>4.3. Evaluating the model<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluating the model</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">report</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter9"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="../chapter8/decision_tree_classifier.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Decision Trees in Classification</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="boosting.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Boosting Models</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Bagging Models
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-libraries-data-variables">
+   1. Required Libraries, Data &amp; Variables
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparation-of-the-dataset">
+   2. Preparation of the Dataset
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bagging-ensemble">
+   3. Bagging Ensemble
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#building-a-boosting-ensemble">
+     3.1. Building a Boosting Ensemble
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualizing-boosted-ensemble">
+     3.2. Visualizing boosted ensemble
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#predicting-the-results">
+     3.3. Predicting the Results
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluating-the-model">
+     3.4. Evaluating the model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#random-forest-classifier">
+   4. Random Forest Classifier
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     4.1. Building a Boosting Ensemble
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     4.2. Predicting the Results
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4.3. Evaluating the model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andrew Wolf
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>
