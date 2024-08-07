@@ -26,6 +26,7 @@ Let's import the data and have a look at it:
 
 ```{code-cell} ipython3
 import pandas as pd
+warnings.filterwarnings('ignore') # ignoring all warnings
 
 data = pd.read_csv('https://github.com/5x12/themlsbook/raw/master/supplements/data/car_price.csv', delimiter=',', header=0)
 ```

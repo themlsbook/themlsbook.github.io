@@ -48,3 +48,27 @@ parts:
     title: Decision Tree in Regression
   - file: chapter8/decision_tree_classifier
     title: Decision Tree in Classification
+- caption: CHAPTER 9 - Ensemble Models
+  chapters:
+  - file: chapter9/bagging
+    title: Bagging Models
+  - file: chapter9/boosting
+    title: Boosting Models
+- caption: CHAPTER 10 - Logit Models
+  chapters:
+  - file: chapter10/logistic_regression
+    title: Logistic Regression
+- caption: CHAPTER 11 - Maximum Margin Models
+  chapters:
+  - file: chapter11/svm
+    title: Support Vector Machines
+- caption: CHAPTER 12 - Model Tuning
+  chapters:
+  - file: chapter12/tuning
+    title: Hyper-parameters Tuning
+- caption: CHAPTER 13 - Model Evaluation
+  chapters:
+  - file: chapter13/evaluation_reg
+    title: Model Evaluation for Regression
+  - file: chapter13/evaluation_class
+    title: Model Evaluation for Classification

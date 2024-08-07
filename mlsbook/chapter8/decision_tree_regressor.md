@@ -13,14 +13,14 @@ kernelspec:
 (chapter8_part1)=
 
 
-## Decision Trees in Classification
+## Decision Trees in Regression
 
 - This is a supplement material for the [Machine Learning Simplified](https://themlsbook.com) book. It sheds light on Python implementations of the topics discussed while all detailed explanations can be found in the book. 
 - I also assume you know Python syntax and how it works. If you don't, I highly recommend you to take a break and get introduced to the language before going forward with my code. 
 - This material can be downloaded as a Jupyter notebook (Download button in the upper-right corner -> `.ipynb`) to reproduce the code and play around with it. 
 
 
-This notebook is a supplement for *Chapter 7. Data Preparation* of **Machine Learning For Everyone** book.
+This notebook is a supplement for *Chapter 8. Decision Trees* of **Machine Learning For Everyone** book.
 
 ## 1. Required Libraries, Data & Variables
 
